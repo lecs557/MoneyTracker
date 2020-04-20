@@ -41,7 +41,7 @@ public class StartWindowCtrl extends BaseWindowCtrl {
                 if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                     if (mouseEvent.getClickCount() == 2) {
                         System.out.println("Double clicked");
-                        Main.setCurrentAccount(cell.getItem());
+                        Main.currentAccount = cell.getItem();
                         openAccount();
                     }
                 }

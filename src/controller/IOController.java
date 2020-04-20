@@ -29,7 +29,12 @@ public class IOController {
 
         for(String pth: Objects.requireNonNull(folder.list())){
             String name=pth.replace(".txt","");
-            Main.accountManager.addAcc(new Account(name,"",""));
+            Account loadAccount = new Account(name,"","");
+            Main.accountManager.addAcc(loadAccount);
+
+            // TODO LOAD COMPLETE
+
+
         }
 
     }

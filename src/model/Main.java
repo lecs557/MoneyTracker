@@ -19,7 +19,6 @@ public class Main extends Application {
     public static AccountManager accountManager;
     public static IOController ioController;
     public static Stage stage;
-    public static Pane contentPane;
     public static Stage newAccStage;
     public enum windows {Start,Account};
 
@@ -33,14 +32,6 @@ public class Main extends Application {
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-    }
-
-    public static Account getCurrentAccount() {
-        return currentAccount;
-    }
-
-    public static void setCurrentAccount(Account currentAccount) {
-        Main.currentAccount = currentAccount;
     }
 
     public static void main(String[] args) {
