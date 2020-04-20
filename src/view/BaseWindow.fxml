@@ -14,6 +14,7 @@
                <items>
                   <MenuItem fx:id="mi_newAcc" mnemonicParsing="false" onAction="#openNewAccount" text="Neues Konto" />
                   <MenuItem fx:id="mi_save" mnemonicParsing="false" onAction="#save" text="Speichern" />
+                  <MenuItem fx:id="mi_load" mnemonicParsing="false" onAction="#load" text="Laden" />
                   <MenuItem fx:id="mi_close" mnemonicParsing="false" onAction="#close" text="Close" />
                </items>
             </Menu>

@@ -19,7 +19,6 @@ public class StartWindowCtrl extends BaseWindowCtrl {
     public Button btn_newAcc;
 
     public void initialize() throws IOException {
-        System.out.println(contentPane);
         visibility();
 
         lv_accounts.setItems(Main.accountManager.getAccounts());

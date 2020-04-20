@@ -5,6 +5,7 @@ import model.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class IOController {
 
@@ -23,11 +24,18 @@ public class IOController {
 
     }
 
-    public void loadAll() {
+    public void loadAll(String path) {
+        File folder = new File(path);
+
+        for(String pth: Objects.requireNonNull(folder.list())){
+            String name=pth.replace(".txt","");
+            Main.accountManager.addAcc(new Account(name,"",""));
+        }
 
     }
 
-    public void loadAccount() {
+    public void loadAccount(String path) {
+
 
     }
 }

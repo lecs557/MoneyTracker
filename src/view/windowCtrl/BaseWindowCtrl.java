@@ -14,12 +14,12 @@ public class BaseWindowCtrl {
     public Menu m_file;
     public MenuItem mi_save;
     public MenuItem mi_newAcc;
+    public MenuItem mi_load;
     public MenuItem mi_close;
     public Pane contentPane;
 
     public void initialize() throws IOException {
-        Main.contentPane = contentPane;
-        Main.windowManager.openContent(Main.windows.Start);
+
     }
 
     public void close(ActionEvent event) {
@@ -40,5 +40,9 @@ public class BaseWindowCtrl {
 
     public void save(ActionEvent event) throws IOException {
         Main.ioController.saveAll("TEST");
+    }
+
+    public void load() {
+        Main.ioController.loadAll("TEST");
     }
 }

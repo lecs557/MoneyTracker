@@ -12,8 +12,8 @@ public class WindowManager {
 
     public void openContent(Main.windows windows) {
         try {
-            Main.contentPane.getChildren().clear();
-            Main.contentPane.getChildren().add( FXMLLoader.load(getClass().getResource("../view/"+windows.name()+".fxml")));
+            Parent parent = FXMLLoader.load(getClass().getResource("../view/"+windows.name()+".fxml"));
+            Main.stage.setScene(new Scene(parent));
         } catch (IOException e) {
             e.printStackTrace();
         }
