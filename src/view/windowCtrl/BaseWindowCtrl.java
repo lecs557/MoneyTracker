@@ -42,7 +42,7 @@ public class BaseWindowCtrl {
         Main.ioController.saveAll("TEST");
     }
 
-    public void load() {
+    public void load() throws IOException {
         Main.ioController.loadAll("TEST");
     }
 }

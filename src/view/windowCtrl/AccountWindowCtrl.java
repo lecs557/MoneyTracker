@@ -22,6 +22,6 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newTransaction() {
-        Main.currentAccount.createTransaction(new Transaction("1.1.20","test",1000));
+        Main.currentAccount.addTransaction(new Transaction("1.1.20","test",1000));
     }
 }

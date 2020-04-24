@@ -28,7 +28,10 @@ public class Main extends Application {
         windowManager=new WindowManager();
         accountManager= new AccountManager();
         ioController = new IOController();
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
+        Account a = new Account("a","","");
+        a.addTransaction(new Transaction("aaa","bbb",50));
+        currentAccount = a;
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Account.fxml"));
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
