@@ -2,6 +2,7 @@ package model;
 
 import controller.AccountManager;
 import controller.IOController;
+import controller.LogController;
 import controller.WindowManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,20 +21,27 @@ public class Main extends Application {
     public static WindowManager windowManager;
     public static AccountManager accountManager;
     public static IOController ioController;
+    public static LogController logController;
     public static Stage stage;
     public static Stage newAccStage;
+    public static Stage newTransaction;
+    public static Stage logStage;
     public enum windows {Start,Account};
 
     @Override
     public void start(Stage primaryStage) throws IOException{
         stage=primaryStage;
+
         windowManager=new WindowManager();
         accountManager= new AccountManager();
         ioController = new IOController();
+        logController = new LogController();
+
 //        Account a = new Account("a","","");
 //        a.addTransaction(new Transaction(LocalDate.now(),"bbb",50));
 //        currentAccount = a;
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/NewTransaction.fxml"));
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

@@ -30,4 +30,16 @@ public class WindowManager {
         }
         Main.newAccStage.show();
     }
+
+    public void showAlert(){
+        Main.newAccStage=new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("../view/LogWindow.fxml"));
+            Main.newAccStage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Main.newAccStage.show();
+    }
 }
