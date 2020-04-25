@@ -1,12 +1,14 @@
 package view.windowCtrl;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import model.Account;
 import model.Main;
 
+import java.io.File;
 import java.io.IOException;
 
 public class BaseWindowCtrl {
@@ -31,11 +33,11 @@ public class BaseWindowCtrl {
     }
 
     public void openAccount() {
-        Main.windowManager.openContent(Main.windows.Account);
+        Main.windowManager.openWindpw(Main.windows.Account);
     }
 
     public void openStart(){
-        Main.windowManager.openContent(Main.windows.Start);
+        Main.windowManager.openWindpw(Main.windows.Start);
     }
 
     public void save(ActionEvent event) throws IOException {
@@ -43,6 +45,22 @@ public class BaseWindowCtrl {
     }
 
     public void load() throws IOException {
-        Main.ioController.loadAll(Main.DESTINATION);
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Konto auswählen");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("KontoFiles","*.konto"));
+        chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        File temp = chooser.showOpenDialog(Main.stage);
+        boolean exist = false;
+        if (temp != null) {
+            String name = temp.getName().replace(".konto","");
+            for (Account acc:Main.accountManager.getAccounts()){
+                if(name==acc.getName()){
+                    exist =true;
+                }
+            }
+            if (!exist)
+                Main.ioController.load(name,temp.getAbsolutePath());
+        }
     }
 }

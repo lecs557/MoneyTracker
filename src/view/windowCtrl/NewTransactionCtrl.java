@@ -4,6 +4,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import model.Main;
+import model.Transaction;
 
 import java.time.LocalDate;
 
@@ -64,23 +66,24 @@ public class NewTransactionCtrl {
             }
         });
 
-        tb_cents.setOnKeyTyped(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER){
-                ok();
-            }
-        });
-
-
-
-
-
     }
 
     public void ok(){
-        
+        try {
+            int teYear = Integer.parseInt(tb_year.getText());
+            int teMonth =Integer.parseInt(tb_month.getText());
+            int teday = Integer.parseInt(tb_day.getText());
+            LocalDate temp = LocalDate.of(teYear,teMonth,teday);
+            String teReason = tb_reason.getText();
+            int tebetrag = Integer.parseInt(tb_money.getText()+tb_cents.getText());
+            Main.currentAccount.addTransaction(new Transaction(temp,teReason,tebetrag));
+            Main.newTransaction.close();
+        } catch (Exception e) {
+            tb_day.requestFocus();
+        }
     }
 
     public void close(){
-
+        Main.newTransaction.close();
     }
 }

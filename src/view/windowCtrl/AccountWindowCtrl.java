@@ -20,12 +20,10 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     }
 
     public void back(){
-        Main.windowManager.openContent(Main.windows.Start);
+        Main.windowManager.openWindpw(Main.windows.Start);
     }
 
     public void newTransaction() {
-        Main.currentAccount.addTransaction(new Transaction(LocalDate.of(2020,1,1) ,"test",1000));
-        Main.currentAccount.addTransaction(new Transaction(LocalDate.of(2020,1,10) ,"test",100));
-        Main.currentAccount.addTransaction(new Transaction(LocalDate.of(2020,1,7) ,"test",500));
+        Main.windowManager.showNewTransactionStage();
     }
 }

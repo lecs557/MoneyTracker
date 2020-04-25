@@ -17,7 +17,6 @@ public class Transaction {
         try {
             this.date = LocalDate.parse(date,form);
         } catch (Exception e) {
-            System.out.println("Datum konnte nicht geschrieben werden");
             this.reason+=" "+date;
             this.date = LocalDate.of(1995,9,17);
         }
@@ -26,7 +25,6 @@ public class Transaction {
             this.betrag = Integer.parseInt(betrag);
         } catch (NumberFormatException e) {
             this.betrag=0;
-            System.out.println("Betrag konnte nicht geschrieben werden");
             this.reason+=" "+betrag;
         }
     }

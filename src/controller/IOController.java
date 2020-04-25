@@ -15,12 +15,14 @@ public class IOController {
         folder.mkdir();
         String pth = folder.getAbsolutePath();
         for (Account acc : Main.accountManager.getAccounts()) {
-            FileWriter accountFile = new FileWriter(pth + "/"+ acc.getName()+".txt");
+            int j=0;
+            FileWriter accountFile = new FileWriter(pth + "/"+ acc.getName()+".konto");
             for (Transaction t:acc.getTransactions()) {
+                j++;
                 accountFile.append(t.getDate_S()+":"+t.getReason()+":"+t.getBetrag()+";");
             }
             accountFile.close();
-            System.out.println("GESPEICHERT: "+acc.getName());
+            Main.logController.addLog("GESPEICHERT: "+acc.getName()+" -> "+j+" Transactionen");
         }
     }
 
@@ -28,38 +30,25 @@ public class IOController {
 
     }
 
-    public void loadAll(String path) throws IOException {
-        File folder = new File(path);
-
-        for(String pth: Objects.requireNonNull(folder.list())){
-            String name=pth.replace(".txt","");
-            Account loadAccount = new Account(name,"","");
-            FileReader loadedFile = new FileReader(path + "/"+ pth);
-            Main.accountManager.addAcc(loadAccount);
-            int temp = loadedFile.read();
-            String cur="";
-            while (temp!=-1){
-                if (temp==';') {
-                    loadAccount.addTransaction(createTransaction(cur));
-                    cur="";
-                } else {
-                    cur+=(char) temp;
-                }
-                temp=loadedFile.read();
+    public void load(String name, String path) throws IOException {
+        Account loadAccount = new Account(name,"","");
+        FileReader loadedFile = new FileReader(path);
+        Main.accountManager.addAcc(loadAccount);
+        int temp = loadedFile.read();
+        String cur="";
+        int j=0;
+        while (temp!=-1){
+            if (temp==';') {
+                j++;
+                loadAccount.addTransaction(createTransaction(cur));
+                cur="";
+            } else {
+                cur+=(char) temp;
             }
-
-
-
-            // TODO LOAD COMPLETE
-
-
+            temp=loadedFile.read();
         }
-
-    }
-
-    public void loadAccount(String path) {
-
-
+        Main.logController.addLog("GELADEN: "+name+" -> "+j+" Transactionen");
+        Main.windowManager.showLogStage();
     }
 
     private Transaction createTransaction(String cur) {

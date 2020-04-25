@@ -15,6 +15,7 @@ public class LogWindowCtrl {
     }
 
     public void ok() {
+        Main.logStage.close();
 
     }
 }

@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class WindowManager {
 
-    public void openContent(Main.windows windows) {
+    public void openWindpw(Main.windows windows) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("../view/"+windows.name()+".fxml"));
             Main.stage.setScene(new Scene(parent));
@@ -31,15 +31,27 @@ public class WindowManager {
         Main.newAccStage.show();
     }
 
-    public void showAlert(){
-        Main.newAccStage=new Stage();
+    public void showLogStage(){
+        Main.logStage=new Stage();
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("../view/LogWindow.fxml"));
-            Main.newAccStage.setScene(new Scene(root));
+            Main.logStage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Main.newAccStage.show();
+        Main.logStage.show();
+    }
+
+    public void showNewTransactionStage(){
+        Main.newTransaction=new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("../view/NewTransaction.fxml"));
+            Main.newTransaction.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Main.newTransaction.show();
     }
 }

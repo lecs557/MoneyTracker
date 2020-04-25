@@ -38,13 +38,14 @@ public class Main extends Application {
         logController = new LogController();
 
 //        Account a = new Account("a","","");
-//        a.addTransaction(new Transaction(LocalDate.now(),"bbb",50));
+//        a.addTransaction(new Transaction(LocalDate.now(),"bbb",50020));
 //        currentAccount = a;
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/NewTransaction.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        logController.addLog("GESTARTET");
     }
 
     public static void main(String[] args) {

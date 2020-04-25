@@ -11,6 +11,7 @@ import javafx.util.Callback;
 import model.Main;
 import model.Transaction;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -87,7 +88,7 @@ public class TransactionTable extends TableView<Transaction> {
                             setText(null);
                             setGraphic(null);
                         } else {
-                            Label l = new Label(item+"€");
+                            Label l = new Label(new DecimalFormat("#0.00").format((double)item/100)+" €");
                             if (item > 0){
                                 l.setStyle("-fx-text-fill: green;");
                             } else if (item < 0) {
@@ -119,7 +120,7 @@ public class TransactionTable extends TableView<Transaction> {
                             setText(null);
                             setGraphic(null);
                         } else {
-                            Label l = new Label(item+"€");
+                            Label l = new Label(new DecimalFormat("#0.00").format((double)item/100)+" €");
                             if (item > 0){
                                 l.setStyle("-fx-text-fill: green;");
                             } else if (item < 0) {
