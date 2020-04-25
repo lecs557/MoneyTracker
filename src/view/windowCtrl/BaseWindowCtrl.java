@@ -39,10 +39,10 @@ public class BaseWindowCtrl {
     }
 
     public void save(ActionEvent event) throws IOException {
-        Main.ioController.saveAll("TEST");
+        Main.ioController.saveAll(Main.DESTINATION);
     }
 
     public void load() throws IOException {
-        Main.ioController.loadAll("TEST");
+        Main.ioController.loadAll(Main.DESTINATION);
     }
 }

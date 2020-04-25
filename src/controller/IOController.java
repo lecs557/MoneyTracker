@@ -5,6 +5,7 @@ import model.Main;
 import model.Transaction;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.Objects;
 
 public class IOController {
@@ -16,10 +17,10 @@ public class IOController {
         for (Account acc : Main.accountManager.getAccounts()) {
             FileWriter accountFile = new FileWriter(pth + "/"+ acc.getName()+".txt");
             for (Transaction t:acc.getTransactions()) {
-                accountFile.append(t.getDateString()+":"+t.getReason()+":"+t.getBetrag()+";");
+                accountFile.append(t.getDate_S()+":"+t.getReason()+":"+t.getBetrag()+";");
             }
-
-
+            accountFile.close();
+            System.out.println("GESPEICHERT: "+acc.getName());
         }
     }
 
@@ -66,15 +67,9 @@ public class IOController {
         String b = cur.split(":")[1];
         String c = cur.split(":")[2];
         if(a==null || b==null || c==null){
-          return new Transaction(cur,"",0);
+          return new Transaction("","cur","0");
         } else {
-            try {
-                int cInt = Integer.parseInt(c);
-                return new Transaction(a,b,cInt);
-            } catch (NumberFormatException e) {
-                System.out.println("Betrag ist keine Zahl");
-                return new Transaction(a,b+"  "+c,0);
-            }
+            return new Transaction(a,b,c);
         }
     }
 }

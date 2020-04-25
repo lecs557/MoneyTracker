@@ -6,6 +6,8 @@ import model.Main;
 import model.Transaction;
 import view.customized_Panes.TransactionTable;
 
+import java.time.LocalDate;
+
 public class AccountWindowCtrl extends BaseWindowCtrl{
 
     public Label lbl_account;
@@ -22,6 +24,8 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newTransaction() {
-        Main.currentAccount.addTransaction(new Transaction("1.1.20","test",1000));
+        Main.currentAccount.addTransaction(new Transaction(LocalDate.of(2020,1,1) ,"test",1000));
+        Main.currentAccount.addTransaction(new Transaction(LocalDate.of(2020,1,10) ,"test",100));
+        Main.currentAccount.addTransaction(new Transaction(LocalDate.of(2020,1,7) ,"test",500));
     }
 }

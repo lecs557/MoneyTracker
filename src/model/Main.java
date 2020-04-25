@@ -11,9 +11,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Main extends Application {
 
+    public static final String DESTINATION = "Test_Kontos";
     public static Account  currentAccount;
     public static WindowManager windowManager;
     public static AccountManager accountManager;
@@ -28,10 +30,10 @@ public class Main extends Application {
         windowManager=new WindowManager();
         accountManager= new AccountManager();
         ioController = new IOController();
-        Account a = new Account("a","","");
-        a.addTransaction(new Transaction("aaa","bbb",50));
-        currentAccount = a;
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Account.fxml"));
+//        Account a = new Account("a","","");
+//        a.addTransaction(new Transaction(LocalDate.now(),"bbb",50));
+//        currentAccount = a;
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
