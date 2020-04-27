@@ -48,6 +48,10 @@ public class Transaction {
         return date;
     }
 
+    public MyDate getMyDate() {
+        return new MyDate(date);
+    }
+
     public String getReason() {
         return reason;
     }

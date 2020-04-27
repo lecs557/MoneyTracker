@@ -2,6 +2,9 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+
+import java.time.LocalDate;
 
 public class Account {
 
@@ -10,7 +13,8 @@ public class Account {
     private String iban;
     private String bic;
     private ObservableList<Transaction> transactions = FXCollections.observableArrayList();
-    private int startKapital=0;
+    private ObservableList<XYChart.Data<MyDate,Number>> data = FXCollections.observableArrayList();
+    private int startKapital=1000;
 
     public Account(String name, String iban, String bic)  {
         this.name = name;
@@ -28,13 +32,16 @@ public class Account {
                 }
             }
         }
+
         transactions.add(i,transaction);
+
         while(i < transactions.size()){
             if(i==0){
                 transactions.get(i).berechneKontoStand(startKapital);
             } else {
                 transactions.get(i).berechneKontoStand(transactions.get(i-1).getKonto());
             }
+            data.add(i,new XYChart.Data<>(transaction.getMyDate(),transaction.getKonto()/100));
             i++;
         }
     }
@@ -47,8 +54,8 @@ public class Account {
         return transactions;
     }
 
-    public boolean isErr() {
-        return err;
+    public ObservableList<XYChart.Data<MyDate, Number>> getData() {
+        return data;
     }
 
     public void setErr(boolean err) {

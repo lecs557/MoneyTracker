@@ -37,11 +37,19 @@ public class Main extends Application {
         ioController = new IOController();
         logController = new LogController();
 
+        Parent root;
+        if (getParameters() != null) {
+            String path = getParameters().getUnnamed().get(0);
+            String name = path.split("/")[path.split("/").length-1].replace(".konto","");
+            currentAccount = ioController.load(name,path);
+            root = FXMLLoader.load(getClass().getResource("/view/Account.fxml"));
+        } else {
+            root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
+        }
 //        Account a = new Account("a","","");
 //        a.addTransaction(new Transaction(LocalDate.now(),"bbb",50020));
 //        currentAccount = a;
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

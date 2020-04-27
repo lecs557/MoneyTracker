@@ -19,9 +19,6 @@ public class TransactionTable extends TableView<Transaction> {
 
 
     public TransactionTable()  {
-
-        setItems(Main.currentAccount.getTransactions());
-
         //DATUM
         TableColumn<Transaction, LocalDate> date =new TableColumn<>("Datum");
         date.setMinWidth(120);
@@ -105,7 +102,7 @@ public class TransactionTable extends TableView<Transaction> {
         });
 
 
-        //BETRAG
+        //KONTOSTAND
         TableColumn<Transaction, Integer> stand =new TableColumn<Transaction, Integer>("Kontostand");
         stand.setMinWidth(100);
         stand.setCellValueFactory(new PropertyValueFactory<Transaction,Integer>("konto"));
@@ -136,9 +133,7 @@ public class TransactionTable extends TableView<Transaction> {
             }
         });
 
-
-
-
+        setItems(Main.currentAccount.getTransactions());
         getColumns().addAll(date, zweck, betrag, stand);
     }
 

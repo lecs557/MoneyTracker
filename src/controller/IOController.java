@@ -30,7 +30,7 @@ public class IOController {
 
     }
 
-    public void load(String name, String path) throws IOException {
+    public Account load(String name, String path) throws IOException {
         Account loadAccount = new Account(name,"","");
         FileReader loadedFile = new FileReader(path);
         Main.accountManager.addAcc(loadAccount);
@@ -48,7 +48,7 @@ public class IOController {
             temp=loadedFile.read();
         }
         Main.logController.addLog("GELADEN: "+name+" -> "+j+" Transactionen");
-        Main.windowManager.showLogStage();
+        return loadAccount;
     }
 
     private Transaction createTransaction(String cur) {
