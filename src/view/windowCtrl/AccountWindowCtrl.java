@@ -26,7 +26,7 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
 
         diagramm_tab.setContent(new TransactionChart());
 
-        tabPane.getTabs().add(new Tab("Werte", new TransactionTable()));
+        tabPane.getTabs().add(new Tab("Transactionen", new TransactionTable()));
     }
 
     public void back(){

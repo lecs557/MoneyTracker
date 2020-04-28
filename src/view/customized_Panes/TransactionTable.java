@@ -1,11 +1,10 @@
 package view.customized_Panes;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import model.Main;
@@ -60,7 +59,10 @@ public class TransactionTable extends TableView<Transaction> {
                             setGraphic(null);
                         } else {
                             Label l = new Label(item);
-                            setGraphic(l);// TODO mit Scenebuilder
+                            Button b = new Button("DELETE");
+                            HBox p = new HBox(l,b);
+                            setGraphic(p);// TODO mit Scenebuilder
+                            b.setOnMouseClicked(mouseEvent -> Main.currentAccount.deleteTransaction(getTableRow().getItem()));
                         }
                     }
                 };

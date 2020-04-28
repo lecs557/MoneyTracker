@@ -54,7 +54,7 @@ public class NewTransactionCtrl {
 
 
         tb_money.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[0-9]*")) {
+            if (!newValue.matches("(-?[0-9]*)")) {
                 tb_money.setText(oldValue);
             }
         });

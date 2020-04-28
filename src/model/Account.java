@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Account {
 
@@ -32,18 +33,33 @@ public class Account {
                 }
             }
         }
-
         transactions.add(i,transaction);
-
+        data.add(new XYChart.Data<>(transaction.getMyDate(),transaction.getKonto()/100));
         while(i < transactions.size()){
             if(i==0){
                 transactions.get(i).berechneKontoStand(startKapital);
             } else {
                 transactions.get(i).berechneKontoStand(transactions.get(i-1).getKonto());
             }
-            data.add(i,new XYChart.Data<>(transaction.getMyDate(),transaction.getKonto()/100));
+                data.get(i).setYValue(transactions.get(i).getKonto()/100);
             i++;
         }
+    }
+
+    public void deleteTransaction(Transaction transaction){
+        int i = transactions.indexOf(transaction);
+        transactions.remove(i);
+        data.remove(i);
+        while(i < transactions.size()){
+            if(i==0){
+                transactions.get(i).berechneKontoStand(startKapital);
+            } else {
+                transactions.get(i).berechneKontoStand(transactions.get(i-1).getKonto());
+            }
+            data.get(i).setYValue(transactions.get(i).getKonto()/100);
+            i++;
+        }
+
     }
 
     public String getName() {
