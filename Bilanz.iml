@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="JUnit5.4">
@@ -25,5 +25,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="org.testfx:testfx-junit5:4.0.16-alpha" level="project" />
+    <orderEntry type="library" name="org.testfx:testfx-core:4.0.16-alpha" level="project" />
   </component>
 </module>

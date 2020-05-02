@@ -1,5 +1,6 @@
 package view.customized_Panes;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 public class TransactionTable extends TableView<Transaction> {
 
 
-    public TransactionTable()  {
+    public TransactionTable(ObservableList<Transaction> list)  {
         //DATUM
         TableColumn<Transaction, LocalDate> date =new TableColumn<>("Datum");
         date.setMinWidth(120);
@@ -134,14 +135,13 @@ public class TransactionTable extends TableView<Transaction> {
                 return cell;
             }
         });
-
-        setItems(Main.currentAccount.getTransactions());
+        setItems(list);
         getColumns().addAll(date, zweck, betrag, stand);
     }
 
     @Override
     protected double computePrefHeight(double width){
-        return 50+Main.currentAccount.getTransactions().size()*50;
+        return 50+ getItems().size()*50;
     }
 
     @Override

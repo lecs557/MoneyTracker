@@ -13,21 +13,22 @@ public class MyDate extends Number {
 
     @Override
     public int intValue() {
-        return date.getDayOfYear();
+        return date.getDayOfYear() +365*(date.getYear()-2018);
     }
 
     @Override
     public long longValue() {
-        return date.getDayOfYear();
+        return date.getDayOfYear() +365*(date.getYear()-2018);
     }
 
     @Override
     public float floatValue() {
-        return date.getDayOfYear();
+        return date.getDayOfYear() +365*(date.getYear()-2018);
     }
 
     @Override
-    public double doubleValue() {return date.getDayOfYear();
+    public double doubleValue() {
+        return date.getDayOfYear() +365*(date.getYear()-2018);
     }
 
     public LocalDate getDate() {

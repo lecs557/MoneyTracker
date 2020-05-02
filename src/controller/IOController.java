@@ -1,12 +1,12 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import model.Account;
 import model.Main;
 import model.Transaction;
 
 import java.io.*;
-import java.sql.SQLOutput;
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class IOController {
 
@@ -17,9 +17,11 @@ public class IOController {
         for (Account acc : Main.accountManager.getAccounts()) {
             int j=0;
             FileWriter accountFile = new FileWriter(pth + "/"+ acc.getName()+".konto");
-            for (Transaction t:acc.getTransactions()) {
-                j++;
-                accountFile.append(t.getDate_S()+":"+t.getReason()+":"+t.getBetrag()+";");
+            for (ObservableList<Transaction> olt:acc.getYears_Transaction()) {
+                for (Transaction t:olt) {
+                    j++;
+                    accountFile.append(t.getDate_S() + ":" + t.getReason() + ":" + t.getBetrag() + ";");
+                }
             }
             accountFile.close();
             Main.logController.addLog("GESPEICHERT: "+acc.getName()+" -> "+j+" Transactionen");
@@ -31,7 +33,7 @@ public class IOController {
     }
 
     public Account load(String name, String path) throws IOException {
-        Account loadAccount = new Account(name,"","");
+        Account loadAccount = new Account(name);
         FileReader loadedFile = new FileReader(path);
         Main.accountManager.addAcc(loadAccount);
         int temp = loadedFile.read();

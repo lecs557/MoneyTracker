@@ -38,7 +38,7 @@ public class Main extends Application {
         logController = new LogController();
 
         Parent root;
-        if (getParameters() != null) {
+        if (getParameters().getUnnamed().size() > 0) {
             String path = getParameters().getUnnamed().get(0);
             String name = path.split("/")[path.split("/").length-1].replace(".konto","");
             currentAccount = ioController.load(name,path);

@@ -79,6 +79,7 @@ public class NewTransactionCtrl {
             Main.currentAccount.addTransaction(new Transaction(temp,teReason,tebetrag));
             Main.newTransaction.close();
         } catch (Exception e) {
+            e.printStackTrace();
             tb_day.requestFocus();
         }
     }

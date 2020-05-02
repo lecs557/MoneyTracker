@@ -10,13 +10,19 @@ import java.util.List;
 
 public class LocalDateAxis extends ValueAxis<MyDate> {
 
+    public LocalDateAxis() {
+    }
+
+    public LocalDateAxis(double lowerBound, double upperBound) {
+        super(lowerBound, upperBound);
+    }
+
     @Override
     protected List<MyDate> calculateMinorTickMarks() {
         ArrayList<MyDate> myDates = new ArrayList<>();
-        myDates.add(new MyDate(LocalDate.of(2020,1,15)));
-        myDates.add(new MyDate(LocalDate.of(2020,2,15)));
-        myDates.add(new MyDate(LocalDate.of(2020,3,15)));
-        myDates.add(new MyDate(LocalDate.of(2020,4,15)));
+        for(int i=0;i<24;i++){
+            myDates.add(new MyDate(LocalDate.of(2018+i/12,(i%11)+1,1)));
+        }
         return myDates;
 
     }
@@ -28,16 +34,15 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
 
     @Override
     protected Object getRange() {
-        return autoRange(0,300,8,10);
+        return autoRange(0,6,60,10);
     }
 
     @Override
     protected List<MyDate> calculateTickValues(double v, Object o) {
         ArrayList<MyDate> myDates = new ArrayList<>();
-        myDates.add(new MyDate(LocalDate.of(2020,1,1)));
-        myDates.add(new MyDate(LocalDate.of(2020,2,1)));
-        myDates.add(new MyDate(LocalDate.of(2020,3,1)));
-        myDates.add(new MyDate(LocalDate.of(2020,4,1)));
+        for(int i=0;i<13;i++){
+            myDates.add(new MyDate(LocalDate.of(2018+i/4,((i%4)*3)+1,1)));
+        }
         return myDates;
     }
 

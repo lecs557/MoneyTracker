@@ -38,7 +38,7 @@ public class NewAccountWindowCtrl {
 
     @FXML
     void ok(ActionEvent event) {
-        Main.accountManager.addAcc(new Account(tb_name.getText(), tb_iban.getText(), tb_bic.getText()));
+        Main.accountManager.addAcc(new Account(tb_name.getText()));
         Main.newAccStage.close();
     }
 
