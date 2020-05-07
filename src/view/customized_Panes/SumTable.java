@@ -9,6 +9,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import model.Main;
 import model.Sum;
@@ -113,5 +114,12 @@ public class SumTable extends TableView<Sum> {
         });
         getColumns().add(gesamt);
         getItems().setAll(Main.currentAccount.getSums());
+    }
+
+    public void putInto(Pane container){
+        setPrefHeight(container.getPrefHeight());
+        setPrefWidth(container.getPrefWidth());
+        container.getChildren().clear();
+        container.getChildren().add(this);
     }
 }

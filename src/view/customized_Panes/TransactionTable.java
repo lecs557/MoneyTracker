@@ -19,6 +19,33 @@ public class TransactionTable extends TableView<Transaction> {
 
 
     public TransactionTable(ObservableList<Transaction> list)  {
+        //DELETE
+        TableColumn<Transaction, LocalDate> delete =new TableColumn<>("");
+        delete.setCellValueFactory(new PropertyValueFactory<>("date"));
+        delete.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Transaction, LocalDate> call(TableColumn<Transaction, LocalDate> transactionStringTableColumn) {
+                TableCell<Transaction, LocalDate> cell = new TableCell<>() {
+                    @Override
+                    protected void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                            setGraphic(null);
+                        } else {
+                            Button b = new Button("D");
+                            setGraphic(b);
+                            b.setOnMouseClicked(mouseEvent -> Main.currentAccount.deleteTransaction(getTableRow().getItem()));
+                        }
+                    }
+                };
+                cell.setAlignment(Pos.CENTER);
+                return cell;
+            }
+        });
+
+
+
         //DATUM
         TableColumn<Transaction, LocalDate> date =new TableColumn<>("Datum");
         date.setMinWidth(120);
@@ -35,7 +62,7 @@ public class TransactionTable extends TableView<Transaction> {
                             setGraphic(null);
                         } else {
                             Label l = new Label(item.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")));
-                            setGraphic(l);// TODO mit Scenebuilder
+                            setGraphic(l);
                         }
                     }
                 };
@@ -60,10 +87,8 @@ public class TransactionTable extends TableView<Transaction> {
                             setGraphic(null);
                         } else {
                             Label l = new Label(item);
-                            Button b = new Button("DELETE");
-                            HBox p = new HBox(l,b);
-                            setGraphic(p);// TODO mit Scenebuilder
-                            b.setOnMouseClicked(mouseEvent -> Main.currentAccount.deleteTransaction(getTableRow().getItem()));
+                            setGraphic(l);
+
                         }
                     }
                 };
@@ -136,16 +161,6 @@ public class TransactionTable extends TableView<Transaction> {
             }
         });
         setItems(list);
-        getColumns().addAll(date, zweck, betrag, stand);
-    }
-
-    @Override
-    protected double computePrefHeight(double width){
-        return 50+ getItems().size()*50;
-    }
-
-    @Override
-    protected double computeMaxHeight(double width){
-        return 200;
+        getColumns().addAll(delete, date, zweck, betrag, stand);
     }
 }

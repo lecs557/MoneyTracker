@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.chart.Axis?>
-<?import javafx.scene.chart.ValueAxis?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windowCtrl.AccountWindowCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="766.0" prefWidth="1259.0" styleClass="main" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windowCtrl.AccountWindowCtrl">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="600.0">
+      <MenuBar prefHeight="25.0" prefWidth="1182.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <menus>
             <Menu fx:id="m_file" mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem fx:id="mi_newAcc" mnemonicParsing="false" onAction="#openNewAccount" text="Neues Konto" />
-                  <MenuItem fx:id="mi_save" mnemonicParsing="false" onAction="#save" text="Speichern" />
-                  <MenuItem fx:id="mi_load" mnemonicParsing="false" onAction="#load" text="Laden" />
-                  <MenuItem fx:id="mi_close" mnemonicParsing="false" onAction="#close" text="Close" />
+                  <MenuItem fx:id="mi_close" mnemonicParsing="false" onAction="#close" text="Schließen" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveUnder" text="Speichern unter..." />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
@@ -39,22 +34,44 @@
             </Menu>
          </menus>
       </MenuBar>
-      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="280.0" prefWidth="580.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane layoutX="14.0" layoutY="25.0" prefHeight="580.0" prefWidth="983.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Label fx:id="lbl_account" prefHeight="41.0" prefWidth="139.0" text="lbl_account">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TabPane fx:id="tabPane" layoutY="40.0" prefHeight="240.0" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <tabs>
-                  <Tab fx:id="diagramm_tab" text="Allgemein"/>
-                   <Tab fx:id="template_tab" text="Vorlagen"/>
-               </tabs>
-            </TabPane>
-            <Button fx:id="btn_back" layoutX="523.0" layoutY="7.0" mnemonicParsing="false" onAction="#back" text="Back" />
+            <FlowPane layoutX="26.0" layoutY="20.0" prefHeight="580.0" prefWidth="762.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <Label fx:id="lbl_account" prefHeight="41.0" prefWidth="356.0" text="lbl_account">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn_newTr" mnemonicParsing="false" onAction="#newTransaction" text="Neue Transaction">
+                     <FlowPane.margin>
+                        <Insets />
+                     </FlowPane.margin>
+                  </Button>
+                  <Pane prefHeight="41.0" prefWidth="613.0">
+                     <children>
+                        <Button layoutX="56.0" layoutY="2.0" mnemonicParsing="false" onAction="#readPDF" text="PDF" />
+                     </children></Pane>
+                  <Button fx:id="btn_save" mnemonicParsing="false" onAction="#save" text="Speichern">
+                     <FlowPane.margin>
+                        <Insets right="5.0" />
+                     </FlowPane.margin>
+                  </Button>
+                  <Button fx:id="btn_back" mnemonicParsing="false" onAction="#back" text="Zurück" />
+                  <Pane fx:id="diagrammContainer" prefHeight="357.0" prefWidth="1216.0">
+                     <FlowPane.margin>
+                        <Insets bottom="10.0" />
+                     </FlowPane.margin>
+                  </Pane>
+                  <TabPane fx:id="tabPane" prefHeight="294.0" prefWidth="564.0" tabClosingPolicy="UNAVAILABLE" />
+                  <Pane fx:id="sumContainer" prefHeight="294.0" prefWidth="629.0">
+                     <FlowPane.margin>
+                        <Insets left="10.0" />
+                     </FlowPane.margin>
+                  </Pane>
+               </children>
+            </FlowPane>
          </children>
       </AnchorPane>
-      <Button fx:id="btn_newTr" layoutX="51.0" layoutY="325.0" mnemonicParsing="false" onAction="#newTransaction" text="New Transaction" />
    </children>
 </AnchorPane>

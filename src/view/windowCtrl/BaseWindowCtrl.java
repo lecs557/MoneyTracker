@@ -36,14 +36,6 @@ public class BaseWindowCtrl {
         Main.windowManager.openWindpw(Main.windows.Account);
     }
 
-    public void openStart(){
-        Main.windowManager.openWindpw(Main.windows.Start);
-    }
-
-    public void save(ActionEvent event) throws IOException {
-        Main.ioController.saveAll(Main.DESTINATION);
-    }
-
     public void load() throws IOException {
 
         FileChooser chooser = new FileChooser();

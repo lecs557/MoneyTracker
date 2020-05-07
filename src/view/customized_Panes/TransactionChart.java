@@ -5,10 +5,12 @@ import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.layout.Pane;
 import model.Main;
 import model.MyDate;
 import model.Transaction;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,5 +25,12 @@ public class TransactionChart extends LineChart<MyDate,Number> {
         }
         getData().add(series);
         series.setName("Mein Konto");
+    }
+
+    public void putInto(Pane container){
+        setPrefHeight(container.getPrefHeight());
+        setPrefWidth(container.getPrefWidth());
+        container.getChildren().clear();
+        container.getChildren().add(this);
     }
 }

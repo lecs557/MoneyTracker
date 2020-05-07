@@ -78,6 +78,7 @@ public class NewTransactionCtrl {
             int tebetrag = Integer.parseInt(tb_money.getText()+tb_cents.getText());
             Main.currentAccount.addTransaction(new Transaction(temp,teReason,tebetrag));
             Main.newTransaction.close();
+            Main.currentAccount.reload();
         } catch (Exception e) {
             e.printStackTrace();
             tb_day.requestFocus();

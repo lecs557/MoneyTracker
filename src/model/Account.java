@@ -4,8 +4,10 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.Pane;
 import view.customized_Panes.SumTable;
 import view.customized_Panes.TransactionChart;
 import view.customized_Panes.TransactionTable;
@@ -15,9 +17,12 @@ import java.util.ArrayList;
 public class Account {
 
     public TabPane tabPane;
-    public Tab diagramm_tab;
+    public Pane diagrammContainer;
+    public Pane sumContainer;
+    public Button btn_save;
 
     private String name;
+    private String path;
     private ObservableList<ObservableList<Transaction>> years_Transaction = FXCollections.observableArrayList();
     private ArrayList<Sum> sums = new ArrayList<>();
     private ObservableList<ObservableList<XYChart.Data<MyDate,Number>>> years_data = FXCollections.observableArrayList();
@@ -60,7 +65,7 @@ public class Account {
                         ObservableList<Transaction> prevYear = years_Transaction.get(yearIndex - 1);
                         transactions.get(transactionIndex).berechneKontoStand(prevYear.get(prevYear.size() - 1).getKonto());
                     }
-
+                    years_data.get(yearIndex).get(transactionIndex).setYValue(transactions.get(transactionIndex).getKonto() / 100);
                 } else {
                     transactions.get(transactionIndex).berechneKontoStand(transactions.get(transactionIndex - 1).getKonto());
                 }
@@ -70,7 +75,6 @@ public class Account {
             yearIndex++;
             transactionIndex=0;
         }
-       reload();
     }
 
     public void deleteTransaction(Transaction transaction){
@@ -111,7 +115,7 @@ public class Account {
             index++;
             i=0;
         }
-       reload();
+        reload();
     }
 
     private int getSumIndex(Transaction transaction) {
@@ -147,14 +151,15 @@ public class Account {
     public void reload(){
         Platform.runLater((Runnable) () -> {
             int j = tabPane.getSelectionModel().getSelectedIndex();
-            diagramm_tab.setContent(new TransactionChart());
+            new TransactionChart().putInto(diagrammContainer);
+            new SumTable().putInto(sumContainer);
+            Main.currentAccount.tabPane = tabPane;
             tabPane.getTabs().clear();
-            tabPane.getTabs().add(diagramm_tab);
-            tabPane.getTabs().add(new Tab("Hallo",new SumTable()));
             for (ObservableList<Transaction> year : Main.currentAccount.getYears_Transaction()) {
                 tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear() + "", new TransactionTable(year)));
             }
             tabPane.getSelectionModel().select(j);
+            btn_save.setDisable(false);
         });
     }
 
@@ -172,5 +177,13 @@ public class Account {
 
     public ArrayList<Sum> getSums() {
         return sums;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

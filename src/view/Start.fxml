@@ -9,14 +9,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windowCtrl.StartWindowCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windowCtrl.StartWindowCtrl">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="600.0">
          <menus>
             <Menu fx:id="m_file" mnemonicParsing="false" text="File">
                <items>
                   <MenuItem fx:id="mi_newAcc" mnemonicParsing="false" onAction="#openNewAccount" text="Neues Konto" />
-                  <MenuItem fx:id="mi_save" mnemonicParsing="false" onAction="#save" text="Speichern" />
                   <MenuItem fx:id="mi_load" mnemonicParsing="false" onAction="#load" text="Laden" />
                   <MenuItem fx:id="mi_close" mnemonicParsing="false" onAction="#close" text="Close" />
                </items>

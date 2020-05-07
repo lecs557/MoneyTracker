@@ -1,27 +1,21 @@
 package model;
 
-import controller.AccountManager;
-import controller.IOController;
-import controller.LogController;
-import controller.WindowManager;
+import controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class Main extends Application {
 
-    public static final String DESTINATION = "Test_Kontos";
     public static Account  currentAccount;
     public static WindowManager windowManager;
     public static AccountManager accountManager;
     public static IOController ioController;
-    public static LogController logController;
+    public static PDFController pdfController;
     public static Stage stage;
     public static Stage newAccStage;
     public static Stage newTransaction;
@@ -35,7 +29,7 @@ public class Main extends Application {
         windowManager=new WindowManager();
         accountManager= new AccountManager();
         ioController = new IOController();
-        logController = new LogController();
+        pdfController = new PDFController();
 
         Parent root;
         if (getParameters().getUnnamed().size() > 0) {
@@ -46,14 +40,11 @@ public class Main extends Application {
         } else {
             root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
         }
-//        Account a = new Account("a","","");
-//        a.addTransaction(new Transaction(LocalDate.now(),"bbb",50020));
-//        currentAccount = a;
+
 
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        logController.addLog("GESTARTET");
     }
 
     public static void main(String[] args) {
