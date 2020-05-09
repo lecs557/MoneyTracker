@@ -20,26 +20,38 @@ public class WindowManager {
     }
 
     public void showNewAccountStage(){
-        Main.newAccStage=new Stage();
+        Main.newStage=new Stage();
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/view/NewAccount.fxml"));
-            Main.newAccStage.setScene(new Scene(root));
+            Main.newStage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Main.newAccStage.show();
+        Main.newStage.show();
     }
 
     public void showNewTransactionStage(){
-        Main.newTransaction=new Stage();
+        Main.newStage=new Stage();
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/view/NewTransaction.fxml"));
-            Main.newTransaction.setScene(new Scene(root));
+            Main.newStage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Main.newTransaction.show();
+        Main.newStage.show();
+    }
+
+    public void showRename(){
+        Main.newStage=new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/view/RenameWindow.fxml"));
+            Main.newStage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Main.newStage.show();
     }
 }

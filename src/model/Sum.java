@@ -41,16 +41,8 @@ public class Sum {
         sum.put(year,prev - transaction.getBetrag());
     }
 
-    public int getDayOfMonth() {
-        return dayOfMonth;
-    }
-
     public String getReason() {
         return reason;
-    }
-
-    public int getCents() {
-        return cents;
     }
 
     public HashMap<Integer, Integer> getSum() {
@@ -59,5 +51,9 @@ public class Sum {
 
     public int getAllSum() {
         return allSum;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

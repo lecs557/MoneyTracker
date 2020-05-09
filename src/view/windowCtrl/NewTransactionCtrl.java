@@ -77,7 +77,7 @@ public class NewTransactionCtrl {
             String teReason = tb_reason.getText();
             int tebetrag = Integer.parseInt(tb_money.getText()+tb_cents.getText());
             Main.currentAccount.addTransaction(new Transaction(temp,teReason,tebetrag));
-            Main.newTransaction.close();
+            Main.newStage.close();
             Main.currentAccount.reload();
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,6 +86,6 @@ public class NewTransactionCtrl {
     }
 
     public void close(){
-        Main.newTransaction.close();
+        Main.newStage.close();
     }
 }

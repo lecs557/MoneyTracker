@@ -17,9 +17,7 @@ public class Main extends Application {
     public static IOController ioController;
     public static PDFController pdfController;
     public static Stage stage;
-    public static Stage newAccStage;
-    public static Stage newTransaction;
-    public static Stage logStage;
+    public static Stage newStage;
     public enum windows {Start,Account};
 
     @Override
@@ -31,16 +29,12 @@ public class Main extends Application {
         ioController = new IOController();
         pdfController = new PDFController();
 
-        Parent root;
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
         if (getParameters().getUnnamed().size() > 0) {
             String path = getParameters().getUnnamed().get(0);
-            String name = path.split("/")[path.split("/").length-1].replace(".konto","");
-            currentAccount = ioController.load(name,path);
-            root = FXMLLoader.load(getClass().getResource("/view/Account.fxml"));
-        } else {
-            root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
+            String name = path.split("/")[path.split("/").length - 1].replace(".konto", "");
+            ioController.load(name, path);
         }
-
 
         primaryStage.setTitle("Bilanz");
         primaryStage.setScene(new Scene(root));

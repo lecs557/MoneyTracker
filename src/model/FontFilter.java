@@ -13,7 +13,7 @@ public class FontFilter extends RenderFilter {
 	@Override
 	public boolean allowText(TextRenderInfo tri) {
 		
-		Main.pdfController.addTransactions();
+		Main.pdfController.addTransactions(tri);
 		
 		return true;
 		

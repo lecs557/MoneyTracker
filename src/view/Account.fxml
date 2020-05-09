@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -51,6 +52,8 @@
                   <Pane prefHeight="41.0" prefWidth="613.0">
                      <children>
                         <Button layoutX="56.0" layoutY="2.0" mnemonicParsing="false" onAction="#readPDF" text="PDF" />
+                        <Button layoutX="104.0" layoutY="3.0" mnemonicParsing="false" onAction="#renameReason" text="Zweck umbenennen" />
+                        <ProgressBar fx:id="pb_pdf" layoutX="265.0" layoutY="12.0" prefWidth="200.0" progress="0.0" />
                      </children></Pane>
                   <Button fx:id="btn_save" mnemonicParsing="false" onAction="#save" text="Speichern">
                      <FlowPane.margin>

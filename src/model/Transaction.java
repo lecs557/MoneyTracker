@@ -63,4 +63,8 @@ public class Transaction {
     public int getKonto() {
         return konto;
     }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 }
