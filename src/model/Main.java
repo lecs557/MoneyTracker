@@ -30,15 +30,14 @@ public class Main extends Application {
         pdfController = new PDFController();
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
+        primaryStage.setTitle("Bilanz");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
         if (getParameters().getUnnamed().size() > 0) {
             String path = getParameters().getUnnamed().get(0);
             String name = path.split("/")[path.split("/").length - 1].replace(".konto", "");
             ioController.load(name, path);
         }
-
-        primaryStage.setTitle("Bilanz");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,7 @@
-package model.runnables;
+package model.threads;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import model.Account;
@@ -11,13 +12,15 @@ import view.customized_Panes.ViewUtils;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Saver implements Runnable {
+public class Saver extends Thread {
 
-    SimpleDoubleProperty progressYear;
-    SimpleDoubleProperty progressTransaction;
+    private SimpleDoubleProperty progressYear = new SimpleDoubleProperty();
+    private SimpleDoubleProperty progressTransaction = new SimpleDoubleProperty();
+    private SimpleBooleanProperty running = new SimpleBooleanProperty();
 
     @Override
     public void run() {
+        running.set(true);
         String path= Main.currentAccount.getPath();
         Account acc = Main.currentAccount;
         int i=0;
@@ -33,14 +36,16 @@ public class Saver implements Runnable {
                     j++;
                     progressTransaction.set((double)j/sizeT);
                     accountFile.append(t.getDate_S() + ":" + t.getReason() + ":" + t.getBetrag() + ";");
+                    Thread.sleep(300);
                 }
             }
             accountFile.close();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("Problem mit dem Pfad: "+path);
             Platform.runLater(ViewUtils::setPath);
             e.printStackTrace();
         }
+        running.set(false);
     }
 
 
@@ -50,5 +55,9 @@ public class Saver implements Runnable {
 
     public SimpleDoubleProperty progressTransactionProperty() {
         return progressTransaction;
+    }
+
+    public SimpleBooleanProperty runningProperty() {
+        return running;
     }
 }

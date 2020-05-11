@@ -1,7 +1,7 @@
-package model.runnables;
+package model.threads;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import model.Account;
 import model.Main;
@@ -11,12 +11,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Loader implements Runnable {
+public class Loader extends Thread {
 
     private String name;
     private String path;
-    private SimpleIntegerProperty count = new SimpleIntegerProperty(0);
+    private SimpleStringProperty count = new SimpleStringProperty();
     private SimpleStringProperty current = new SimpleStringProperty();
+    private SimpleBooleanProperty running = new SimpleBooleanProperty();
 
     public Loader(String name, String path) {
         this.name = name;
@@ -25,10 +26,10 @@ public class Loader implements Runnable {
 
     @Override
     public void run() {
+        running.set(true);
         Account loadAccount = new Account(name);
-        FileReader loadedFile = null;
         try {
-            loadedFile = new FileReader(path);
+            FileReader loadedFile = new FileReader(path);
             Main.accountManager.addAcc(loadAccount);
             loadAccount.setPath(path.replace("/"+name+".konto",""));
             int temp = loadedFile.read();
@@ -37,24 +38,30 @@ public class Loader implements Runnable {
             while (temp!=-1) {
                 if (temp == ';') {
                     j++;
-                    count.set(j);
-                    current.set(cur);
+                    int finalJ = j;
+                    Platform.runLater(() -> count.set(finalJ +""));
+                    String finalCur = cur;
+                    Platform.runLater(() -> current.set(finalCur));
                     loadAccount.addTransaction(createTransaction(cur));
                     cur = "";
+                    Thread.sleep(300);
                 } else {
                     cur += (char) temp;
                 }
                 temp = loadedFile.read();
             }
             Main.currentAccount = loadAccount;
-            Platform.runLater(() -> Main.windowManager.openWindpw(Main.windows.Account));
+            Platform.runLater(() -> Main.windowManager.openWindow(Main.windows.Account));
         } catch (FileNotFoundException e) {
             System.out.println(path+" wurde nicht gefunden.");
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println(path+" kann nicht gelesen werden.");
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        running.set(false);
     }
 
     private Transaction createTransaction(String cur) {
@@ -68,11 +75,19 @@ public class Loader implements Runnable {
         }
     }
 
-    public SimpleIntegerProperty countProperty() {
+    public SimpleStringProperty countProperty() {
         return count;
     }
 
     public SimpleStringProperty currentProperty() {
         return current;
+    }
+
+    public SimpleBooleanProperty isRunningProperty() {
+        return running;
+    }
+
+    public String getTransactionName() {
+        return name;
     }
 }

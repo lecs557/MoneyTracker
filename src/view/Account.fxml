@@ -74,6 +74,13 @@
                   </Pane>
                </children>
             </FlowPane>
+            <Pane fx:id="savePane" layoutX="500.0" layoutY="200.0" prefHeight="200.0" prefWidth="428.0" visible="false">
+               <children>
+                  <ProgressBar fx:id="pb_year" layoutX="114.0" layoutY="60.0" prefWidth="200.0" progress="0.0" />
+                  <ProgressBar fx:id="pb_transa" layoutX="114.0" layoutY="118.0" prefWidth="200.0" progress="0.0" />
+                  <Label layoutX="169.0" layoutY="29.0" text="Wird gespeichert" />
+               </children>
+            </Pane>
          </children>
       </AnchorPane>
    </children>

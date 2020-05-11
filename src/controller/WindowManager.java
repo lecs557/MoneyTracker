@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class WindowManager {
 
-    public void openWindpw(Main.windows windows) {
+    public void openWindow(Main.windows windows) {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("/view/"+windows.name()+".fxml"));
             Main.stage.setScene(new Scene(parent));

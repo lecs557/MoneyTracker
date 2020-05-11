@@ -2,15 +2,14 @@ package view.windowCtrl;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ObservableDoubleValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import model.Account;
 import model.Main;
 import model.Transaction;
+import model.threads.PDFLoader;
+import model.threads.Saver;
 import view.customized_Panes.SumTable;
 import view.customized_Panes.TransactionChart;
 import view.customized_Panes.TransactionTable;
@@ -27,7 +26,11 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     public Pane diagrammContainer;
     public Pane sumContainer;
     public Button btn_save;
-    public ProgressBar pb_pdf;
+    public ProgressBar pb_pdf, pb_year, pb_transa;
+    public Pane savePane;
+
+    private Saver save;
+    private PDFLoader pdfLoad;
 
     public void initialize() {
         Main.currentAccount.tabPane = tabPane;
@@ -38,15 +41,38 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
         lbl_account.setText(Main.currentAccount.getName());
 
         new TransactionChart().putInto(diagrammContainer);
-        new SumTable().putInto(sumContainer);
         tabPane.getTabs().clear();
         for(ObservableList<Transaction> year: Main.currentAccount.getYears_Transaction()){
             tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear()+"", new TransactionTable(year)));
         }
+        new SumTable().putInto(sumContainer);
+
+        Main.ioController.saveRunningProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(t1){
+                save = Main.ioController.getSave();
+                pb_year.progressProperty().bind(save.progressYearProperty());
+                pb_transa.progressProperty().bind(save.progressTransactionProperty());
+                savePane.setVisible(true);
+            }else {
+                save=null;
+                savePane.setVisible(false);
+            }
+        });
+
+        Main.ioController.pdfLoadRunningProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(t1){
+                pdfLoad = Main.ioController.getPdfLoad();
+                pb_pdf.progressProperty().bind(pdfLoad.progressProperty());
+                savePane.setVisible(true);
+            }else {
+                save=null;
+                savePane.setVisible(false);
+            }
+        });
     }
 
     public void back(){
-        Main.windowManager.openWindpw(Main.windows.Start);
+        Main.windowManager.openWindow(Main.windows.Start);
     }
 
     public void newTransaction() {
@@ -67,34 +93,13 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
         btn_save.setDisable(true);
     }
 
+
     public void readPDF()  {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("PDF auswählen");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
-        List<File> temps = chooser.showOpenMultipleDialog(Main.stage);
-        SimpleDoubleProperty progress = new SimpleDoubleProperty(0);
-        pb_pdf.progressProperty().bind(progress);
-
-        new Thread(() -> {
-            int i=0;
-            int size = temps.size();
-            for(File temp:temps) {
-                if (temp != null) {
-                    String path = temp.getAbsolutePath();
-                    try {
-                        Main.pdfController.readPDF(path);
-                    } catch (IOException e) {
-                        System.out.println("Problem bei: "+path);
-                        e.printStackTrace();
-                    }
-                }
-                i++;
-                progress.set((double)i/size);
-                System.out.println(i);
-                System.out.println(progress.get());
-            }
-            Main.currentAccount.reload();
-        }).start();
+        List<File> files = chooser.showOpenMultipleDialog(Main.stage);
+        Main.ioController.pdfLoad(files);
     }
 
     public void renameReason(){

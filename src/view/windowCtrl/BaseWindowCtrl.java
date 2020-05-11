@@ -33,7 +33,7 @@ public class BaseWindowCtrl {
     }
 
     public void openAccount() {
-        Main.windowManager.openWindpw(Main.windows.Account);
+        Main.windowManager.openWindow(Main.windows.Account);
     }
 
     public void load() throws IOException {
