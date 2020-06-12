@@ -1,7 +1,5 @@
 package view.windowCtrl;
 
-import javafx.application.Platform;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -25,19 +23,19 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     public TabPane tabPane;
     public Pane diagrammContainer;
     public Pane sumContainer;
-    public Button btn_save;
     public ProgressBar pb_pdf, pb_year, pb_transa;
     public Pane savePane;
+    public Pane pdfPane;
 
-    private Saver save;
+    private Saver saver;
     private PDFLoader pdfLoad;
 
     public void initialize() {
         Main.currentAccount.tabPane = tabPane;
         Main.currentAccount.diagrammContainer = diagrammContainer;
         Main.currentAccount.sumContainer = sumContainer;
-        Main.currentAccount.btn_save = btn_save;
-        btn_save.setDisable(true);
+        Main.currentAccount.mi_save = mi_save;
+        mi_save.setDisable(true);
         lbl_account.setText(Main.currentAccount.getName());
 
         new TransactionChart().putInto(diagrammContainer);
@@ -49,12 +47,12 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
 
         Main.ioController.saveRunningProperty().addListener((observableValue, aBoolean, t1) -> {
             if(t1){
-                save = Main.ioController.getSave();
-                pb_year.progressProperty().bind(save.progressYearProperty());
-                pb_transa.progressProperty().bind(save.progressTransactionProperty());
+                saver = Main.ioController.getSave();
+                pb_year.progressProperty().bind(saver.progressYearProperty());
+                pb_transa.progressProperty().bind(saver.progressTransactionProperty());
                 savePane.setVisible(true);
             }else {
-                save=null;
+                saver =null;
                 savePane.setVisible(false);
             }
         });
@@ -63,13 +61,15 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
             if(t1){
                 pdfLoad = Main.ioController.getPdfLoad();
                 pb_pdf.progressProperty().bind(pdfLoad.progressProperty());
-                savePane.setVisible(true);
+                pdfPane.setVisible(true);
             }else {
-                save=null;
-                savePane.setVisible(false);
+                pdfLoad =null;
+                pdfPane.setVisible(false);
             }
         });
     }
+
+
 
     public void back(){
         Main.windowManager.openWindow(Main.windows.Start);
@@ -84,13 +84,13 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
            ViewUtils.setPath();
         }
         Main.ioController.save();
-        btn_save.setDisable(true);
+        mi_save.setDisable(true);
     }
 
     public void saveUnder() throws IOException {
         ViewUtils.setPath();
         Main.ioController.save();
-        btn_save.setDisable(true);
+        mi_save.setDisable(true);
     }
 
 

@@ -2,7 +2,6 @@ package model.threads;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 import model.Account;
 import model.Main;
 import model.Transaction;
@@ -15,8 +14,6 @@ public class Loader extends Thread {
 
     private String name;
     private String path;
-    private SimpleStringProperty count = new SimpleStringProperty();
-    private SimpleStringProperty current = new SimpleStringProperty();
     private SimpleBooleanProperty running = new SimpleBooleanProperty();
 
     public Loader(String name, String path) {
@@ -28,6 +25,7 @@ public class Loader extends Thread {
     public void run() {
         running.set(true);
         Account loadAccount = new Account(name);
+        Main.currentAccount = loadAccount;
         try {
             FileReader loadedFile = new FileReader(path);
             Main.accountManager.addAcc(loadAccount);
@@ -38,8 +36,6 @@ public class Loader extends Thread {
             while (temp!=-1) {
                 if (temp == ';') {
                     j++;
-                    int finalJ = j;
-                    String finalCur = cur;
                     loadAccount.addTransaction(createTransaction(cur));
                     cur = "";
                 } else {
@@ -47,8 +43,6 @@ public class Loader extends Thread {
                 }
                 temp = loadedFile.read();
             }
-            Main.currentAccount = loadAccount;
-            Platform.runLater(() -> Main.windowManager.openWindow(Main.windows.Account));
         } catch (FileNotFoundException e) {
             System.out.println(path+" wurde nicht gefunden.");
             e.printStackTrace();
@@ -56,7 +50,9 @@ public class Loader extends Thread {
             System.out.println(path+" kann nicht gelesen werden.");
             e.printStackTrace();
         }
+        Platform.runLater (() -> Main.windowManager.openWindow(Main.windows.Account));
         running.set(false);
+
     }
 
     private Transaction createTransaction(String cur) {
@@ -71,19 +67,7 @@ public class Loader extends Thread {
         }
     }
 
-    public SimpleStringProperty countProperty() {
-        return count;
-    }
-
-    public SimpleStringProperty currentProperty() {
-        return current;
-    }
-
     public SimpleBooleanProperty isRunningProperty() {
         return running;
-    }
-
-    public String getTransactionName() {
-        return name;
     }
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,10 +11,14 @@ import java.io.IOException;
 
 public class WindowManager {
 
+    private SimpleBooleanProperty loadWindow = new SimpleBooleanProperty(false);
+
     public void openWindow(Main.windows windows) {
         try {
+            loadWindow.set(true);
             Parent parent = FXMLLoader.load(getClass().getResource("/view/"+windows.name()+".fxml"));
             Main.stage.setScene(new Scene(parent));
+            loadWindow.set(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,5 +58,9 @@ public class WindowManager {
             e.printStackTrace();
         }
         Main.newStage.show();
+    }
+
+    public SimpleBooleanProperty loadWindowProperty() {
+        return loadWindow;
     }
 }

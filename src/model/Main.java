@@ -2,6 +2,7 @@ package model;
 
 import controller.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ public class Main extends Application {
     public static WindowManager windowManager;
     public static AccountManager accountManager;
     public static IOController ioController;
+    public static EditController editController;
     public static Stage stage;
     public static Stage newStage;
     public enum windows {Start,Account};
@@ -26,9 +28,10 @@ public class Main extends Application {
         windowManager=new WindowManager();
         accountManager= new AccountManager();
         ioController = new IOController();
+        editController = new EditController();
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
-        primaryStage.setTitle("Bilanz");
+        primaryStage.setTitle("Finanzen");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         if (getParameters().getUnnamed().size() > 0) {

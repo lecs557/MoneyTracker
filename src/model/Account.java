@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
@@ -19,8 +20,7 @@ public class Account {
     public TabPane tabPane;
     public Pane diagrammContainer;
     public Pane sumContainer;
-    public Button btn_save;
-
+    public MenuItem mi_save;
     private String name;
     private String path;
     private ObservableList<ObservableList<Transaction>> years_Transaction = FXCollections.observableArrayList();
@@ -121,7 +121,7 @@ public class Account {
     private int getSumIndex(Transaction transaction) {
         int i=0;
         for (Sum s : sums){
-            if(s.getReason().endsWith(transaction.getReason())){
+            if(s.getReason().equals(transaction.getReason())){
                 return i;
             }
             i++;
@@ -159,7 +159,7 @@ public class Account {
                 tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear() + "", new TransactionTable(year)));
             }
             tabPane.getSelectionModel().select(j);
-            btn_save.setDisable(false);
+            mi_save.setDisable(false);
         });
     }
 

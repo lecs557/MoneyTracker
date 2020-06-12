@@ -20,9 +20,9 @@ public class IOController {
 
     public void save()  {
        save = new Saver();
-        save.start();
-        saveRunning.unbind();
-        saveRunning.bind(save.runningProperty());
+       save.start();
+       saveRunning.unbind();
+       saveRunning.bind(save.runningProperty());
     }
 
     public void load(String name, String path) {
