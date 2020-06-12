@@ -15,7 +15,6 @@ public class Main extends Application {
     public static WindowManager windowManager;
     public static AccountManager accountManager;
     public static IOController ioController;
-    public static PDFController pdfController;
     public static Stage stage;
     public static Stage newStage;
     public enum windows {Start,Account};
@@ -27,7 +26,6 @@ public class Main extends Application {
         windowManager=new WindowManager();
         accountManager= new AccountManager();
         ioController = new IOController();
-        pdfController = new PDFController();
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
         primaryStage.setTitle("Bilanz");

@@ -36,11 +36,10 @@ public class Saver extends Thread {
                     j++;
                     progressTransaction.set((double)j/sizeT);
                     accountFile.append(t.getDate_S() + ":" + t.getReason() + ":" + t.getBetrag() + ";");
-                    Thread.sleep(300);
                 }
             }
             accountFile.close();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException  e) {
             System.out.println("Problem mit dem Pfad: "+path);
             Platform.runLater(ViewUtils::setPath);
             e.printStackTrace();

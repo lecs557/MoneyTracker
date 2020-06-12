@@ -39,12 +39,9 @@ public class Loader extends Thread {
                 if (temp == ';') {
                     j++;
                     int finalJ = j;
-                    Platform.runLater(() -> count.set(finalJ +""));
                     String finalCur = cur;
-                    Platform.runLater(() -> current.set(finalCur));
                     loadAccount.addTransaction(createTransaction(cur));
                     cur = "";
-                    Thread.sleep(300);
                 } else {
                     cur += (char) temp;
                 }
@@ -58,16 +55,15 @@ public class Loader extends Thread {
         } catch (IOException e) {
             System.out.println(path+" kann nicht gelesen werden.");
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
         running.set(false);
     }
 
     private Transaction createTransaction(String cur) {
-        String a = cur.split(":")[0];
-        String b = cur.split(":")[1];
-        String c = cur.split(":")[2];
+        String[] transactionArray = cur.split(":");
+        String a = transactionArray[0];
+        String b = transactionArray[1];
+        String c = transactionArray[transactionArray.length-1];
         if(a==null || b==null || c==null){
             return new Transaction("","cur","0");
         } else {

@@ -41,30 +41,39 @@ public class FontFilter extends RenderFilter {
 
 
 		if (relevant) {
-			if( (68 < x && x < 72) && ( transacY-y < 0 ||  14 < transacY-y )){
-				if(!zweck.isEmpty()) {
-					System.out.println("NEUE TRANSACTION vom: "+date.toString());
-					System.out.println(betrag);
-					System.out.println(zweck);
-					System.out.println("----------------");
-					Main.currentAccount.addTransaction(new Transaction(date,zweck,betrag));
-					ignoreNext=false;
-					zweck="";
-				}
-				transacY = y;
-				date = LocalDate.parse(tri.getText(), form);
-			} else {
-				if(140<x && x<450 && !ignoreNext){
-					zweck+=tri.getText()+" ";
-					if (tri.getText().contains("BAFOEG") || tri.getText().contains("Ticketerstattung")){
-						ignoreNext=true;
-					}
-				}
-				if(x>500){
-					betrag = Integer.parseInt(tri.getText().replace(",",""));
-				}
-			}
-		}
+            try {
+                if( (68 < x && x < 72) && ( transacY-y < 0 ||  14 < transacY-y )){
+                    if(!zweck.isEmpty()) {
+                        System.out.println("NEUE TRANSACTION vom: "+date.toString());
+                        System.out.println(betrag);
+                        System.out.println(zweck);
+                        System.out.println("----------------");
+                        Main.currentAccount.addTransaction(new Transaction(date,zweck,betrag));
+                        ignoreNext=false;
+                        zweck="";
+                        betrag=0;
+                    }
+                    transacY = y;
+                    date = LocalDate.parse(tri.getText(), form);
+                } else {
+                    if(140<x && x<450 && !ignoreNext){
+                        zweck+=tri.getText()+" ";
+                        if (tri.getText().contains("BAFOEG") || tri.getText().contains("Ticketerstattung")){
+                            ignoreNext=true;
+                        }
+                    }
+                    if(x>500){
+                        betrag = Integer.parseInt(tri.getText().replace(",","").replace(".",""));
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("FEHLER bei:");
+                System.out.println("NEUE TRANSACTION vom: "+date.toString());
+                System.out.println(betrag);
+                System.out.println(zweck);
+                e.printStackTrace();
+            }
+        }
 
 
 		if(tri.getText().contains("Valuta") && (68 < x && x < 72) ){

@@ -12,6 +12,9 @@ import java.util.List;
 
 public class LocalDateAxis extends ValueAxis<MyDate> {
 
+    int start = 2020;
+    int end = 2021;
+
     public LocalDateAxis() {
     }
 
@@ -26,8 +29,8 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
     @Override
     protected List<MyDate> calculateMinorTickMarks() {
         ArrayList<MyDate> myDates = new ArrayList<>();
-        for(int i=0;i<36;i++){
-            myDates.add(new MyDate(LocalDate.of(2018+i/12,(i%12)+1,1)));
+        for(int i=0;i<(end-start)*12;i++){
+            myDates.add(new MyDate(LocalDate.of(start+i/12,(i%12)+1,1)));
         }
         return myDates;
 
@@ -46,8 +49,8 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
     @Override
     protected List<MyDate> calculateTickValues(double v, Object o) {
         ArrayList<MyDate> myDates = new ArrayList<>();
-        for(int i=0;i<24;i++){
-            myDates.add(new MyDate(LocalDate.of(2018+i/4,((i%4)*3)+1,1)));
+        for(int i=0;i<(end-start)*12;i++){
+            myDates.add(new MyDate(LocalDate.of(start+i/4,((i%4)*3)+1,1)));
         }
         return myDates;
     }
@@ -59,7 +62,7 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
 
     private int start(){
         if(!Main.currentAccount.getYears_Transaction().isEmpty()){
-            int start=Main.currentAccount.getYears_Transaction().get(0).get(0).getDate().getYear();
+            start=Main.currentAccount.getYears_Transaction().get(0).get(0).getDate().getYear();
             return new MyDate(LocalDate.of(start,1,1)).intValue();
         }
         return 0;
@@ -68,7 +71,7 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
     private int end() {
         if (!Main.currentAccount.getYears_Transaction().isEmpty()) {
             int size = Main.currentAccount.getYears_Transaction().size();
-            int end = Main.currentAccount.getYears_Transaction().get(size - 1).get(0).getDate().getYear();
+            end = Main.currentAccount.getYears_Transaction().get(size - 1).get(0).getDate().getYear();
             return new MyDate(LocalDate.of(end, 12, 31)).intValue();
         }
         return 365;
