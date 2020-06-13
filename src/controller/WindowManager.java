@@ -13,10 +13,10 @@ public class WindowManager {
 
     private SimpleBooleanProperty loadWindow = new SimpleBooleanProperty(false);
 
-    public void openWindow(Main.windows windows) {
+    public void openWindow(Main.windows window) {
         try {
             loadWindow.set(true);
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/"+windows.name()+".fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/windows"+window.name()+".fxml"));
             Main.stage.setScene(new Scene(parent));
             loadWindow.set(false);
         } catch (IOException e) {
@@ -24,40 +24,15 @@ public class WindowManager {
         }
     }
 
-    public void showNewAccountStage(){
-        Main.newStage=new Stage();
-        Parent root = null;
+    public void showStage(Main.windows window){
         try {
-            root = FXMLLoader.load(getClass().getResource("/view/NewAccount.fxml"));
+            Main.newStage=new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/windows"+window.name()+".fxml"));
             Main.newStage.setScene(new Scene(root));
+            Main.newStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Main.newStage.show();
-    }
-
-    public void showNewTransactionStage(){
-        Main.newStage=new Stage();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/view/NewTransaction.fxml"));
-            Main.newStage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Main.newStage.show();
-    }
-
-    public void showRename(){
-        Main.newStage=new Stage();
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/view/RenameWindow.fxml"));
-            Main.newStage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Main.newStage.show();
     }
 
     public SimpleBooleanProperty loadWindowProperty() {

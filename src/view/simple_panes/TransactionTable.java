@@ -1,11 +1,9 @@
-package view.customized_Panes;
+package view.simple_panes;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import model.Main;
@@ -19,7 +17,7 @@ public class TransactionTable extends TableView<Transaction> {
 
 
     public TransactionTable(ObservableList<Transaction> list)  {
-        //DELETE
+        //SEE
         TableColumn<Transaction, LocalDate> delete =new TableColumn<>("");
         delete.setCellValueFactory(new PropertyValueFactory<>("date"));
         delete.setCellFactory(new Callback<>() {
@@ -33,9 +31,12 @@ public class TransactionTable extends TableView<Transaction> {
                             setText(null);
                             setGraphic(null);
                         } else {
-                            Button b = new Button("D");
+                            Button b = new Button("S");
                             setGraphic(b);
-                            b.setOnMouseClicked(mouseEvent -> Main.currentAccount.deleteTransaction(getTableRow().getItem()));
+                            b.setOnMouseClicked(mouseEvent ->{
+                                Main.editController.setEditTransaction(getTableRow().getItem());
+                                Main.windowManager.showStage(Main.windows.TransactionWindow);
+                            });
                         }
                     }
                 };

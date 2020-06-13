@@ -1,11 +1,9 @@
-package view.windowCtrl;
+package view.windows;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import model.Account;
 import model.Main;
 

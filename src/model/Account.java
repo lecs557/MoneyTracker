@@ -4,14 +4,13 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
-import view.customized_Panes.SumTable;
-import view.customized_Panes.TransactionChart;
-import view.customized_Panes.TransactionTable;
+import view.simple_panes.SumTable;
+import view.simple_panes.TransactionChart;
+import view.simple_panes.TransactionTable;
 
 import java.util.ArrayList;
 

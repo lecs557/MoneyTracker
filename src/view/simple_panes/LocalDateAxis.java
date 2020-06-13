@@ -1,6 +1,5 @@
-package view.customized_Panes;
+package view.simple_panes;
 
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.ValueAxis;
 import model.Main;
 import model.MyDate;

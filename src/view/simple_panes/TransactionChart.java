@@ -1,18 +1,11 @@
-package view.customized_Panes;
+package view.simple_panes;
 
 import javafx.collections.ObservableList;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Pane;
 import model.Main;
 import model.MyDate;
-import model.Transaction;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TransactionChart extends LineChart<MyDate,Number> {
 

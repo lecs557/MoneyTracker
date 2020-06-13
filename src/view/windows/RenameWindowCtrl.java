@@ -1,17 +1,9 @@
-package view.windowCtrl;
+package view.windows;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Main;
 import model.Renames;
-import model.Sum;
-import model.Transaction;
-
-import java.util.ArrayList;
 
 
 public class RenameWindowCtrl {
@@ -32,6 +24,8 @@ public class RenameWindowCtrl {
     public void ok() {
         rename = new Renames(tf.getText(),tf1.getText());
         Main.editController.rename(rename);
+        Main.newStage.close();
+        Main.currentAccount.reload();
 //        for(Sum s: Main.currentAccount.getSums()){
 //            for(HBox h: replacements){
 //                if(s.getReason().equals(   ((Label)h.getChildren().get(0)).getText()      )    ){

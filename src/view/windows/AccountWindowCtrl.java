@@ -1,4 +1,4 @@
-package view.windowCtrl;
+package view.windows;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -7,11 +7,12 @@ import javafx.stage.FileChooser;
 import model.Main;
 import model.Transaction;
 import model.threads.PDFLoader;
+import model.threads.Renamer;
 import model.threads.Saver;
-import view.customized_Panes.SumTable;
-import view.customized_Panes.TransactionChart;
-import view.customized_Panes.TransactionTable;
-import view.customized_Panes.ViewUtils;
+import view.simple_panes.SumTable;
+import view.simple_panes.TransactionChart;
+import view.simple_panes.TransactionTable;
+import view.simple_panes.ViewUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,12 +24,14 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     public TabPane tabPane;
     public Pane diagrammContainer;
     public Pane sumContainer;
-    public ProgressBar pb_pdf, pb_year, pb_transa;
+    public ProgressBar pb_pdf, pb_year, pb_transa,pb_year1, pb_transa1;
     public Pane savePane;
+    public Pane chPane;
     public Pane pdfPane;
 
     private Saver saver;
     private PDFLoader pdfLoad;
+    private Renamer renamer;
 
     public void initialize() {
         Main.currentAccount.tabPane = tabPane;
@@ -44,6 +47,18 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
             tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear()+"", new TransactionTable(year)));
         }
         new SumTable().putInto(sumContainer);
+
+        Main.editController.renameRunningProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(t1){
+                renamer = Main.editController.getRename();
+                pb_year1.progressProperty().bind(renamer.progressYearProperty());
+                pb_transa1.progressProperty().bind(renamer.progressTransactionProperty());
+                chPane.setVisible(true);
+            }else {
+                renamer =null;
+                chPane.setVisible(false);
+            }
+        });
 
         Main.ioController.saveRunningProperty().addListener((observableValue, aBoolean, t1) -> {
             if(t1){
@@ -76,7 +91,7 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newTransaction() {
-        Main.windowManager.showNewTransactionStage();
+        Main.windowManager.showStage(Main.windows.NewTransaction);
     }
 
     public void save() throws IOException {
@@ -103,6 +118,7 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     }
 
     public void renameReason(){
-        Main.windowManager.showRename();
+        Main.windowManager.showStage(Main.windows.RenameWindow);
+        mi_save.setDisable(false);
     }
 }

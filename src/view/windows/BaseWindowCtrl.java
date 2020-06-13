@@ -1,4 +1,4 @@
-package view.windowCtrl;
+package view.windows;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
@@ -29,7 +29,7 @@ public class BaseWindowCtrl {
     }
 
     public void openNewAccount(ActionEvent event) {
-        Main.windowManager.showNewAccountStage();
+        Main.windowManager.showStage(Main.windows.NewAccount);
     }
 
     public void openAccount() {

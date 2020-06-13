@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import model.Account;
 import model.Main;
 import model.Transaction;
-import view.customized_Panes.ViewUtils;
+import view.simple_panes.ViewUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;

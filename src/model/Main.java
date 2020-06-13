@@ -2,7 +2,6 @@ package model;
 
 import controller.*;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,7 +18,7 @@ public class Main extends Application {
     public static EditController editController;
     public static Stage stage;
     public static Stage newStage;
-    public enum windows {Start,Account};
+    public enum windows {Start,Account,NewAccount,NewTransaction,RenameWindow,TransactionWindow};
 
     @Override
     public void start(Stage primaryStage) throws IOException{
@@ -30,7 +29,7 @@ public class Main extends Application {
         ioController = new IOController();
         editController = new EditController();
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Start.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/windows/Start.fxml"));
         primaryStage.setTitle("Finanzen");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

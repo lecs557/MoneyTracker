@@ -1,4 +1,4 @@
-package view.customized_Panes;
+package view.simple_panes;
 
 import javafx.stage.DirectoryChooser;
 import model.Main;

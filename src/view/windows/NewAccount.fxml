@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="203.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windowCtrl.NewAccountWindowCtrl">
+<Pane prefHeight="203.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windows.NewAccountWindowCtrl">
    <children>
       <VBox layoutX="14.0" layoutY="14.0" prefHeight="143.0" prefWidth="228.0">
          <children>

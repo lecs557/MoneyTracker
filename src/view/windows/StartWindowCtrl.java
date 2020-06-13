@@ -1,16 +1,12 @@
-package view.windowCtrl;
+package view.windows;
 
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import model.Account;
 import model.Main;
@@ -73,7 +69,7 @@ public class StartWindowCtrl extends BaseWindowCtrl {
     }
 
     public void onNewAcc(){
-        Main.windowManager.showNewAccountStage();
+        Main.windowManager.showStage(Main.windows.NewAccount);
     }
 
     public void visibility(){

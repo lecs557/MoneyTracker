@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="766.0" prefWidth="1259.0" styleClass="main" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windowCtrl.AccountWindowCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="766.0" prefWidth="1259.0" styleClass="main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windows.AccountWindowCtrl">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="1182.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <menus>
@@ -82,6 +82,17 @@
                      </font>
                   </Label>
                   <ProgressBar fx:id="pb_pdf" layoutX="115.0" layoutY="151.0" prefWidth="200.0" progress="0.0" />
+               </children>
+            </Pane>
+            <Pane fx:id="chPane" layoutX="510.0" layoutY="210.0" prefHeight="200.0" prefWidth="430.0" visible="false">
+               <children>
+                  <Label layoutX="120.0" layoutY="22.0" text="Zwcks werden geändert">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ProgressBar fx:id="pb_year1" layoutX="114.0" layoutY="60.0" prefWidth="200.0" progress="0.0" />
+                  <ProgressBar fx:id="pb_transa1" layoutX="114.0" layoutY="118.0" prefWidth="200.0" progress="0.0" />
                </children>
             </Pane>
          </children>

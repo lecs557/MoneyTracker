@@ -1,9 +1,6 @@
-package view.windowCtrl;
+package view.windows;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import model.Main;
 import model.Transaction;
 
