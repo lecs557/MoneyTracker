@@ -15,6 +15,7 @@ import model.Sum;
 import model.Transaction;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class SumTable extends TableView<Sum> {
@@ -109,7 +110,13 @@ public class SumTable extends TableView<Sum> {
             }
         });
         getColumns().add(gesamt);
-        getItems().setAll(Main.currentAccount.getSums());
+        getItems().clear();
+        for(Sum s: Main.currentAccount.getSums()){
+            if(s.getNumber()>3){
+                getItems().add(s);
+            }
+
+        }
     }
 
     public void putInto(Pane container){

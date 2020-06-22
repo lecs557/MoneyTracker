@@ -3,10 +3,7 @@ package model.threads;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
-import model.Account;
-import model.Main;
-import model.Renames;
-import model.Transaction;
+import model.*;
 
 public class Renamer extends Thread {
 
@@ -36,8 +33,24 @@ public class Renamer extends Thread {
                 }
                 j++;
                 progressTransaction.set((double)j/sizeT);
-
             }
+        }
+        Sum a=null;
+        Sum b=null;
+        for(Sum s:Main.currentAccount.getSums()) {
+            if(s.getReason().equals(renames.getRenameTo())){
+                a=s;
+            }
+            if(s.getReason().equals(renames.getContains())){
+                b=s;
+            }
+        }
+        if (b==null)
+            System.out.println("B is null");
+        if(a==null){
+            b.setReason(renames.getRenameTo());
+        } else {
+            a.mergesum(b.getSum());
         }
         isRunning.set(false);
 

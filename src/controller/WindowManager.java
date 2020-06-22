@@ -16,7 +16,7 @@ public class WindowManager {
     public void openWindow(Main.windows window) {
         try {
             loadWindow.set(true);
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/windows"+window.name()+".fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/windows/"+window.name()+".fxml"));
             Main.stage.setScene(new Scene(parent));
             loadWindow.set(false);
         } catch (IOException e) {
@@ -27,7 +27,7 @@ public class WindowManager {
     public void showStage(Main.windows window){
         try {
             Main.newStage=new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/view/windows"+window.name()+".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/windows/"+window.name()+".fxml"));
             Main.newStage.setScene(new Scene(root));
             Main.newStage.show();
         } catch (IOException e) {

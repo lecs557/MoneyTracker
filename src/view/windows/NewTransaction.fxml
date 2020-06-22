@@ -2,90 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <Pane prefHeight="203.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windows.NewTransactionCtrl">
     <children>
-        <VBox layoutX="14.0" layoutY="14.0" prefHeight="143.0" prefWidth="228.0">
-            <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="278.0">
-                    <children>
-                        <Label contentDisplay="TOP" text="Datum">
-                            <HBox.margin>
-                                <Insets right="20.0" />
-                            </HBox.margin>
-                        </Label>
-                        <TextField fx:id="tb_day" prefHeight="25.0" prefWidth="33.0">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin></TextField>
-                  <Label text=".">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tb_month" layoutX="66.0" layoutY="16.0" prefHeight="25.0" prefWidth="33.0">
-                     <HBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Label layoutX="109.0" layoutY="14.0" text=".">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tb_year" layoutX="99.0" layoutY="16.0" prefHeight="25.0" prefWidth="60.0">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </TextField>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="278.0">
-                    <children>
-                        <Label contentDisplay="TOP" text="Zwck">
-                            <HBox.margin>
-                                <Insets right="24.0" />
-                            </HBox.margin>
-                        </Label>
-                        <TextField fx:id="tb_reason" prefHeight="25.0" prefWidth="167.0" />
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="47.0" prefHeight="37.0" prefWidth="278.0">
-                    <children>
-                        <Label contentDisplay="TOP" text="Betrag">
-                            <HBox.margin>
-                                <Insets right="20.0" />
-                            </HBox.margin>
-                        </Label>
-                        <TextField fx:id="tb_money" prefHeight="25.0" prefWidth="74.0">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin></TextField>
-                  <Label text=",">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tb_cents" layoutX="65.0" layoutY="16.0" prefHeight="25.0" prefWidth="30.0">
-                     <HBox.margin>
-                        <Insets left="5.0" right="10.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Label text="€">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
+      <Pane fx:id="enterTransactionContainer" prefHeight="120.0" prefWidth="300.0" />
         <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="164.0" prefHeight="25.0" prefWidth="359.0">
             <children>
                 <Button fx:id="btn_ok" mnemonicParsing="false" onAction="#ok" prefWidth="52.0" text="OK">

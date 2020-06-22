@@ -35,6 +35,13 @@ public class Transaction {
         this.betrag = betrag;
     }
 
+    public void setThis(Transaction transaction) {
+        this.date = transaction.getDate();
+        this.reason = transaction.getReason();
+        this.betrag = transaction.getBetrag();
+    }
+
+
     public void berechneKontoStand(int sum){
         konto =sum+betrag;
 

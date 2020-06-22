@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 public class Sum {
 
+    private int number;
     private int dayOfMonth;
     private String reason;
     private int cents;
@@ -16,7 +17,14 @@ public class Sum {
         reason = transaction.getReason();
         cents = transaction.getBetrag();
         allSum=0;
+        number=0;
         sum = new HashMap<>();
+    }
+
+    public void mergesum(HashMap<Integer,Integer> sumtem){
+        for( int key:sumtem.keySet()){
+            sum.put(key ,sum.get(key)+sumtem.get(key));
+        }
     }
 
     public void addToSum(Transaction transaction) {
@@ -26,6 +34,7 @@ public class Sum {
             prev = sum.get(year);
             sum.remove(year);
         }
+        number++;
         allSum+=transaction.getBetrag();
         sum.put(year,prev+transaction.getBetrag());
     }
@@ -37,6 +46,7 @@ public class Sum {
             prev = sum.get(year);
             sum.remove(year);
         }
+        number--;
         allSum-=transaction.getKonto();
         sum.put(year,prev - transaction.getBetrag());
     }
@@ -51,6 +61,10 @@ public class Sum {
 
     public int getAllSum() {
         return allSum;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public void setReason(String reason) {
