@@ -13,23 +13,25 @@ public class WindowManager {
 
     private SimpleBooleanProperty loadWindow = new SimpleBooleanProperty(false);
 
-    public void openWindow(Main.windows window) {
+    public void changeSceneTo(Main.windows window) {
         try {
             loadWindow.set(true);
             Parent parent = FXMLLoader.load(getClass().getResource("/view/windows/"+window.name()+".fxml"));
-            Main.stage.setScene(new Scene(parent));
+            Main.primaryStage.setScene(new Scene(parent));
             loadWindow.set(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void showStage(Main.windows window){
+    public void openStageOf(Main.windows window){
         try {
-            Main.newStage=new Stage();
+            Main.secStage =new Stage();
+            loadWindow.set(true);
             Parent root = FXMLLoader.load(getClass().getResource("/view/windows/"+window.name()+".fxml"));
-            Main.newStage.setScene(new Scene(root));
-            Main.newStage.show();
+            Main.secStage.setScene(new Scene(root));
+            loadWindow.set(false);
+            Main.secStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package view.simple_panes;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -12,11 +13,12 @@ import model.Transaction;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class TransactionTable extends TableView<Transaction> {
 
 
-    public TransactionTable(ObservableList<Transaction> list)  {
+    public TransactionTable(ArrayList<Transaction> list)  {
         //SEE
         TableColumn<Transaction, LocalDate> delete =new TableColumn<>("");
         delete.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -35,7 +37,7 @@ public class TransactionTable extends TableView<Transaction> {
                             setGraphic(b);
                             b.setOnMouseClicked(mouseEvent ->{
                                 Main.editController.setEditTransaction(getTableRow().getItem());
-                                Main.windowManager.showStage(Main.windows.TransactionWindow);
+                                Main.windowManager.openStageOf(Main.windows.TransactionWindow);
                             });
                         }
                     }
@@ -161,7 +163,7 @@ public class TransactionTable extends TableView<Transaction> {
                 return cell;
             }
         });
-        setItems(list);
+        setItems(FXCollections.observableList(list));
         getColumns().addAll(delete, date, zweck, betrag, stand);
     }
 }

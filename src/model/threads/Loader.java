@@ -50,7 +50,7 @@ public class Loader extends Thread {
             System.out.println(path+" kann nicht gelesen werden.");
             e.printStackTrace();
         }
-        Platform.runLater (() -> Main.windowManager.openWindow(Main.windows.Account));
+        Platform.runLater (() -> Main.windowManager.changeSceneTo(Main.windows.Account));
         running.set(false);
 
     }

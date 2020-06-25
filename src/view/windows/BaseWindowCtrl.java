@@ -29,11 +29,11 @@ public class BaseWindowCtrl {
     }
 
     public void openNewAccount(ActionEvent event) {
-        Main.windowManager.showStage(Main.windows.NewAccount);
+        Main.windowManager.openStageOf(Main.windows.NewAccount);
     }
 
     public void openAccount() {
-        Main.windowManager.openWindow(Main.windows.Account);
+        Main.windowManager.changeSceneTo(Main.windows.Account);
     }
 
     public void load() throws IOException {
@@ -42,7 +42,7 @@ public class BaseWindowCtrl {
         chooser.setTitle("Konto auswählen");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("KontoFiles","*.konto"));
         chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        File temp = chooser.showOpenDialog(Main.stage);
+        File temp = chooser.showOpenDialog(Main.primaryStage);
         boolean exist = false;
         if (temp != null) {
             String name = temp.getName().replace(".konto","");
@@ -52,7 +52,7 @@ public class BaseWindowCtrl {
                 }
             }
             if (!exist)
-                Main.ioController.load(name,temp.getAbsolutePath());
+                Main.ioController.startLoad(name,temp.getAbsolutePath());
         }
     }
 }

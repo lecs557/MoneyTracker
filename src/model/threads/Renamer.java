@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import model.*;
 
+import java.util.ArrayList;
+
 public class Renamer extends Thread {
 
     private SimpleDoubleProperty progressYear = new SimpleDoubleProperty();
@@ -22,7 +24,7 @@ public class Renamer extends Thread {
         Account acc = Main.currentAccount;
         int i=0;
         int sizeYt = acc.getYears_Transaction().size();
-        for (ObservableList<Transaction> yt: Main.currentAccount.getYears_Transaction()){
+        for (ArrayList<Transaction> yt: Main.currentAccount.getYears_Transaction()){
             i++;
             progressYear.set((double) i/sizeYt);
             int j=0;
@@ -41,19 +43,20 @@ public class Renamer extends Thread {
             if(s.getReason().equals(renames.getRenameTo())){
                 a=s;
             }
-            if(s.getReason().equals(renames.getContains())){
+            if(s.getReason().contains(renames.getContains())){
                 b=s;
             }
         }
         if (b==null)
             System.out.println("B is null");
-        if(a==null){
-            b.setReason(renames.getRenameTo());
-        } else {
-            a.mergesum(b.getSum());
+        else {
+            if (a == null) {
+                b.setReason(renames.getRenameTo());
+            } else {
+                a.mergesum(b);
+            }
+            isRunning.set(false);
         }
-        isRunning.set(false);
-
     }
 
     public SimpleDoubleProperty progressYearProperty() {
@@ -64,7 +67,7 @@ public class Renamer extends Thread {
         return progressTransaction;
     }
 
-    public SimpleBooleanProperty isRunningProperty() {
+    public SimpleBooleanProperty runningProperty() {
         return isRunning;
     }
 

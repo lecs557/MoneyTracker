@@ -15,6 +15,7 @@ import model.Sum;
 import model.Transaction;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -34,7 +35,7 @@ public class SumTable extends TableView<Sum> {
         getColumns().add(name);
 
         //Jahre
-        ObservableList<ObservableList<Transaction>> years = Main.currentAccount.getYears_Transaction();
+        ObservableList<ArrayList<Transaction>> years = Main.currentAccount.getYears_Transaction();
         for(int i=0;i<years.size();i++){
             int year = years.get(i).get(0).getDate().getYear();
             TableColumn<Sum, Integer> date =new TableColumn<>(""+year);

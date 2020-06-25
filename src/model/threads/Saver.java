@@ -11,6 +11,7 @@ import view.simple_panes.ViewUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Saver extends Thread {
 
@@ -27,7 +28,7 @@ public class Saver extends Thread {
         int sizeYt = acc.getYears_Transaction().size();
         try {
             FileWriter accountFile = new FileWriter(path + "/"+ acc.getName()+".konto");
-            for (ObservableList<Transaction> olt:acc.getYears_Transaction()) {
+            for (ArrayList<Transaction> olt:acc.getYears_Transaction()) {
                 i++;
                 progressYear.set((double) i/sizeYt);
                 int j=0;

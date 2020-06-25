@@ -22,9 +22,9 @@ public class Account {
     public MenuItem mi_save;
     private String name;
     private String path;
-    private ObservableList<ObservableList<Transaction>> years_Transaction = FXCollections.observableArrayList();
+    private ObservableList<ArrayList<Transaction>> years_Transaction = FXCollections.observableArrayList();
     private ArrayList<Sum> sums = new ArrayList<>();
-    private ObservableList<ObservableList<XYChart.Data<MyDate,Number>>> years_data = FXCollections.observableArrayList();
+    private ObservableList<ArrayList<XYChart.Data<MyDate,Number>>> years_data = FXCollections.observableArrayList();
     private int startKapital=0;
 
     public Account(String name)  {
@@ -34,7 +34,7 @@ public class Account {
 
     public void addTransaction(Transaction transaction) {
         int yearIndex = getYearIndex(transaction);
-        ObservableList<Transaction> transactions = years_Transaction.get((yearIndex));
+        ArrayList<Transaction> transactions = years_Transaction.get((yearIndex));
         int sumIndex = getSumIndex(transaction);
 
         sums.get(sumIndex).addToSum(transaction);
@@ -61,7 +61,7 @@ public class Account {
                     if (yearIndex == 0) {
                         transactions.get(transactionIndex).berechneKontoStand(startKapital);
                     } else {
-                        ObservableList<Transaction> prevYear = years_Transaction.get(yearIndex - 1);
+                        ArrayList<Transaction> prevYear = years_Transaction.get(yearIndex - 1);
                         transactions.get(transactionIndex).berechneKontoStand(prevYear.get(prevYear.size() - 1).getKonto());
                     }
                     years_data.get(yearIndex).get(transactionIndex).setYValue(transactions.get(transactionIndex).getKonto() / 100);
@@ -78,7 +78,7 @@ public class Account {
 
     public void deleteTransaction(Transaction transaction){
         int index = getYearIndex(transaction);
-        ObservableList<Transaction> transactions = years_Transaction.get(index);
+        ArrayList<Transaction> transactions = years_Transaction.get(index);
         int sumIndex = getSumIndex(transaction);
 
         sums.get(sumIndex).removeFromSum(transaction);
@@ -101,7 +101,7 @@ public class Account {
                     if (index == 0) {
                         transactions.get(i).berechneKontoStand(startKapital);
                     } else {
-                        ObservableList<Transaction> prevYear = years_Transaction.get(index - 1);
+                        ArrayList<Transaction> prevYear = years_Transaction.get(index - 1);
                         transactions.get(i).berechneKontoStand(prevYear.get(prevYear.size() - 1).getKonto());
                     }
 
@@ -131,19 +131,19 @@ public class Account {
 
     private int getYearIndex(Transaction transaction){
         int i=0;
-        for (ObservableList<Transaction> allTarnsactions: years_Transaction){
+        for (ArrayList<Transaction> allTarnsactions: years_Transaction){
             if(allTarnsactions.get(0).getDate().getYear() == transaction.getDate().getYear()){
                 return i;
             }if(allTarnsactions.get(0).getDate().getYear() > transaction.getDate().getYear()){
-                years_Transaction.add(i,FXCollections.observableArrayList());
-                years_data.add(i,FXCollections.observableArrayList());
+                years_Transaction.add(i,new ArrayList<>());
+                years_data.add(i,new ArrayList<>());
                 return i;
             }if(allTarnsactions.get(0).getDate().getYear() < transaction.getDate().getYear()){
                 i++;
             }
         }
-        years_Transaction.add(FXCollections.observableArrayList());
-        years_data.add(FXCollections.observableArrayList());
+        years_Transaction.add(new ArrayList<>());
+        years_data.add(new ArrayList<>());
         return i;
     }
 
@@ -154,7 +154,7 @@ public class Account {
             new SumTable().putInto(sumContainer);
             Main.currentAccount.tabPane = tabPane;
             tabPane.getTabs().clear();
-            for (ObservableList<Transaction> year : Main.currentAccount.getYears_Transaction()) {
+            for (ArrayList<Transaction> year : Main.currentAccount.getYears_Transaction()) {
                 tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear() + "", new TransactionTable(year)));
             }
             tabPane.getSelectionModel().select(j);
@@ -166,11 +166,11 @@ public class Account {
         return name;
     }
 
-    public ObservableList<ObservableList<Transaction>> getYears_Transaction() {
+    public ObservableList<ArrayList<Transaction>> getYears_Transaction() {
         return years_Transaction;
     }
 
-    public ObservableList<ObservableList<XYChart.Data<MyDate, Number>>> getYears_data() {
+    public ObservableList<ArrayList<XYChart.Data<MyDate, Number>>> getYears_data() {
         return years_data;
     }
 

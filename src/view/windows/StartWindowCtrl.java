@@ -69,7 +69,7 @@ public class StartWindowCtrl extends BaseWindowCtrl {
     }
 
     public void onNewAcc(){
-        Main.windowManager.showStage(Main.windows.NewAccount);
+        Main.windowManager.openStageOf(Main.windows.NewAccount);
     }
 
     public void visibility(){

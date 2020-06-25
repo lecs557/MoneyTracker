@@ -1,16 +1,12 @@
 package view.windows;
 
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import model.Main;
 import model.Renames;
 import model.Transaction;
 import view.panes.EnterTransactionCtrl;
 import view.panes.MyNode;
-
-import java.time.format.DateTimeFormatter;
-import java.util.EventListener;
 
 public class TransactionWindowCtrl {
 
@@ -58,10 +54,10 @@ public class TransactionWindowCtrl {
                 Main.currentAccount.addTransaction(temp);
             } else if(rb_rename.isSelected()){
                 Renames ren = new Renames(c.tb_reason.getText(), c1.tb_reason.getText());
-                Main.editController.rename(ren);
+                Main.editController.startRenamer(ren);
             }
         }
-        Main.newStage.close();
+        Main.secStage.close();
         Main.currentAccount.reload();
 
     }
@@ -69,7 +65,7 @@ public class TransactionWindowCtrl {
     public void edit(){
         Transaction edit = Main.editController.getEditTransaction();
         Main.currentAccount.deleteTransaction(edit);
-        Main.newStage.close();
+        Main.secStage.close();
         Main.currentAccount.reload();
     }
 }

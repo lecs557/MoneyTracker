@@ -7,21 +7,21 @@ import model.threads.Renamer;
 
 public class EditController {
 
-    private Renamer rename;
+    private Renamer renamer;
     private SimpleBooleanProperty renameRunning = new SimpleBooleanProperty();
 
     private Transaction editTransaction;
 
-    public void rename(Renames a){
-        rename = new Renamer(a);
-        rename.start();
+    public void startRenamer(Renames a){
+        renamer = new Renamer(a);
+        renamer.start();
         renameRunning.unbind();
-        renameRunning.bind(rename.isRunningProperty());
+        renameRunning.bind(renamer.runningProperty());
 
     }
 
-    public Renamer getRename() {
-        return rename;
+    public Renamer getRenamer() {
+        return renamer;
     }
 
     public SimpleBooleanProperty renameRunningProperty() {

@@ -23,8 +23,8 @@ public class RenameWindowCtrl {
 
     public void ok() {
         rename = new Renames(tf.getText(),tf1.getText());
-        Main.editController.rename(rename);
-        Main.newStage.close();
+        Main.editController.startRenamer(rename);
+        Main.secStage.close();
         Main.currentAccount.reload();
 //        for(Sum s: Main.currentAccount.getSums()){
 //            for(HBox h: replacements){

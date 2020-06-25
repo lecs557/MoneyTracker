@@ -21,10 +21,11 @@ public class Sum {
         sum = new HashMap<>();
     }
 
-    public void mergesum(HashMap<Integer,Integer> sumtem){
-        for( int key:sumtem.keySet()){
-            sum.put(key ,sum.get(key)+sumtem.get(key));
+    public void mergesum(Sum sumtem){
+        for( int key:sumtem.getSum().keySet()){
+            sum.put(key ,sum.getOrDefault(key,0)+sumtem.getSum().get(key));
         }
+        number+=sumtem.getNumber();
     }
 
     public void addToSum(Transaction transaction) {

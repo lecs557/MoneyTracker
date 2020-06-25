@@ -31,13 +31,13 @@ public class NewAccountWindowCtrl {
 
     @FXML
     void close(ActionEvent event) {
-        Main.newStage.close();
+        Main.secStage.close();
     }
 
     @FXML
     void ok(ActionEvent event) {
         Main.accountManager.addAcc(new Account(tb_name.getText()));
-        Main.newStage.close();
+        Main.secStage.close();
     }
 
 }

@@ -16,11 +16,11 @@ public class NewTransactionCtrl {
 
     public void ok(){
         Main.currentAccount.addTransaction(c.getTransaction());
-        Main.newStage.close();
+        Main.secStage.close();
         Main.currentAccount.reload();
     }
 
     public void close(){
-        Main.newStage.close();
+        Main.secStage.close();
     }
 }

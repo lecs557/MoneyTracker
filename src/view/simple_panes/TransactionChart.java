@@ -7,13 +7,15 @@ import javafx.scene.layout.Pane;
 import model.Main;
 import model.MyDate;
 
+import java.util.ArrayList;
+
 public class TransactionChart extends LineChart<MyDate,Number> {
 
     public TransactionChart() {
         super(new LocalDateAxis(0,1200), new NumberAxis());
         getXAxis().setAutoRanging(false);
         Series<MyDate,Number> series = new Series<>();
-        for (ObservableList<Data<MyDate,Number>> t:Main.currentAccount.getYears_data()){
+        for (ArrayList<Data<MyDate,Number>> t:Main.currentAccount.getYears_data()){
             series.getData().addAll(t);
         }
         getData().add(series);

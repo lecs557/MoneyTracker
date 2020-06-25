@@ -10,45 +10,41 @@ import java.util.List;
 
 public class IOController {
 
-    private Loader load;
+    private Loader loader;
     private SimpleBooleanProperty loadRunning = new SimpleBooleanProperty();
-    private Saver save;
+    private Saver saver;
     private SimpleBooleanProperty saveRunning = new SimpleBooleanProperty();
-    private PDFLoader pdfLoad;
+    private PDFLoader pdfLoader;
     private SimpleBooleanProperty pdfLoadRunning = new SimpleBooleanProperty();
 
 
-    public void save()  {
-       save = new Saver();
-       save.start();
+    public void startSave()  {
+       saver = new Saver();
+       saver.start();
        saveRunning.unbind();
-       saveRunning.bind(save.runningProperty());
+       saveRunning.bind(saver.runningProperty());
     }
 
-    public void load(String name, String path) {
-        load =new Loader(name, path);
-        load.start();
+    public void startLoad(String name, String path) {
+        loader =new Loader(name, path);
+        loader.start();
         loadRunning.unbind();
-        loadRunning.bind(load.isRunningProperty());
+        loadRunning.bind(loader.isRunningProperty());
     }
 
-    public void pdfLoad(List<File> files){
-        pdfLoad = new PDFLoader(files);
-        pdfLoad.start();
+    public void startPDFLoad(List<File> files){
+        pdfLoader = new PDFLoader(files);
+        pdfLoader.start();
         pdfLoadRunning.unbind();
-        pdfLoadRunning.bind(pdfLoad.runningProperty());
+        pdfLoadRunning.bind(pdfLoader.runningProperty());
     }
 
-    public Loader getLoad() {
-        return load;
+    public Saver getSaver() {
+        return saver;
     }
 
-    public Saver getSave() {
-        return save;
-    }
-
-    public PDFLoader getPdfLoad() {
-        return pdfLoad;
+    public PDFLoader getPdfLoader() {
+        return pdfLoader;
     }
 
     public SimpleBooleanProperty loadRunningProperty() {
