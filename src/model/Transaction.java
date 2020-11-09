@@ -3,29 +3,38 @@ package model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Transaction {
+public class Transaction  {
 
     private DateTimeFormatter form = DateTimeFormatter.BASIC_ISO_DATE;
     private LocalDate date;
+
     private String reason;
     private int betrag;
     private int konto;
 
-    public Transaction(String date, String reason, String betrag) {
-        this.reason = reason;
-
-        try {
-            this.date = LocalDate.parse(date,form);
-        } catch (Exception e) {
-            this.reason+=" "+date;
-            this.date = LocalDate.of(1995,9,17);
-        }
-
-        try {
-            this.betrag = Integer.parseInt(betrag);
-        } catch (NumberFormatException e) {
-            this.betrag=0;
-            this.reason+=" "+betrag;
+    public Transaction(String[] temp) {
+        int i=0;
+        for (String elem:temp){
+            if(i==1){
+                this.reason = elem;
+            }
+            if(i==0){
+                try {
+                    this.date = LocalDate.parse(elem,form);
+                } catch (Exception e) {
+                    this.reason+=" "+elem;
+                    this.date = LocalDate.of(1995,9,17);
+                }
+            }
+            if(i==2){
+                try {
+                    this.betrag = Integer.parseInt(elem);
+                } catch (NumberFormatException e) {
+                    this.betrag=0;
+                    this.reason+=" "+elem;
+                }
+            }
+            i++;
         }
     }
 
@@ -41,6 +50,11 @@ public class Transaction {
         this.betrag = transaction.getBetrag();
     }
 
+    public String store(){
+        return date.format(form) + Main.SEPARATOR +
+                reason + Main.SEPARATOR +
+                betrag + Main.SEPARATOR + Main.ENDSEPARATOR;
+    }
 
     public void berechneKontoStand(int sum){
         konto =sum+betrag;
@@ -73,5 +87,10 @@ public class Transaction {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public static Transaction transactionFromString(String string){
+        String[] temp = string.split(Main.SEPARATOR);
+        return new Transaction(temp);
     }
 }

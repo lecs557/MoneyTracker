@@ -3,12 +3,15 @@ package model.threads;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import model.Account;
+import model.Group;
 import model.Main;
 import model.Transaction;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Loader extends Thread {
 
@@ -27,44 +30,32 @@ public class Loader extends Thread {
         Account loadAccount = new Account(name);
         Main.currentAccount = loadAccount;
         try {
-            FileReader loadedFile = new FileReader(path);
+            Scanner loadedFile = new Scanner(new File(path));
             Main.accountManager.addAcc(loadAccount);
             loadAccount.setPath(path.replace("/"+name+".konto",""));
-            int temp = loadedFile.read();
+            loadedFile.useDelimiter(Main.ENDSEPARATOR);
             String cur="";
             int j=0;
-            while (temp!=-1) {
-                if (temp == ';') {
+            while (loadedFile.hasNext()) {
+                cur = loadedFile.next();
+                cur = cur.replace(Main.ENDSEPARATOR,"");
+                if(cur.startsWith(Main.OPTIONSEPARATOR)){
+                   cur = cur.replace(Main.OPTIONSEPARATOR,"");
                     j++;
-                    loadAccount.addTransaction(createTransaction(cur));
-                    cur = "";
-                } else {
-                    cur += (char) temp;
                 }
-                temp = loadedFile.read();
+                if(j==0){
+                    loadAccount.addGroup(Group.groupFromString(cur));
+                }if(j==1){
+                    loadAccount.addTransaction(Transaction.transactionFromString(cur));
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println(path+" wurde nicht gefunden.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println(path+" kann nicht gelesen werden.");
             e.printStackTrace();
         }
         Platform.runLater (() -> Main.windowManager.changeSceneTo(Main.windows.Account));
         running.set(false);
 
-    }
-
-    private Transaction createTransaction(String cur) {
-        String[] transactionArray = cur.split(":");
-        String a = transactionArray[0];
-        String b = transactionArray[1];
-        String c = transactionArray[transactionArray.length-1];
-        if(a==null || b==null || c==null){
-            return new Transaction("","cur","0");
-        } else {
-            return new Transaction(a,b,c);
-        }
     }
 
     public SimpleBooleanProperty isRunningProperty() {

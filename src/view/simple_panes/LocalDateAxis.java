@@ -11,13 +11,13 @@ import java.util.List;
 
 public class LocalDateAxis extends ValueAxis<MyDate> {
 
-    int start = 2020;
-    int end = 2021;
+    private int start = 2020;
+    private int end = 2021;
 
     public LocalDateAxis() {
     }
 
-    public LocalDateAxis(double lowerBound, double upperBound) {
+    LocalDateAxis(double lowerBound, double upperBound) {
         super(lowerBound, upperBound);
         setLowerBound(start());
         setUpperBound(end());
@@ -28,7 +28,7 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
     @Override
     protected List<MyDate> calculateMinorTickMarks() {
         ArrayList<MyDate> myDates = new ArrayList<>();
-        for(int i=0;i<(end-start)*12;i++){
+        for(int i=0;i<(end-start+1)*12;i++){
             myDates.add(new MyDate(LocalDate.of(start+i/12,(i%12)+1,1)));
         }
         return myDates;

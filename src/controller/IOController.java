@@ -2,7 +2,7 @@ package controller;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import model.threads.Loader;
-import model.threads.PDFLoader;
+import model.threads.PDFImporter;
 import model.threads.Saver;
 
 import java.io.File;
@@ -14,7 +14,7 @@ public class IOController {
     private SimpleBooleanProperty loadRunning = new SimpleBooleanProperty();
     private Saver saver;
     private SimpleBooleanProperty saveRunning = new SimpleBooleanProperty();
-    private PDFLoader pdfLoader;
+    private PDFImporter pdfLoader;
     private SimpleBooleanProperty pdfLoadRunning = new SimpleBooleanProperty();
 
 
@@ -32,8 +32,8 @@ public class IOController {
         loadRunning.bind(loader.isRunningProperty());
     }
 
-    public void startPDFLoad(List<File> files){
-        pdfLoader = new PDFLoader(files);
+    public void startPDFImport(List<File> files){
+        pdfLoader = new PDFImporter(files);
         pdfLoader.start();
         pdfLoadRunning.unbind();
         pdfLoadRunning.bind(pdfLoader.runningProperty());
@@ -43,7 +43,7 @@ public class IOController {
         return saver;
     }
 
-    public PDFLoader getPdfLoader() {
+    public PDFImporter getPdfLoader() {
         return pdfLoader;
     }
 

@@ -11,14 +11,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class PDFLoader extends Thread {
+public class PDFImporter extends Thread {
 
     private List<File> files;
     private SimpleDoubleProperty progress = new SimpleDoubleProperty();
     private SimpleBooleanProperty running = new SimpleBooleanProperty();
     private PdfReader pdfReader;
 
-    public PDFLoader(List<File> files) {
+    public PDFImporter(List<File> files) {
         this.files = files;
     }
 

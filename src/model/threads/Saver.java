@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import model.Account;
+import model.Group;
 import model.Main;
 import model.Transaction;
 import view.simple_panes.ViewUtils;
@@ -28,6 +29,10 @@ public class Saver extends Thread {
         int sizeYt = acc.getYears_Transaction().size();
         try {
             FileWriter accountFile = new FileWriter(path + "/"+ acc.getName()+".konto");
+            for (Group group: acc.getGroups()){
+                accountFile.append(group.store());
+            }
+            accountFile.append(Main.OPTIONSEPARATOR);
             for (ArrayList<Transaction> olt:acc.getYears_Transaction()) {
                 i++;
                 progressYear.set((double) i/sizeYt);
@@ -36,7 +41,7 @@ public class Saver extends Thread {
                 for (Transaction t:olt) {
                     j++;
                     progressTransaction.set((double)j/sizeT);
-                    accountFile.append(t.getDate_S() + ":" + t.getReason() + ":" + t.getBetrag() + ";");
+                    accountFile.append(t.store());
                 }
             }
             accountFile.close();

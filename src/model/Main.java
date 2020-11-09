@@ -14,7 +14,12 @@ public class Main extends Application {
     public enum windows {Start,Account,NewAccount,NewTransaction,RenameWindow,TransactionWindow};
     public static Stage primaryStage;
     public static Stage secStage;
+
+    public enum types {Lastschrift, Gutschrift, Gehalt, Überweisung}
     public static Account currentAccount;
+    public static String SEPARATOR = "§-§";
+    public static String ENDSEPARATOR = "§END§";
+    public static String OPTIONSEPARATOR = "§OOO§";
 
     // *** Controller ***
     public static WindowManager windowManager;

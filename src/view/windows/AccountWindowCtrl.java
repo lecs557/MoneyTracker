@@ -1,12 +1,11 @@
 package view.windows;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import model.Main;
 import model.Transaction;
-import model.threads.PDFLoader;
+import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.SumTable;
@@ -15,7 +14,6 @@ import view.simple_panes.TransactionTable;
 import view.simple_panes.ViewUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     public Pane pdfPane;
 
     private Saver saver;
-    private PDFLoader pdfLoad;
+    private PDFImporter pdfLoad;
     private Renamer renamer;
 
     public void initialize() {
@@ -115,7 +113,7 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
         chooser.setTitle("PDF auswählen");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
         List<File> files = chooser.showOpenMultipleDialog(Main.primaryStage);
-        Main.ioController.startPDFLoad(files);
+        Main.ioController.startPDFImport(files);
     }
 
     public void renameReason(){

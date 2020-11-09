@@ -12,16 +12,21 @@ import view.simple_panes.SumTable;
 import view.simple_panes.TransactionChart;
 import view.simple_panes.TransactionTable;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Account {
+
+    private String name;
+    private String path;
 
     public TabPane tabPane;
     public Pane diagrammContainer;
     public Pane sumContainer;
     public MenuItem mi_save;
-    private String name;
-    private String path;
+
+
+    private ArrayList<Group> groups = new ArrayList<>();
     private ObservableList<ArrayList<Transaction>> years_Transaction = FXCollections.observableArrayList();
     private ArrayList<Sum> sums = new ArrayList<>();
     private ObservableList<ArrayList<XYChart.Data<MyDate,Number>>> years_data = FXCollections.observableArrayList();
@@ -117,6 +122,10 @@ public class Account {
         reload();
     }
 
+    public void addGroup(Group group){
+        groups.add(group);
+    }
+
     private int getSumIndex(Transaction transaction) {
         int i=0;
         for (Sum s : sums){
@@ -131,14 +140,14 @@ public class Account {
 
     private int getYearIndex(Transaction transaction){
         int i=0;
-        for (ArrayList<Transaction> allTarnsactions: years_Transaction){
-            if(allTarnsactions.get(0).getDate().getYear() == transaction.getDate().getYear()){
+        for (ArrayList<Transaction> allTransactions: years_Transaction){
+            if(allTransactions.get(0).getDate().getYear() == transaction.getDate().getYear()){
                 return i;
-            }if(allTarnsactions.get(0).getDate().getYear() > transaction.getDate().getYear()){
+            }if(allTransactions.get(0).getDate().getYear() > transaction.getDate().getYear()){
                 years_Transaction.add(i,new ArrayList<>());
                 years_data.add(i,new ArrayList<>());
                 return i;
-            }if(allTarnsactions.get(0).getDate().getYear() < transaction.getDate().getYear()){
+            }if(allTransactions.get(0).getDate().getYear() < transaction.getDate().getYear()){
                 i++;
             }
         }
@@ -160,6 +169,10 @@ public class Account {
             tabPane.getSelectionModel().select(j);
             mi_save.setDisable(false);
         });
+    }
+
+    public ArrayList<Group> getGroups() {
+        return groups;
     }
 
     public String getName() {
