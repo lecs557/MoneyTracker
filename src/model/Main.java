@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import view.simple_panes.PDFViewer;
 
 import java.io.IOException;
 
@@ -45,6 +46,9 @@ public class Main extends Application {
             String name = path.split("/")[path.split("/").length - 1].replace(".konto", "");
             ioController.startLoad(name, path);
         }
+        Stage sec = new Stage();
+        sec.setScene(new Scene(new PDFViewer("C:/Users/User/Desktop/Marcel/Geld/Käufe/2017/PC.pdf")));
+        sec.show();
     }
 
     public static void main(String[] args) {
