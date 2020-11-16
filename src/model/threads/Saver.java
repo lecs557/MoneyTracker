@@ -3,8 +3,7 @@ package model.threads;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.collections.ObservableList;
-import model.Account;
+import model.Profile;
 import model.Group;
 import model.Main;
 import model.Transaction;
@@ -23,8 +22,8 @@ public class Saver extends Thread {
     @Override
     public void run() {
         running.set(true);
-        String path= Main.currentAccount.getPath();
-        Account acc = Main.currentAccount;
+        String path= Main.currentAccount.getFilePath();
+        Profile acc = Main.currentAccount;
         int i=0;
         int sizeYt = acc.getYears_Transaction().size();
         try {

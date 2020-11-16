@@ -12,37 +12,26 @@ import view.simple_panes.SumTable;
 import view.simple_panes.TransactionChart;
 import view.simple_panes.TransactionTable;
 
-import java.awt.*;
 import java.util.ArrayList;
 
-public class Account {
+public class BankAccount {
 
-    private String name;
-    private String path;
 
     public TabPane tabPane;
     public Pane diagrammContainer;
     public Pane sumContainer;
     public MenuItem mi_save;
 
-
-    private ArrayList<Group> groups = new ArrayList<>();
+    ArrayList <Group> groups = new ArrayList<>();
     private ObservableList<ArrayList<Transaction>> years_Transaction = FXCollections.observableArrayList();
-    private ArrayList<Sum> sums = new ArrayList<>();
     private ObservableList<ArrayList<XYChart.Data<MyDate,Number>>> years_data = FXCollections.observableArrayList();
-    private int startKapital=0;
 
-    public Account(String name)  {
-        this.name = name;
-
+    public BankAccount() {
     }
 
     public void addTransaction(Transaction transaction) {
         int yearIndex = getYearIndex(transaction);
         ArrayList<Transaction> transactions = years_Transaction.get((yearIndex));
-        int sumIndex = getSumIndex(transaction);
-
-        sums.get(sumIndex).addToSum(transaction);
 
         // add transaction in the right place
         int transactionIndex = transactions.size();
@@ -55,7 +44,7 @@ public class Account {
             }
         }
         transactions.add(transactionIndex,transaction);
-        years_data.get(yearIndex).add(new XYChart.Data<>(transaction.getMyDate(),transaction.getKonto()/100));
+        years_data.get(yearIndex).add(new XYChart.Data<>(transaction.getMyDate(),transaction.getBalance()/100));
 
 
         // update Kontostand of the transaction after it
@@ -64,16 +53,16 @@ public class Account {
             while (transactionIndex < transactions.size()) {
                 if (transactionIndex == 0) {
                     if (yearIndex == 0) {
-                        transactions.get(transactionIndex).berechneKontoStand(startKapital);
+                        transactions.get(transactionIndex).calculateBalance(0);
                     } else {
                         ArrayList<Transaction> prevYear = years_Transaction.get(yearIndex - 1);
-                        transactions.get(transactionIndex).berechneKontoStand(prevYear.get(prevYear.size() - 1).getKonto());
+                        transactions.get(transactionIndex).calculateBalance(prevYear.get(prevYear.size() - 1).getBalance());
                     }
-                    years_data.get(yearIndex).get(transactionIndex).setYValue(transactions.get(transactionIndex).getKonto() / 100);
+                    years_data.get(yearIndex).get(transactionIndex).setYValue(transactions.get(transactionIndex).getBalance() / 100);
                 } else {
-                    transactions.get(transactionIndex).berechneKontoStand(transactions.get(transactionIndex - 1).getKonto());
+                    transactions.get(transactionIndex).calculateBalance(transactions.get(transactionIndex - 1).getBalance());
                 }
-                years_data.get(yearIndex).get(transactionIndex).setYValue(transactions.get(transactionIndex).getKonto() / 100);
+                years_data.get(yearIndex).get(transactionIndex).setYValue(transactions.get(transactionIndex).getBalance() / 100);
                 transactionIndex++;
             }
             yearIndex++;
@@ -84,9 +73,6 @@ public class Account {
     public void deleteTransaction(Transaction transaction){
         int index = getYearIndex(transaction);
         ArrayList<Transaction> transactions = years_Transaction.get(index);
-        int sumIndex = getSumIndex(transaction);
-
-        sums.get(sumIndex).removeFromSum(transaction);
 
         // remove transaction
         int i = transactions.indexOf(transaction);
@@ -104,16 +90,16 @@ public class Account {
             while (i < transactions.size()) {
                 if (i == 0) {
                     if (index == 0) {
-                        transactions.get(i).berechneKontoStand(startKapital);
+                        transactions.get(i).calculateBalance(0);
                     } else {
                         ArrayList<Transaction> prevYear = years_Transaction.get(index - 1);
-                        transactions.get(i).berechneKontoStand(prevYear.get(prevYear.size() - 1).getKonto());
+                        transactions.get(i).calculateBalance(prevYear.get(prevYear.size() - 1).getBalance());
                     }
 
                 } else {
-                    transactions.get(i).berechneKontoStand(transactions.get(i - 1).getKonto());
+                    transactions.get(i).calculateBalance(transactions.get(i - 1).getBalance());
                 }
-                years_data.get(index).get(i).setYValue(transactions.get(i).getKonto() / 100);
+                years_data.get(index).get(i).setYValue(transactions.get(i).getBalance() / 100);
                 i++;
             }
             index++;
@@ -124,18 +110,6 @@ public class Account {
 
     public void addGroup(Group group){
         groups.add(group);
-    }
-
-    private int getSumIndex(Transaction transaction) {
-        int i=0;
-        for (Sum s : sums){
-            if(s.getReason().equals(transaction.getReason())){
-                return i;
-            }
-            i++;
-        }
-        sums.add(new Sum(transaction));
-        return i;
     }
 
     private int getYearIndex(Transaction transaction){
@@ -161,11 +135,7 @@ public class Account {
             int j = tabPane.getSelectionModel().getSelectedIndex();
             new TransactionChart().putInto(diagrammContainer);
             new SumTable().putInto(sumContainer);
-            Main.currentAccount.tabPane = tabPane;
             tabPane.getTabs().clear();
-            for (ArrayList<Transaction> year : Main.currentAccount.getYears_Transaction()) {
-                tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear() + "", new TransactionTable(year)));
-            }
             tabPane.getSelectionModel().select(j);
             mi_save.setDisable(false);
         });
@@ -175,10 +145,6 @@ public class Account {
         return groups;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public ObservableList<ArrayList<Transaction>> getYears_Transaction() {
         return years_Transaction;
     }
@@ -186,19 +152,4 @@ public class Account {
     public ObservableList<ArrayList<XYChart.Data<MyDate, Number>>> getYears_data() {
         return years_data;
     }
-
-    public ArrayList<Sum> getSums() {
-        return sums;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-
 }
-

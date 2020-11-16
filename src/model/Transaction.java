@@ -2,62 +2,63 @@ package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Transaction  {
 
     private DateTimeFormatter form = DateTimeFormatter.BASIC_ISO_DATE;
     private LocalDate date;
-
-    private String reason;
-    private int betrag;
-    private int konto;
+    private String purpose;
+    private int amount;
+    private int balance;
+    private ArrayList<String> pdfPaths;
 
     public Transaction(String[] temp) {
         int i=0;
         for (String elem:temp){
             if(i==1){
-                this.reason = elem;
+                this.purpose = elem;
             }
             if(i==0){
                 try {
                     this.date = LocalDate.parse(elem,form);
                 } catch (Exception e) {
-                    this.reason+=" "+elem;
+                    this.purpose +=" "+elem;
                     this.date = LocalDate.of(1995,9,17);
                 }
             }
             if(i==2){
                 try {
-                    this.betrag = Integer.parseInt(elem);
+                    this.amount = Integer.parseInt(elem);
                 } catch (NumberFormatException e) {
-                    this.betrag=0;
-                    this.reason+=" "+elem;
+                    this.amount =0;
+                    this.purpose +=" "+elem;
                 }
             }
             i++;
         }
     }
 
-    public Transaction(LocalDate date, String reason, int betrag) {
+    public Transaction(LocalDate date, String purpose, int amount) {
         this.date = date;
-        this.reason = reason;
-        this.betrag = betrag;
+        this.purpose = purpose;
+        this.amount = amount;
     }
 
     public void setThis(Transaction transaction) {
         this.date = transaction.getDate();
-        this.reason = transaction.getReason();
-        this.betrag = transaction.getBetrag();
+        this.purpose = transaction.getPurpose();
+        this.amount = transaction.getAmount();
     }
 
     public String store(){
         return date.format(form) + Main.SEPARATOR +
-                reason + Main.SEPARATOR +
-                betrag + Main.SEPARATOR + Main.ENDSEPARATOR;
+                purpose + Main.SEPARATOR +
+                amount + Main.SEPARATOR + Main.ENDSEPARATOR;
     }
 
-    public void berechneKontoStand(int sum){
-        konto =sum+betrag;
+    public void calculateBalance(int sum){
+        balance =sum+ amount;
 
     }
 
@@ -73,20 +74,20 @@ public class Transaction  {
         return new MyDate(date);
     }
 
-    public String getReason() {
-        return reason;
+    public String getPurpose() {
+        return purpose;
     }
 
-    public int getBetrag() {
-        return betrag;
+    public int getAmount() {
+        return amount;
     }
 
-    public int getKonto() {
-        return konto;
+    public int getBalance() {
+        return balance;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
     public static Transaction transactionFromString(String string){

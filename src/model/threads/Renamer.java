@@ -2,7 +2,6 @@ package model.threads;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.collections.ObservableList;
 import model.*;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class Renamer extends Thread {
     @Override
     public void run() {
         isRunning.set(true);
-        Account acc = Main.currentAccount;
+        Profile acc = Main.currentAccount;
         int i=0;
         int sizeYt = acc.getYears_Transaction().size();
         for (ArrayList<Transaction> yt: Main.currentAccount.getYears_Transaction()){
@@ -30,8 +29,8 @@ public class Renamer extends Thread {
             int j=0;
             int sizeT = yt.size();
             for(Transaction t: yt){
-                if(t.getReason().contains(renames.getContains())){
-                    t.setReason(renames.getRenameTo());
+                if(t.getPurpose().contains(renames.getContains())){
+                    t.setPurpose(renames.getRenameTo());
                 }
                 j++;
                 progressTransaction.set((double)j/sizeT);

@@ -1,7 +1,6 @@
 package model;
 
 import java.util.HashMap;
-import java.util.function.Function;
 
 public class Sum {
 
@@ -14,8 +13,8 @@ public class Sum {
 
     public Sum(Transaction transaction) {
         dayOfMonth = transaction.getDate().getDayOfMonth();
-        reason = transaction.getReason();
-        cents = transaction.getBetrag();
+        reason = transaction.getPurpose();
+        cents = transaction.getAmount();
         allSum=0;
         number=0;
         sum = new HashMap<>();
@@ -36,8 +35,8 @@ public class Sum {
             sum.remove(year);
         }
         number++;
-        allSum+=transaction.getBetrag();
-        sum.put(year,prev+transaction.getBetrag());
+        allSum+=transaction.getAmount();
+        sum.put(year,prev+transaction.getAmount());
     }
 
     public void removeFromSum(Transaction transaction){
@@ -48,8 +47,8 @@ public class Sum {
             sum.remove(year);
         }
         number--;
-        allSum-=transaction.getKonto();
-        sum.put(year,prev - transaction.getBetrag());
+        allSum-=transaction.getBalance();
+        sum.put(year,prev - transaction.getAmount());
     }
 
     public String getReason() {

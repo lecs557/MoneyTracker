@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import model.Account;
+import model.Profile;
 import model.Main;
 
 public class NewAccountWindowCtrl {
@@ -36,7 +36,7 @@ public class NewAccountWindowCtrl {
 
     @FXML
     void ok(ActionEvent event) {
-        Main.accountManager.addAcc(new Account(tb_name.getText()));
+        Main.accountManager.addProfile(new Profile(tb_name.getText()));
         Main.secStage.close();
     }
 

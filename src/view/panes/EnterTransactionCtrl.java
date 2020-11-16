@@ -5,7 +5,6 @@ import model.Main;
 import model.Transaction;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class EnterTransactionCtrl {
 
@@ -66,9 +65,9 @@ public class EnterTransactionCtrl {
             tb_day.setText(edit.getDate().getYear() + "");
             tb_month.setText(edit.getDate().getMonthValue() + "");
             tb_year.setText(edit.getDate().getYear() + "");
-            tb_reason.setText(edit.getReason());
-            tb_money.setText(edit.getBetrag()/100 + "");
-            tb_cents.setText(edit.getBetrag()%100 + "");
+            tb_reason.setText(edit.getPurpose());
+            tb_money.setText(edit.getAmount()/100 + "");
+            tb_cents.setText(edit.getAmount()%100 + "");
         }
     }
 

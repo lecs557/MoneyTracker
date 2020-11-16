@@ -17,14 +17,14 @@ public class Main extends Application {
     public static Stage secStage;
 
     public enum types {Lastschrift, Gutschrift, Gehalt, Überweisung}
-    public static Account currentAccount;
+    public static Profile currentAccount;
     public static String SEPARATOR = "§-§";
     public static String ENDSEPARATOR = "§END§";
     public static String OPTIONSEPARATOR = "§OOO§";
 
     // *** Controller ***
     public static WindowManager windowManager;
-    public static AccountManager accountManager;
+    public static ProfileAccountManager accountManager;
     public static IOController ioController;
     public static EditController editController;
 
@@ -33,7 +33,7 @@ public class Main extends Application {
         Main.primaryStage =primaryStage;
 
         windowManager=new WindowManager();
-        accountManager= new AccountManager();
+        accountManager= new ProfileAccountManager();
         ioController = new IOController();
         editController = new EditController();
 

@@ -94,7 +94,7 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     }
 
     public void save() {
-        if (Main.currentAccount.getPath() == null) {
+        if (Main.currentAccount.getFilePath() == null) {
            ViewUtils.setPath();
         }
         Main.ioController.startSave();

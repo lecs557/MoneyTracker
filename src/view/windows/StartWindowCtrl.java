@@ -8,14 +8,14 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import model.Account;
+import model.Profile;
 import model.Main;
 import model.threads.Loader;
 
 
 public class StartWindowCtrl extends BaseWindowCtrl {
 
-    public ListView<Account> lv_accounts;
+    public ListView<Profile> lv_accounts;
     public Button btn_newAcc;
     public Pane loadPane;
 
@@ -40,11 +40,11 @@ public class StartWindowCtrl extends BaseWindowCtrl {
         });
 
         lv_accounts.setItems(Main.accountManager.getAccounts());
-        lv_accounts.getItems().addListener((ListChangeListener<? super Account>) change -> visibility());
+        lv_accounts.getItems().addListener((ListChangeListener<? super Profile>) change -> visibility());
         lv_accounts.setCellFactory(lambda -> {
-            ListCell<Account> cell = new ListCell<Account>() {
+            ListCell<Profile> cell = new ListCell<Profile>() {
                 @Override
-                protected void updateItem(Account item, boolean empty) {
+                protected void updateItem(Profile item, boolean empty) {
                     super.updateItem(item, empty);
                     if (empty || item==null) {
                         setText(null);

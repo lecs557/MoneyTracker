@@ -2,15 +2,13 @@ package model.threads;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
-import model.Account;
+import model.Profile;
 import model.Group;
 import model.Main;
 import model.Transaction;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Loader extends Thread {
@@ -27,12 +25,12 @@ public class Loader extends Thread {
     @Override
     public void run() {
         running.set(true);
-        Account loadAccount = new Account(name);
+        Profile loadAccount = new Profile(name);
         Main.currentAccount = loadAccount;
         try {
             Scanner loadedFile = new Scanner(new File(path));
-            Main.accountManager.addAcc(loadAccount);
-            loadAccount.setPath(path.replace("/"+name+".konto",""));
+            Main.accountManager.addProfile(loadAccount);
+            loadAccount.setFilePath(path.replace("/"+name+".konto",""));
             loadedFile.useDelimiter(Main.ENDSEPARATOR);
             String cur="";
             int j=0;
