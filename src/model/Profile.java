@@ -14,10 +14,10 @@ import view.simple_panes.TransactionTable;
 
 import java.util.ArrayList;
 
-public class Profile {
+public class Profile extends StoreClass {
 
+    private int id;
     private String name;
-    private String filePath;
 
     private ArrayList<BankAccount> bankAccounts;
 
@@ -30,14 +30,18 @@ public class Profile {
         return name;
     }
 
-    public String getFilePath() {
-        return filePath;
+
+    @Override
+    public String getTableName() {
+        return "Profiles";
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    @Override
+    public ArrayList<FieldName> getFieldNames() {
+        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
+        fieldNames.add(new FieldName("id", "id","int NOT NULL AUTO_INCREMENT"));
+        fieldNames.add(new FieldName("name", "name","TEXT"));
+        return fieldNames;
     }
-
-
 }
 

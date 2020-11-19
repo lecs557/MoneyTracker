@@ -3,40 +3,20 @@ package model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Transaction  {
+public class Transaction extends StoreClass {
 
     private DateTimeFormatter form = DateTimeFormatter.BASIC_ISO_DATE;
+    private int id;
     private LocalDate date;
     private String purpose;
     private int amount;
     private int balance;
     private ArrayList<String> pdfPaths;
 
-    public Transaction(String[] temp) {
-        int i=0;
-        for (String elem:temp){
-            if(i==1){
-                this.purpose = elem;
-            }
-            if(i==0){
-                try {
-                    this.date = LocalDate.parse(elem,form);
-                } catch (Exception e) {
-                    this.purpose +=" "+elem;
-                    this.date = LocalDate.of(1995,9,17);
-                }
-            }
-            if(i==2){
-                try {
-                    this.amount = Integer.parseInt(elem);
-                } catch (NumberFormatException e) {
-                    this.amount =0;
-                    this.purpose +=" "+elem;
-                }
-            }
-            i++;
-        }
+    public Transaction() {
+
     }
 
     public Transaction(LocalDate date, String purpose, int amount) {
@@ -45,21 +25,38 @@ public class Transaction  {
         this.amount = amount;
     }
 
-    public void setThis(Transaction transaction) {
-        this.date = transaction.getDate();
-        this.purpose = transaction.getPurpose();
-        this.amount = transaction.getAmount();
-    }
-
-    public String store(){
-        return date.format(form) + Main.SEPARATOR +
-                purpose + Main.SEPARATOR +
-                amount + Main.SEPARATOR + Main.ENDSEPARATOR;
-    }
-
     public void calculateBalance(int sum){
         balance =sum+ amount;
+    }
 
+    /* GETTER & SETTER */
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    public ArrayList<String> getPdfPaths() {
+        return pdfPaths;
+    }
+
+    public void setPdfPaths(ArrayList<String> pdfPaths) {
+        this.pdfPaths = pdfPaths;
     }
 
     public String getDate_S() {
@@ -90,8 +87,18 @@ public class Transaction  {
         this.purpose = purpose;
     }
 
-    public static Transaction transactionFromString(String string){
-        String[] temp = string.split(Main.SEPARATOR);
-        return new Transaction(temp);
+    @Override
+    public ArrayList<FieldName> getFieldNames(){
+        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
+        fieldNames.add(new FieldName("id", "id","int NOT NULL AUTO_INCREMENT"));
+        fieldNames.add(new FieldName("date", "date","DATE"));
+        fieldNames.add(new FieldName("purpose", "purpose","TEXT"));
+        fieldNames.add(new FieldName("amount", "amount","int"));
+        return fieldNames;
+    }
+
+    @Override
+    public String getTableName() {
+        return "Transaction";
     }
 }
