@@ -25,7 +25,6 @@ public class RenameWindowCtrl {
         rename = new Renames(tf.getText(),tf1.getText());
         Main.editController.startRenamer(rename);
         Main.secStage.close();
-        Main.currentAccount.reload();
 //        for(Sum s: Main.currentAccount.getSums()){
 //            for(HBox h: replacements){
 //                if(s.getReason().equals(   ((Label)h.getChildren().get(0)).getText()      )    ){

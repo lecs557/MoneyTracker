@@ -46,7 +46,7 @@ public class BaseWindowCtrl {
         boolean exist = false;
         if (temp != null) {
             String name = temp.getName().replace(".konto","");
-            for (Profile acc:Main.accountManager.getAccounts()){
+            for (Profile acc:Main.accountManager.getProfiles()){
                 if(name==acc.getName()){
                     exist =true;
                 }

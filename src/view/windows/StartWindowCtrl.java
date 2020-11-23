@@ -16,15 +16,15 @@ import model.threads.Loader;
 public class StartWindowCtrl extends BaseWindowCtrl {
 
     public ListView<Profile> lv_accounts;
-    public Button btn_newAcc;
+    public Button btn_createProfile;
     public Pane loadPane;
+    public Label lbl_error;
 
     private  Loader load;
 
     public void initialize() {
 
         visibility();
-
         Main.ioController.loadRunningProperty().addListener((observableValue, aBoolean, t1) -> {
             if(t1){
                 loadPane.setVisible(true);
@@ -39,7 +39,7 @@ public class StartWindowCtrl extends BaseWindowCtrl {
             }
         });
 
-        lv_accounts.setItems(Main.accountManager.getAccounts());
+        lv_accounts.getItems().addAll(Main.accountManager.getProfiles());
         lv_accounts.getItems().addListener((ListChangeListener<? super Profile>) change -> visibility());
         lv_accounts.setCellFactory(lambda -> {
             ListCell<Profile> cell = new ListCell<Profile>() {
@@ -68,16 +68,16 @@ public class StartWindowCtrl extends BaseWindowCtrl {
         });
     }
 
-    public void onNewAcc(){
+    public void createProfile(){
         Main.windowManager.openStageOf(Main.windows.NewAccount);
     }
 
     public void visibility(){
-        if (Main.accountManager.getAccounts().size()>0){
+        if (Main.accountManager.getProfiles().size()>0){
             lv_accounts.setVisible(true);
-            btn_newAcc.setVisible(false);
+            btn_createProfile.setVisible(false);
         } else {
-            btn_newAcc.setVisible(true);
+            btn_createProfile.setVisible(true);
             lv_accounts.setVisible(false);
         }
 

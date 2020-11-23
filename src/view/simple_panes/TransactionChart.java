@@ -15,9 +15,9 @@ public class TransactionChart extends LineChart<MyDate,Number> {
         super(new LocalDateAxis(0,1200), new NumberAxis());
         getXAxis().setAutoRanging(false);
         Series<MyDate,Number> series = new Series<>();
-        for (ArrayList<Data<MyDate,Number>> t:Main.currentAccount.getYears_data()){
-            series.getData().addAll(t);
-        }
+//        for (ArrayList<Data<MyDate,Number>> t:Main.currentAccount.getYears_data()){
+//            series.getData().addAll(t);
+//        }
         getData().add(series);
         series.setName("Mein Konto");
     }

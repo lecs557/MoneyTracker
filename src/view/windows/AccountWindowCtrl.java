@@ -34,17 +34,13 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
 
     public void initialize() {
         // ** Ansicht initialisieren ***
-        Main.currentAccount.tabPane = tabPane;
-        Main.currentAccount.diagrammContainer = diagrammContainer;
-        Main.currentAccount.sumContainer = sumContainer;
-        Main.currentAccount.mi_save = mi_save;
         mi_save.setDisable(true);
         lbl_account.setText(Main.currentAccount.getName());
         new TransactionChart().putInto(diagrammContainer);
         tabPane.getTabs().clear();
-        for(ArrayList<Transaction> year: Main.currentAccount.getYears_Transaction()){
-            tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear()+"", new TransactionTable(year)));
-        }
+//        for(ArrayList<Transaction> year: Main.currentAccount.getYears_Transaction()){
+//            tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear()+"", new TransactionTable(year)));
+//        }
         new SumTable().putInto(sumContainer);
         // ******
         // *** Threads tracken ***
@@ -94,11 +90,7 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     }
 
     public void save() {
-        if (Main.currentAccount.getFilePath() == null) {
-           ViewUtils.setPath();
-        }
-        Main.ioController.startSave();
-        mi_save.setDisable(true);
+
     }
 
     public void saveUnder() {

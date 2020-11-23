@@ -48,7 +48,6 @@ public class PDFImporter extends Thread {
             progress.set((double)p/size);
         }
         running.set(false);
-        Main.currentAccount.reload();
     }
 
     public SimpleDoubleProperty progressProperty() {

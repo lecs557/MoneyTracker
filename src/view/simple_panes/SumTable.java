@@ -35,45 +35,45 @@ public class SumTable extends TableView<Sum> {
         getColumns().add(name);
 
         //Jahre
-        ObservableList<ArrayList<Transaction>> years = Main.currentAccount.getYears_Transaction();
-        for(int i=0;i<years.size();i++){
-            int year = years.get(i).get(0).getDate().getYear();
-            TableColumn<Sum, Integer> date =new TableColumn<>(""+year);
-            date.setMinWidth(120);
-            date.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Sum, Integer>, ObservableValue<Integer>>() {
-                @Override
-                public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Sum, Integer> sumIntegerCellDataFeatures) {
-                    return new SimpleObjectProperty<Integer>(sumIntegerCellDataFeatures.getValue().getSum().get(year));
-                }
-            });
-            date.setCellFactory(new Callback<>() {
-                @Override
-                public TableCell<Sum, Integer> call(TableColumn<Sum, Integer> transactionStringTableColumn) {
-                    TableCell<Sum, Integer> cell = new TableCell<>() {
-                        @Override
-                        protected void updateItem(Integer item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (empty || item == null) {
-                                setText(null);
-                                setGraphic(null);
-                            } else {
-                                Label l = new Label(new DecimalFormat("#0.00").format((double)item/100)+" €");
-                                if (item > 0){
-                                    l.setStyle("-fx-text-fill: green;");
-                                } else if (item < 0) {
-                                    l.setStyle("-fx-text-fill: red;");
-                                } else {
-                                }
-                                setGraphic(l);// TODO mit Scenebuilder
-                            }
-                        }
-                    };
-                    cell.setAlignment(Pos.CENTER);
-                    return cell;
-                }
-            });
-            getColumns().add(date);
-        }
+//        ObservableList<ArrayList<Transaction>> years = Main.currentAccount.getYears_Transaction();
+//        for(int i=0;i<years.size();i++){
+//            int year = years.get(i).get(0).getDate().getYear();
+//            TableColumn<Sum, Integer> date =new TableColumn<>(""+year);
+//            date.setMinWidth(120);
+//            date.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Sum, Integer>, ObservableValue<Integer>>() {
+//                @Override
+//                public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Sum, Integer> sumIntegerCellDataFeatures) {
+//                    return new SimpleObjectProperty<Integer>(sumIntegerCellDataFeatures.getValue().getSum().get(year));
+//                }
+//            });
+//            date.setCellFactory(new Callback<>() {
+//                @Override
+//                public TableCell<Sum, Integer> call(TableColumn<Sum, Integer> transactionStringTableColumn) {
+//                    TableCell<Sum, Integer> cell = new TableCell<>() {
+//                        @Override
+//                        protected void updateItem(Integer item, boolean empty) {
+//                            super.updateItem(item, empty);
+//                            if (empty || item == null) {
+//                                setText(null);
+//                                setGraphic(null);
+//                            } else {
+//                                Label l = new Label(new DecimalFormat("#0.00").format((double)item/100)+" €");
+//                                if (item > 0){
+//                                    l.setStyle("-fx-text-fill: green;");
+//                                } else if (item < 0) {
+//                                    l.setStyle("-fx-text-fill: red;");
+//                                } else {
+//                                }
+//                                setGraphic(l);// TODO mit Scenebuilder
+//                            }
+//                        }
+//                    };
+//                    cell.setAlignment(Pos.CENTER);
+//                    return cell;
+//                }
+//            });
+//            getColumns().add(date);
+//        }
 
         //Gesamt
         TableColumn<Sum, Integer> gesamt =new TableColumn<>("Gesamt");
@@ -112,12 +112,12 @@ public class SumTable extends TableView<Sum> {
         });
         getColumns().add(gesamt);
         getItems().clear();
-        for(Sum s: Main.currentAccount.getSums()){
-            if(s.getNumber()>3){
-                getItems().add(s);
-            }
+//        for(Sum s: Main.currentAccount.getSums()){
+//            if(s.getNumber()>3){
+//                getItems().add(s);
+//            }
 
-        }
+//        }
     }
 
     public void putInto(Pane container){

@@ -6,13 +6,17 @@ import java.util.ArrayList;
 
 public class ProfileAccountManager {
 
-    private ArrayList<Profile> accounts = new ArrayList();
+    private ArrayList<Profile> profiles = new ArrayList();
 
     public void addProfile(Profile acc){
-        accounts.add(acc);
+        profiles.add(acc);
     }
 
-    public ArrayList<Profile> getAccounts() {
-        return accounts;
+    public ArrayList<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(ArrayList<Profile> profiles) {
+        this.profiles = profiles;
     }
 }

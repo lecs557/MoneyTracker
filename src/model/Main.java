@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import view.simple_panes.PDFViewer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -18,9 +19,6 @@ public class Main extends Application {
 
     public enum types {Lastschrift, Gutschrift, Gehalt, Überweisung}
     public static Profile currentAccount;
-    public static String SEPARATOR = "§-§";
-    public static String ENDSEPARATOR = "§END§";
-    public static String OPTIONSEPARATOR = "§OOO§";
 
     // *** Controller ***
     public static WindowManager windowManager;
@@ -37,18 +35,12 @@ public class Main extends Application {
         ioController = new IOController();
         editController = new EditController();
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/windows/Start.fxml"));
+        //ArrayList<? extends StoreClass> ssdd = DatabaseController.loadStoreClass(Profile.class);
+        //accountManager.setProfiles((ArrayList<Profile>) ssdd);
+
+        windowManager.changeSceneTo(windows.Start);
         primaryStage.setTitle("Finanzen");
-        primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        if (getParameters().getUnnamed().size() > 0) {
-            String path = getParameters().getUnnamed().get(0);
-            String name = path.split("/")[path.split("/").length - 1].replace(".konto", "");
-            ioController.startLoad(name, path);
-        }
-        Stage sec = new Stage();
-        sec.setScene(new Scene(new PDFViewer("C:/Users/User/Desktop/Marcel/Geld/Käufe/2017/PC.pdf")));
-        sec.show();
     }
 
     public static void main(String[] args) {

@@ -22,33 +22,6 @@ public class Saver extends Thread {
     @Override
     public void run() {
         running.set(true);
-        String path= Main.currentAccount.getFilePath();
-        Profile acc = Main.currentAccount;
-        int i=0;
-        int sizeYt = acc.getYears_Transaction().size();
-        try {
-            FileWriter accountFile = new FileWriter(path + "/"+ acc.getName()+".konto");
-            for (Group group: acc.getGroups()){
-                accountFile.append(group.store());
-            }
-            accountFile.append(Main.OPTIONSEPARATOR);
-            for (ArrayList<Transaction> olt:acc.getYears_Transaction()) {
-                i++;
-                progressYear.set((double) i/sizeYt);
-                int j=0;
-                int sizeT = olt.size();
-                for (Transaction t:olt) {
-                    j++;
-                    progressTransaction.set((double)j/sizeT);
-                    accountFile.append(t.store());
-                }
-            }
-            accountFile.close();
-        } catch (IOException  e) {
-            System.out.println("Problem mit dem Pfad: "+path);
-            Platform.runLater(ViewUtils::setPath);
-            e.printStackTrace();
-        }
         running.set(false);
     }
 

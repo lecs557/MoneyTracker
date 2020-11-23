@@ -20,42 +20,7 @@ public class Renamer extends Thread {
     @Override
     public void run() {
         isRunning.set(true);
-        Profile acc = Main.currentAccount;
-        int i=0;
-        int sizeYt = acc.getYears_Transaction().size();
-        for (ArrayList<Transaction> yt: Main.currentAccount.getYears_Transaction()){
-            i++;
-            progressYear.set((double) i/sizeYt);
-            int j=0;
-            int sizeT = yt.size();
-            for(Transaction t: yt){
-                if(t.getPurpose().contains(renames.getContains())){
-                    t.setPurpose(renames.getRenameTo());
-                }
-                j++;
-                progressTransaction.set((double)j/sizeT);
-            }
-        }
-        Sum a=null;
-        Sum b=null;
-        for(Sum s:Main.currentAccount.getSums()) {
-            if(s.getReason().equals(renames.getRenameTo())){
-                a=s;
-            }
-            if(s.getReason().contains(renames.getContains())){
-                b=s;
-            }
-        }
-        if (b==null)
-            System.out.println("B is null");
-        else {
-            if (a == null) {
-                b.setReason(renames.getRenameTo());
-            } else {
-                a.mergesum(b);
-            }
-            isRunning.set(false);
-        }
+        isRunning.set(false);
     }
 
     public SimpleDoubleProperty progressYearProperty() {

@@ -18,18 +18,23 @@ public class Profile extends StoreClass {
 
     private int id;
     private String name;
-
     private ArrayList<BankAccount> bankAccounts;
 
-    public Profile(String name)  {
-        this.name = name;
+    public Profile()  {
 
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
-
 
     @Override
     public String getTableName() {
@@ -39,8 +44,8 @@ public class Profile extends StoreClass {
     @Override
     public ArrayList<FieldName> getFieldNames() {
         ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("id", "id","int NOT NULL AUTO_INCREMENT"));
-        fieldNames.add(new FieldName("name", "name","TEXT"));
+        fieldNames.add(new FieldName("Id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
+        fieldNames.add(new FieldName("Name", "name","TEXT"));
         return fieldNames;
     }
 }

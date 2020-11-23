@@ -34,7 +34,6 @@ public class FontFilter extends RenderFilter {
 				System.out.println(betrag);
 				System.out.println(zweck);
 				System.out.println("----------------");
-				Main.currentAccount.addTransaction(new Transaction(date,zweck,betrag));
 				zweck="";
 			}
 		}
@@ -48,7 +47,6 @@ public class FontFilter extends RenderFilter {
                         System.out.println(betrag);
                         System.out.println(zweck);
                         System.out.println("----------------");
-                        Main.currentAccount.addTransaction(new Transaction(date,zweck,betrag));
                         ignoreNext=false;
                         zweck="";
                         betrag=0;

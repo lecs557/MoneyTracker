@@ -35,12 +35,6 @@ public class Group {
         }
     }
 
-    public String store(){
-        return reason + Main.SEPARATOR +
-                color.getRGB() + Main.SEPARATOR +
-                ifContains + Main.SEPARATOR + Main.ENDSEPARATOR;
-    }
-
     public String getReason() {
         return reason;
     }
@@ -53,8 +47,4 @@ public class Group {
         return ifContains;
     }
 
-    public static Group groupFromString(String string){
-        String[] temp = string.split(Main.SEPARATOR);
-        return new Group(temp);
-    }
 }

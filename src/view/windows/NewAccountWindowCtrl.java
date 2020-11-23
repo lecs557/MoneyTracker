@@ -1,5 +1,6 @@
 package view.windows;
 
+import controller.DatabaseController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,7 +37,10 @@ public class NewAccountWindowCtrl {
 
     @FXML
     void ok(ActionEvent event) {
-        Main.accountManager.addProfile(new Profile(tb_name.getText()));
+        Profile profile = new Profile();
+        profile.setName(tb_name.getText());
+        Main.accountManager.addProfile(profile);
+        DatabaseController.storeObject(profile);
         Main.secStage.close();
     }
 

@@ -2,65 +2,128 @@ package controller;
 
 import model.FieldName;
 import model.StoreClass;
-import model.Transaction;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.lang.reflect.Method;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DatabaseController {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/";
-
-    static final String USER = "username";
-    static final String PASS = "pssword";
+    static final String DB_NAME = "Aurum_Observa";
+    static final String DB_PATH = "JDBC:sqlite:"+DB_NAME+".db";
 
     private static Connection conn = null;
     private static Statement stmt = null;
 
-    public static void loadTransactionsOfYear(int year) {
+    public static <T extends StoreClass> ArrayList<T> loadStoreClass(Class<T> storeClass) {
+        ArrayList<T> storeClasses = new ArrayList<>();
         try{
-            Transaction temp = new Transaction();
+            T dummyClass = storeClass.getDeclaredConstructor().newInstance();
             open();
             StringBuilder sql = new StringBuilder("SELECT ");
-            for(FieldName name: temp.getFieldNames()){
-                sql.append(name.sql_name);
-                if(temp.getFieldNames().iterator().hasNext()){
+            Iterator<FieldName> iterator = dummyClass.getFieldNames().iterator();
+            while(iterator.hasNext()){
+                sql.append(iterator.next().sql_name);
+                if(iterator.hasNext()){
                     sql.append(", ");
                 } else {
                     sql.append(" ");
                 }
             }
-            sql.append("WHERE YEAR(date) =").append(year);
-            stmt.executeUpdate(sql.toString());
-        } catch(Exception se){
+            sql.append("FROM ").append(DB_NAME);
+            sql.append(".").append(dummyClass.getTableName());
+            System.out.println(sql);
+            ResultSet rs = stmt.executeQuery(sql.toString());
+            while(rs.next()){
+                T store = storeClass.getDeclaredConstructor().newInstance();
+                for(FieldName name: storeClass.getDeclaredConstructor().newInstance().getFieldNames()){
+                    Method method = storeClass.getMethod("set"+name.programm_name,Class.forName("String"));
+                    method.invoke(store,rs.getString(name.sql_name));
+                }
+                storeClasses.add(store);
+            }
+        } catch(SQLException se){
             se.printStackTrace();
-        } finally{
+            System.out.println("CREATE TABLE");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+        return  storeClasses;
+    }
+
+    public static  void storeObject(StoreClass storeClass){
+        try {
+            open();
+            StringBuilder sql = new StringBuilder("INSERT INTO ");
+            sql.append(storeClass.getTableName());
+            sql.append(" (");
+            Iterator<FieldName> iterator = storeClass.getFieldNames().iterator();
+            while (iterator.hasNext()) {
+                FieldName name = iterator.next();
+                if (!name.programm_name.equals("Id")) {
+                    sql.append(name.sql_name);
+                    if (iterator.hasNext()) {
+                        sql.append(", ");
+                    } else {
+                        sql.append(")");
+                    }
+                }
+            }
+            sql.append(" VALUES(");
+            iterator = storeClass.getFieldNames().iterator();
+
+            while (iterator.hasNext()) {
+                FieldName name = iterator.next();
+                if (!name.programm_name.equals("Id")) {
+                    Method method = storeClass.getClass().getMethod("get" + name.programm_name);
+                    sql.append("'"+method.invoke(storeClass)+"'");
+                    if (iterator.hasNext()) {
+                        sql.append(", ");
+                    } else {
+                        sql.append(")");
+                    }
+                }
+            }
+            System.out.println(sql);
+            stmt.executeUpdate(sql.toString());
+        } catch(SQLException se){
+            se.printStackTrace();
+            System.out.println("CREATE TABLE");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
             close();
         }
     }
 
-    public static void createTable(StoreClass storeClass) {
+    public static <T extends StoreClass> void  createTable(Class<T> storeClass) {
         try{
+            T dummyClass = storeClass.getDeclaredConstructor().newInstance();
             open();
             StringBuilder sql = new StringBuilder("CREATE TABLE ");
-            sql.append(storeClass.getTableName());
-            sql.append(" VALUES(");
-            for(FieldName name: storeClass.getFieldNames()){
-                sql.append(name.sql_name).append(" ");
+            sql.append(dummyClass.getTableName());
+            sql.append("(");
+            Iterator<FieldName> iterator = dummyClass.getFieldNames().iterator();
+            while(iterator.hasNext()){
+                FieldName name = iterator.next();
+                sql.append("'"+name.sql_name+"' ");
                 sql.append(name.sql_type);
-                if(storeClass.getFieldNames().iterator().hasNext()){
+                if(iterator.hasNext()){
                     sql.append(", ");
                 } else {
                     sql.append(") ");
                 }
             }
-            System.out.println("Creating Table...");
+            System.out.println(sql);
             stmt.executeUpdate(sql.toString());
             System.out.println("Table created successfully...");
-        } catch(Exception se){
+        } catch(SQLException se){
             se.printStackTrace();
+            System.out.println("CREATE DataBase");
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally{
             close();
         }
@@ -69,7 +132,8 @@ public class DatabaseController {
     public static void createDataBase() {
         try{
             open();
-            String sql = "CREATE DATABASE Aurum_Observa";
+            String sql = "CREATE DATABASE "+DB_NAME;
+            System.out.println(sql);
             System.out.println("Creating database...");
             stmt.executeUpdate(sql);
             System.out.println("Database created successfully...");
@@ -81,10 +145,15 @@ public class DatabaseController {
     }
 
     private static void open() throws ClassNotFoundException, SQLException {
-        Class.forName(JDBC_DRIVER);
-        System.out.println("Connecting to database...");
-        conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        stmt = conn.createStatement();
+        if( (conn == null || conn.isClosed()) ){
+            System.out.println("Connecting to database...");
+            //Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection(DB_PATH);
+        }
+        if( (stmt == null || stmt.isClosed()) ){
+            stmt = conn.createStatement();
+            System.out.println("new statement...");
+        }
     }
 
     private static void close(){
@@ -96,6 +165,7 @@ public class DatabaseController {
         try{
             if(conn!=null) {
                 conn.close();
+                System.out.println("Connection closed");
             }
         }catch(SQLException se){
             se.printStackTrace();

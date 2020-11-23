@@ -10,6 +10,5 @@ public class ViewUtils {
     public static void setPath() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(Main.primaryStage);
-        Main.currentAccount.setFilePath(file.getAbsolutePath());
     }
 }

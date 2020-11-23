@@ -60,19 +60,19 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
     }
 
     private int start(){
-        if(!Main.currentAccount.getYears_Transaction().isEmpty()){
-            start=Main.currentAccount.getYears_Transaction().get(0).get(0).getDate().getYear();
-            return new MyDate(LocalDate.of(start,1,1)).intValue();
-        }
+//        if(!Main.currentAccount.getYears_Transaction().isEmpty()){
+//            start=Main.currentAccount.getYears_Transaction().get(0).get(0).getDate().getYear();
+//            return new MyDate(LocalDate.of(start,1,1)).intValue();
+//        }
         return 0;
     }
 
     private int end() {
-        if (!Main.currentAccount.getYears_Transaction().isEmpty()) {
-            int size = Main.currentAccount.getYears_Transaction().size();
-            end = Main.currentAccount.getYears_Transaction().get(size - 1).get(0).getDate().getYear();
-            return new MyDate(LocalDate.of(end, 12, 31)).intValue();
-        }
+//        if (!Main.currentAccount.getYears_Transaction().isEmpty()) {
+//            int size = Main.currentAccount.getYears_Transaction().size();
+//            end = Main.currentAccount.getYears_Transaction().get(size - 1).get(0).getDate().getYear();
+//            return new MyDate(LocalDate.of(end, 12, 31)).intValue();
+//        }
         return 365;
     }
 }

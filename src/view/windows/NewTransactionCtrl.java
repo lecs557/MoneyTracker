@@ -11,13 +11,13 @@ public class NewTransactionCtrl {
    public Pane enterTransactionContainer;
 
     public void initialize() {
-         c = new MyNode("EnterTransaction").putInto(enterTransactionContainer).getController();
+         //c = new MyNode("EnterTransaction").putInto(enterTransactionContainer).getController();
     }
 
     public void ok(){
-        Main.currentAccount.addTransaction(c.getTransaction());
-        Main.secStage.close();
-        Main.currentAccount.reload();
+//        Main.currentAccount.addTransaction(c.getTransaction());
+//        Main.secStage.close();
+//        Main.currentAccount.reload();
     }
 
     public void close(){

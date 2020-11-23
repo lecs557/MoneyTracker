@@ -2,14 +2,12 @@ package view.windows;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Pane;
-import model.Main;
-import model.Renames;
-import model.Transaction;
 import view.panes.EnterTransactionCtrl;
 import view.panes.MyNode;
 
 public class TransactionWindowCtrl {
 
+    private MyNode node, node1;
     private EnterTransactionCtrl c;
     public Pane enterTransactionContainer;
     private EnterTransactionCtrl c1;
@@ -17,9 +15,13 @@ public class TransactionWindowCtrl {
     public RadioButton rb_see, rb_edit, rb_rename, rb_reason;
 
     public void initialize() {
-        c = new MyNode("EnterTransaction").putInto(enterTransactionContainer).getController();
+        node = new MyNode();
+        node.setPath("panes/EnterTransaction");
+        c = node.getLoader().getController();
         c.readOnly();
-        c1 = new MyNode("EnterTransaction").putInto(enterTransactionContainer1).getController();
+        node1 = new MyNode();
+        node1.setPath("panes/EnterTransaction");
+        c1 = node.getLoader().getController();
 
         rb_see.setOnMouseClicked(mouseEvent -> {
             c.all();
@@ -43,30 +45,30 @@ public class TransactionWindowCtrl {
         });
     }
 
-    public void ok(){
-        Transaction edit = Main.editController.getEditTransaction();
-        Transaction temp = c1.getTransaction();
-        if (temp != null) {
-            if(rb_reason.isSelected()){
-               edit.setThis(temp);
-            }else if(rb_see.isSelected()){
-                Main.currentAccount.deleteTransaction(edit);
-                Main.currentAccount.addTransaction(temp);
-            } else if(rb_rename.isSelected()){
-                Renames ren = new Renames(c.tb_reason.getText(), c1.tb_reason.getText());
-                Main.editController.startRenamer(ren);
-            }
-        }
-        Main.secStage.close();
-        Main.currentAccount.reload();
-
-    }
-
-    public void edit(){
-        Transaction edit = Main.editController.getEditTransaction();
-        Main.currentAccount.deleteTransaction(edit);
-        Main.secStage.close();
-        Main.currentAccount.reload();
-    }
+//    public void ok(){
+//        Transaction edit = Main.editController.getEditTransaction();
+//        Transaction temp = c1.getTransaction();
+//        if (temp != null) {
+//            if(rb_reason.isSelected()){
+//               edit.setThis(temp);
+//            }else if(rb_see.isSelected()){
+//                Main.currentAccount.deleteTransaction(edit);
+//                Main.currentAccount.addTransaction(temp);
+//            } else if(rb_rename.isSelected()){
+//                Renames ren = new Renames(c.tb_reason.getText(), c1.tb_reason.getText());
+//                Main.editController.startRenamer(ren);
+//            }
+//        }
+//        Main.secStage.close();
+//        Main.currentAccount.reload();
+//
+//    }
+//
+//    public void edit(){
+//        Transaction edit = Main.editController.getEditTransaction();
+//        Main.currentAccount.deleteTransaction(edit);
+//        Main.secStage.close();
+//        Main.currentAccount.reload();
+//    }
 }
 
