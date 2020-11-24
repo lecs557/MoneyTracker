@@ -1,4 +1,6 @@
-package model;
+package model.storeclasses;
+
+import model.FieldName;
 
 import java.util.ArrayList;
 

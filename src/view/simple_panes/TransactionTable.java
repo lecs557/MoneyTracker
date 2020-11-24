@@ -1,14 +1,13 @@
 package view.simple_panes;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import model.Main;
-import model.Transaction;
+import model.storeclasses.Transaction;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;

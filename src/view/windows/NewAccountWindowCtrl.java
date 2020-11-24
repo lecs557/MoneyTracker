@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import model.Profile;
+import model.storeclasses.Profile;
 import model.Main;
 
 public class NewAccountWindowCtrl {
@@ -39,8 +39,8 @@ public class NewAccountWindowCtrl {
     void ok(ActionEvent event) {
         Profile profile = new Profile();
         profile.setName(tb_name.getText());
+        profile.setId(DatabaseController.storeObject(profile));
         Main.accountManager.addProfile(profile);
-        DatabaseController.storeObject(profile);
         Main.secStage.close();
     }
 

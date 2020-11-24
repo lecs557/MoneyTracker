@@ -2,7 +2,7 @@ package view.panes;
 
 import javafx.scene.control.TextField;
 import model.Main;
-import model.Transaction;
+import model.storeclasses.Transaction;
 
 import java.time.LocalDate;
 

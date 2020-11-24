@@ -1,15 +1,6 @@
 package model.threads;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
-import model.Profile;
-import model.Group;
-import model.Main;
-import model.Transaction;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Loader extends Thread {
 

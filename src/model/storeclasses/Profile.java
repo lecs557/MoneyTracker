@@ -1,16 +1,8 @@
-package model;
+package model.storeclasses;
 
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.Pane;
-import view.simple_panes.SumTable;
-import view.simple_panes.TransactionChart;
-import view.simple_panes.TransactionTable;
+import model.BankAccount;
+import model.FieldName;
+import model.storeclasses.StoreClass;
 
 import java.util.ArrayList;
 
@@ -24,8 +16,8 @@ public class Profile extends StoreClass {
 
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = Integer.parseInt(id);
     }
 
     public void setName(String name) {

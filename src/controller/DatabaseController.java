@@ -1,7 +1,7 @@
 package controller;
 
 import model.FieldName;
-import model.StoreClass;
+import model.storeclasses.StoreClass;
 
 import java.lang.reflect.Method;
 import java.sql.*;
@@ -30,14 +30,13 @@ public class DatabaseController {
                     sql.append(" ");
                 }
             }
-            sql.append("FROM ").append(DB_NAME);
-            sql.append(".").append(dummyClass.getTableName());
+            sql.append("FROM ").append(dummyClass.getTableName());
             System.out.println(sql);
             ResultSet rs = stmt.executeQuery(sql.toString());
             while(rs.next()){
                 T store = storeClass.getDeclaredConstructor().newInstance();
                 for(FieldName name: storeClass.getDeclaredConstructor().newInstance().getFieldNames()){
-                    Method method = storeClass.getMethod("set"+name.programm_name,Class.forName("String"));
+                    Method method = storeClass.getMethod("set"+name.programm_name,Class.forName("java.lang.String"));
                     method.invoke(store,rs.getString(name.sql_name));
                 }
                 storeClasses.add(store);
@@ -53,7 +52,8 @@ public class DatabaseController {
         return  storeClasses;
     }
 
-    public static  void storeObject(StoreClass storeClass){
+    public static String storeObject(StoreClass storeClass){
+        String id="-1";
         try {
             open();
             StringBuilder sql = new StringBuilder("INSERT INTO ");
@@ -73,7 +73,6 @@ public class DatabaseController {
             }
             sql.append(" VALUES(");
             iterator = storeClass.getFieldNames().iterator();
-
             while (iterator.hasNext()) {
                 FieldName name = iterator.next();
                 if (!name.programm_name.equals("Id")) {
@@ -88,6 +87,8 @@ public class DatabaseController {
             }
             System.out.println(sql);
             stmt.executeUpdate(sql.toString());
+            ResultSet rs = stmt.executeQuery("SELECT id FROM "+ storeClass.getTableName() +" ORDER BY id DESC LIMIT 1");
+            id = rs.getString("id");
         } catch(SQLException se){
             se.printStackTrace();
             System.out.println("CREATE TABLE");
@@ -96,6 +97,7 @@ public class DatabaseController {
         }finally {
             close();
         }
+        return id;
     }
 
     public static <T extends StoreClass> void  createTable(Class<T> storeClass) {

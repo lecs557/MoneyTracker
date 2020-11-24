@@ -8,7 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
-import model.Profile;
+import model.storeclasses.Profile;
 import model.Main;
 import model.threads.Loader;
 

@@ -1,17 +1,7 @@
 package model.threads;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import model.Profile;
-import model.Group;
-import model.Main;
-import model.Transaction;
-import view.simple_panes.ViewUtils;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class Saver extends Thread {
 

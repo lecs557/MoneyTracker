@@ -2,7 +2,6 @@ package view.simple_panes;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -10,13 +9,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
-import model.Main;
 import model.Sum;
-import model.Transaction;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class SumTable extends TableView<Sum> {

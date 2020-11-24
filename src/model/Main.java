@@ -2,11 +2,8 @@ package model;
 
 import controller.*;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import view.simple_panes.PDFViewer;
+import model.storeclasses.Profile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,8 +32,8 @@ public class Main extends Application {
         ioController = new IOController();
         editController = new EditController();
 
-        //ArrayList<? extends StoreClass> ssdd = DatabaseController.loadStoreClass(Profile.class);
-        //accountManager.setProfiles((ArrayList<Profile>) ssdd);
+        ArrayList<Profile> ssdd = DatabaseController.loadStoreClass(Profile.class);
+        accountManager.setProfiles(ssdd);
 
         windowManager.changeSceneTo(windows.Start);
         primaryStage.setTitle("Finanzen");

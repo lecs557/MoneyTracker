@@ -1,6 +1,6 @@
 package controller;
 
-import model.Profile;
+import model.storeclasses.Profile;
 
 import java.util.ArrayList;
 

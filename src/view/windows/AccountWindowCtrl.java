@@ -4,17 +4,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import model.Main;
-import model.Transaction;
 import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.SumTable;
 import view.simple_panes.TransactionChart;
-import view.simple_panes.TransactionTable;
 import view.simple_panes.ViewUtils;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccountWindowCtrl extends BaseWindowCtrl{

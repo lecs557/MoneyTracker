@@ -1,4 +1,4 @@
-package model;
+package model.storeclasses;
 
 import java.awt.*;
 import java.time.LocalDate;

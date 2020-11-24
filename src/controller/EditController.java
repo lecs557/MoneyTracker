@@ -2,7 +2,7 @@ package controller;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import model.Renames;
-import model.Transaction;
+import model.storeclasses.Transaction;
 import model.threads.Renamer;
 
 public class EditController {

@@ -1,9 +1,11 @@
-package model;
+package model.storeclasses;
+
+import model.FieldName;
+import model.MyDate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Transaction extends StoreClass {
 
@@ -90,10 +92,12 @@ public class Transaction extends StoreClass {
     @Override
     public ArrayList<FieldName> getFieldNames(){
         ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("id", "id","int NOT NULL AUTO_INCREMENT"));
+        fieldNames.add(new FieldName("id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
         fieldNames.add(new FieldName("date", "date","DATE"));
         fieldNames.add(new FieldName("purpose", "purpose","TEXT"));
         fieldNames.add(new FieldName("amount", "amount","int"));
+        fieldNames.add(new FieldName("", "profile_id","int"));
+        fieldNames.add(new FieldName("", "pdf_id","int"));
         return fieldNames;
     }
 

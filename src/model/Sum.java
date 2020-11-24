@@ -1,5 +1,7 @@
 package model;
 
+import model.storeclasses.Transaction;
+
 import java.util.HashMap;
 
 public class Sum {
