@@ -1,50 +1,29 @@
 package model.storeclasses;
 
+import model.FieldName;
+
 import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class Group {
+public class Group extends StoreClass {
 
-    private String reason;
-    private Color color;
-    private String ifContains;
+   int id;
+   String groupName;
+   int sum;
 
-    public Group(String reason, Color color, String ifContains) {
-        this.reason = reason;
-        this.color = color;
-        this.ifContains = ifContains;
+
+    @Override
+    public String getTableName() {
+        return "Groups";
     }
 
-    public Group(String[] temp) {
-        int i=0;
-        for (String elem:temp){
-            if(i==0){
-                this.reason = elem;
-            }
-            if(i==1){
-                try {
-                    this.color = Color.decode(elem);
-                } catch (Exception e) {
-                    color=Color.BLUE;
-                }
-            }
-            if(i==2){
-                ifContains=elem;
-            }
-            i++;
-        }
+    @Override
+    public ArrayList<FieldName> getFieldNames() {
+        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
+        fieldNames.add(new FieldName("Id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
+        fieldNames.add(new FieldName("GroupName", "group_name","TEXT"));
+        fieldNames.add(new FieldName("Sum", "sum","TEXT"));
+        return fieldNames;
     }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public String getIfContains() {
-        return ifContains;
-    }
-
 }

@@ -1,8 +1,6 @@
 package model.storeclasses;
 
-import model.BankAccount;
 import model.FieldName;
-import model.storeclasses.StoreClass;
 
 import java.util.ArrayList;
 

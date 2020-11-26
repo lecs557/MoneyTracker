@@ -1,4 +1,4 @@
-package model;
+package model.storeclasses;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -7,6 +7,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
+import model.FieldName;
+import model.MyDate;
 import model.storeclasses.Group;
 import model.storeclasses.Transaction;
 import view.simple_panes.SumTable;
@@ -14,13 +16,15 @@ import view.simple_panes.TransactionChart;
 
 import java.util.ArrayList;
 
-public class BankAccount {
-
+public class BankAccount extends StoreClass {
 
     public TabPane tabPane;
     public Pane diagrammContainer;
     public Pane sumContainer;
     public MenuItem mi_save;
+
+    private int id;
+    private String bankName;
 
     ArrayList <Group> groups = new ArrayList<>();
     private ObservableList<ArrayList<Transaction>> years_Transaction = FXCollections.observableArrayList();
@@ -151,5 +155,15 @@ public class BankAccount {
 
     public ObservableList<ArrayList<XYChart.Data<MyDate, Number>>> getYears_data() {
         return years_data;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<FieldName> getFieldNames() {
+        return null;
     }
 }
