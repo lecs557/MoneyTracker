@@ -1,9 +1,5 @@
 package model.storeclasses;
 
-import model.FieldName;
-
-import java.awt.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Group extends StoreClass {

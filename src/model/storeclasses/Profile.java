@@ -1,7 +1,5 @@
 package model.storeclasses;
 
-import model.FieldName;
-
 import java.util.ArrayList;
 
 public class Profile extends StoreClass {
@@ -10,7 +8,15 @@ public class Profile extends StoreClass {
     private String name;
     private ArrayList<BankAccount> bankAccounts;
 
-    public Profile()  {
+    public Profile() {
+        setTableName("Profiles");
+        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
+        fieldNames.add(FieldName.storeId());
+        fieldNames.add(new FieldName("Name", "name","TEXT"));
+        setFieldNames(fieldNames);
+        ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
+        foreignKeys.add(new ForeignKey<BankAccount>("BankAccount_id", new BankAccount()));
+        setForeignKeys(foreignKeys);
 
     }
 
@@ -26,17 +32,5 @@ public class Profile extends StoreClass {
         return name;
     }
 
-    @Override
-    public String getTableName() {
-        return "Profiles";
-    }
-
-    @Override
-    public ArrayList<FieldName> getFieldNames() {
-        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("Id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
-        fieldNames.add(new FieldName("Name", "name","TEXT"));
-        return fieldNames;
-    }
 }
 
