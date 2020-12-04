@@ -3,10 +3,6 @@ package view.panes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXMLLoader;
 
-import javafx.scene.Node;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
 import java.io.IOException;
@@ -14,11 +10,11 @@ import java.io.IOException;
 public class MyNode extends Region {
 
     private FXMLLoader loader;
-    private SimpleStringProperty path = new SimpleStringProperty("panes/test");
+    private SimpleStringProperty path = new SimpleStringProperty("/view/panes/test");
 
     public MyNode()  {
         try {
-            loader = new FXMLLoader(getClass().getResource("/view/"+path.get()+".fxml"));
+            loader = new FXMLLoader(getClass().getResource( path.get()+".fxml"));
             this.getChildren().clear();
             this.getChildren().add(loader.load());
         } catch (IOException e) {
@@ -26,7 +22,7 @@ public class MyNode extends Region {
         }
         path.addListener((observableValue, s, t1) -> {
             try {
-                loader = new FXMLLoader(getClass().getResource("/view/"+path.get()+".fxml"));
+                loader = new FXMLLoader(getClass().getResource( path.get()+".fxml"));
                 this.getChildren().clear();
                 this.getChildren().add(loader.load());
             } catch (IOException e) {

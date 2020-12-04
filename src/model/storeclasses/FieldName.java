@@ -2,18 +2,18 @@ package model.storeclasses;
 
  public class FieldName {
 
-    private final String programRefName;
+    private final String programName;
     private final String sqlName;
     private final String sqlType;
 
-    public FieldName(String programRefName, String sqlName, String sqlType) {
-        this.programRefName = programRefName;
+    public FieldName(String programName, String sqlName, String sqlType) {
+        this.programName = programName;
         this.sqlName = sqlName;
         this.sqlType =sqlType;
     }
 
-     public String getProgramRefName() {
-         return programRefName;
+     public String getProgramName() {
+         return programName;
      }
 
      public String getSqlName() {

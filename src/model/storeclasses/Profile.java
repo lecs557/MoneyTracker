@@ -14,10 +14,6 @@ public class Profile extends StoreClass {
         fieldNames.add(FieldName.storeId());
         fieldNames.add(new FieldName("Name", "name","TEXT"));
         setFieldNames(fieldNames);
-        ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
-        foreignKeys.add(new ForeignKey<BankAccount>("BankAccount_id", new BankAccount()));
-        setForeignKeys(foreignKeys);
-
     }
 
     public void setId(String id) {

@@ -79,7 +79,6 @@ public class EnterTransactionCtrl {
             LocalDate temp = LocalDate.of(teYear,teMonth,teday);
             String teReason = tb_reason.getText();
             int tebetrag = Integer.parseInt(tb_money.getText()+tb_cents.getText());
-            return new Transaction(temp,teReason,tebetrag);
         } catch (Exception e) {
             e.printStackTrace();
             tb_day.requestFocus();

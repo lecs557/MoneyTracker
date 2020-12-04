@@ -2,10 +2,11 @@ package model.storeclasses;
 
 import java.util.ArrayList;
 
-public class ForeignKey<T> {
+public class ForeignKey<T extends StoreClass> {
 
     private String sqlName;
-    private  T foreign;
+    private T foreign;
+    private ArrayList<Integer> ids = new ArrayList<>();
 
     public ForeignKey(String sqlName, T foreign) {
         this.sqlName = sqlName;
@@ -18,5 +19,13 @@ public class ForeignKey<T> {
 
     public T getForeign() {
         return foreign;
+    }
+
+    public void setForeign(T foreign) {
+        this.foreign = foreign;
+    }
+
+    public ArrayList<Integer> getIds() {
+        return ids;
     }
 }

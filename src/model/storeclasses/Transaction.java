@@ -14,10 +14,10 @@ public class Transaction extends StoreClass {
     public Transaction() {
         setTableName("Transactions");
         ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
-        fieldNames.add(new FieldName("date", "date","DATE"));
-        fieldNames.add(new FieldName("purpose", "purpose","TEXT"));
-        fieldNames.add(new FieldName("amount", "amount","int"));
+        fieldNames.add(new FieldName("Id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
+        fieldNames.add(new FieldName("Date", "date","DATE"));
+        fieldNames.add(new FieldName("Purpose", "purpose","TEXT"));
+        fieldNames.add(new FieldName("Amount", "amount","int"));
         setFieldNames(fieldNames);
         ArrayList<FieldName> foreignKeys = new ArrayList<FieldName>();
         foreignKeys.add(new FieldName("BankAccount","bank_account_id","INTEGER"));
@@ -63,18 +63,4 @@ public class Transaction extends StoreClass {
         this.balance = balance;
     }
 
-    @Override
-    public ArrayList<FieldName> getFieldNames(){
-        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
-        fieldNames.add(new FieldName("date", "date","DATE"));
-        fieldNames.add(new FieldName("purpose", "purpose","TEXT"));
-        fieldNames.add(new FieldName("amount", "amount","int"));
-        return fieldNames;
-    }
-
-    @Override
-    public String getTableName() {
-        return "Transaction";
-    }
 }

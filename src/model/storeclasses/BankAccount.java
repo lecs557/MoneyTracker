@@ -14,8 +14,8 @@ public class BankAccount extends StoreClass {
         fieldNames.add(FieldName.storeId());
         fieldNames.add(new FieldName("BankName", "bank_name","TEXT"));
         setFieldNames(fieldNames);
-        ArrayList<FieldName> foreignKeys = new ArrayList<FieldName>();
-        foreignKeys.add(new FieldName("Profiles", "profile_id","Integer"));
+        ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
+        foreignKeys.add(new ForeignKey<Profile>("Profiles", new Profile()));
         setForeignKeys(foreignKeys);
     }
 

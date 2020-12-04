@@ -4,9 +4,18 @@ import java.util.ArrayList;
 
 public abstract class StoreClass {
 
+    private int id;
     private String tableName;
     private ArrayList<FieldName> fieldNames;
     private ArrayList<ForeignKey<? extends StoreClass>> foreignKeys;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTableName() {
         return tableName;
@@ -31,5 +40,4 @@ public abstract class StoreClass {
     public void setForeignKeys(ArrayList<ForeignKey<? extends StoreClass>> foreignKeys) {
         this.foreignKeys = foreignKeys;
     }
-
 }

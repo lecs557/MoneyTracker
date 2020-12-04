@@ -24,9 +24,13 @@ public class PDFViewer extends ScrollPane {
     private WebView web = new WebView();
     private String path;
 
-    public PDFViewer(String path) throws IOException {
-        this.path = path;
-        PdfReader pdfReader = new PdfReader(path);
+    public PDFViewer() {
+        path = "C:/Users/User/Desktop/Marcel/Geld/ING_DiBa/Kontoauszüge/Bilanz 2017/04.2017.pdf";
+        try {
+            PdfReader pdfReader = new PdfReader(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         WebEngine engine = web.getEngine();
 
         engine.setJavaScriptEnabled(true);
@@ -55,6 +59,10 @@ public class PDFViewer extends ScrollPane {
                     }
                 });
         setContent(web);
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public void putInto(Pane container) {
