@@ -6,7 +6,7 @@ import model.storeclasses.Transaction;
 
 import java.time.LocalDate;
 
-public class EnterTransactionCtrl {
+public class StringEntryWindowCtrl implements contentable{
 
     public TextField tb_day;
     public TextField tb_month;
@@ -110,5 +110,10 @@ public class EnterTransactionCtrl {
         tb_reason.setEditable(false);
         tb_money.setEditable(false);
         tb_cents.setEditable(false);
+    }
+
+    @Override
+    public String getContent() {
+        return null;
     }
 }

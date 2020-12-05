@@ -1,4 +1,4 @@
-package view.panes;
+package view.simple_panes;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.layout.Region;

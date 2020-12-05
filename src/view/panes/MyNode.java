@@ -31,6 +31,13 @@ public class MyNode extends Region {
         });
     }
 
+    public String getContent(){
+        if(loader.getController() instanceof contentable){
+            return ((contentable) loader.getController()).getContent();
+        }
+        return "";
+    }
+
     public String getPath() {
         return path.get();
     }

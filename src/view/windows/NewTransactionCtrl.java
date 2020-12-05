@@ -2,12 +2,11 @@ package view.windows;
 
 import javafx.scene.layout.Pane;
 import model.Main;
-import view.panes.EnterTransactionCtrl;
-import view.panes.MyNode;
+import view.panes.StringEntryWindowCtrl;
 
 public class NewTransactionCtrl {
 
-   private EnterTransactionCtrl c;
+   private StringEntryWindowCtrl c;
    public Pane enterTransactionContainer;
 
     public void initialize() {

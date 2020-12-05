@@ -2,15 +2,15 @@ package view.windows;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Pane;
-import view.panes.EnterTransactionCtrl;
+import view.panes.StringEntryWindowCtrl;
 import view.panes.MyNode;
 
 public class TransactionWindowCtrl {
 
     private MyNode node, node1;
-    private EnterTransactionCtrl c;
+    private StringEntryWindowCtrl c;
     public Pane enterTransactionContainer;
-    private EnterTransactionCtrl c1;
+    private StringEntryWindowCtrl c1;
     public Pane enterTransactionContainer1;
     public RadioButton rb_see, rb_edit, rb_rename, rb_reason;
 

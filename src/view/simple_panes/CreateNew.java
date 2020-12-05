@@ -3,16 +3,12 @@ package view.simple_panes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import model.storeclasses.FieldName;
 import model.storeclasses.StoreClass;
-
-import java.lang.reflect.InvocationTargetException;
+import view.panes.EntryPane;
 
 public class CreateNew extends Region {
 
