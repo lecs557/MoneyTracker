@@ -1,7 +1,7 @@
 package model.storeclasses;
 
 import view.panes.EntryPane;
-import view.panes.StringEntry;
+import view.panes.entry_panes.StringEntry;
 
 public class FieldName {
 

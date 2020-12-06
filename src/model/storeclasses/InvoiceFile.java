@@ -22,17 +22,4 @@ public class InvoiceFile extends StoreClass{
     public void setPath(String path) {
         this.path = path;
     }
-
-    @Override
-    public String getTableName() {
-        return "Invoice_Files";
-    }
-
-    @Override
-    public ArrayList<FieldName> getFieldNames() {
-        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("Id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
-        fieldNames.add(new FieldName("Path", "path","TEXT"));
-        return fieldNames;
-    }
 }

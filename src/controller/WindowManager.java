@@ -11,12 +11,12 @@ import java.io.IOException;
 
 public class WindowManager {
 
-    private SimpleBooleanProperty loadWindow = new SimpleBooleanProperty(false);
+    private static SimpleBooleanProperty loadWindow = new SimpleBooleanProperty(false);
 
-    public void changeSceneTo(Main.windows window) {
+    public static void changeSceneTo(Main.windows window) {
         try {
             loadWindow.set(true);
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/windows/"+window.name()+".fxml"));
+            Parent parent = FXMLLoader.load(WindowManager.class.getResource("/view/windows/"+window.name()+".fxml"));
             Main.primaryStage.setScene(new Scene(parent));
             loadWindow.set(false);
         } catch (IOException e) {
@@ -24,11 +24,11 @@ public class WindowManager {
         }
     }
 
-    public void openStageOf(Main.windows window){
+    public static void openStageOf(Main.windows window){
         try {
             Main.secStage =new Stage();
             loadWindow.set(true);
-            Parent root = FXMLLoader.load(getClass().getResource("/view/windows/"+window.name()+".fxml"));
+            Parent root = FXMLLoader.load(WindowManager.class.getResource("/view/windows/"+window.name()+".fxml"));
             Main.secStage.setScene(new Scene(root));
             loadWindow.set(false);
             Main.secStage.show();
@@ -37,7 +37,7 @@ public class WindowManager {
         }
     }
 
-    public SimpleBooleanProperty loadWindowProperty() {
+    public static SimpleBooleanProperty loadWindowProperty() {
         return loadWindow;
     }
 }

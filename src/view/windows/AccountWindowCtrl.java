@@ -29,84 +29,84 @@ public class AccountWindowCtrl extends BaseWindowCtrl{
     private PDFImporter pdfLoad;
     private Renamer renamer;
 
-    public void initialize() {
-        // ** Ansicht initialisieren ***
-        mi_save.setDisable(true);
-        lbl_account.setText(Main.currentAccount.getName());
-        new TransactionChart().putInto(diagrammContainer);
-        tabPane.getTabs().clear();
-//        for(ArrayList<Transaction> year: Main.currentAccount.getYears_Transaction()){
-//            tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear()+"", new TransactionTable(year)));
-//        }
-        new SumTable().putInto(sumContainer);
-        // ******
-        // *** Threads tracken ***
-        Main.editController.renameRunningProperty().addListener((observableValue, aBoolean, t1) -> {
-            if(t1){
-                renamer = Main.editController.getRenamer();
-                pb_year1.progressProperty().bind(renamer.progressYearProperty());
-                pb_transa1.progressProperty().bind(renamer.progressTransactionProperty());
-                chPane.setVisible(true);
-            }else {
-                renamer =null;
-                chPane.setVisible(false);
-            }
-        });
-        Main.ioController.saveRunningProperty().addListener((observableValue, aBoolean, t1) -> {
-            if(t1){
-                saver = Main.ioController.getSaver();
-                pb_year.progressProperty().bind(saver.progressYearProperty());
-                pb_transa.progressProperty().bind(saver.progressTransactionProperty());
-                savePane.setVisible(true);
-            }else {
-                saver =null;
-                savePane.setVisible(false);
-            }
-        });
-        Main.ioController.pdfLoadRunningProperty().addListener((observableValue, aBoolean, t1) -> {
-            if(t1){
-                pdfLoad = Main.ioController.getPdfLoader();
-                pb_pdf.progressProperty().bind(pdfLoad.progressProperty());
-                pdfPane.setVisible(true);
-            }else {
-                pdfLoad =null;
-                pdfPane.setVisible(false);
-            }
-        });
-        // ******
-    }
-
-
-
-    public void back(){
-        Main.windowManager.changeSceneTo(Main.windows.Start);
-    }
-
-    public void newTransaction() {
-        Main.windowManager.openStageOf(Main.windows.NewTransaction);
-    }
-
-    public void save() {
-
-    }
-
-    public void saveUnder() {
-        ViewUtils.setPath();
-        Main.ioController.startSave();
-        mi_save.setDisable(true);
-    }
-
-
-    public void readPDF()  {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("PDF auswählen");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
-        List<File> files = chooser.showOpenMultipleDialog(Main.primaryStage);
-        Main.ioController.startPDFImport(files);
-    }
-
-    public void renameReason(){
-        Main.windowManager.openStageOf(Main.windows.RenameWindow);
-        mi_save.setDisable(false);
-    }
+//    public void initialize() {
+//        // ** Ansicht initialisieren ***
+//        mi_save.setDisable(true);
+//        lbl_account.setText(Main.currentAccount.getName());
+//        new TransactionChart().putInto(diagrammContainer);
+//        tabPane.getTabs().clear();
+////        for(ArrayList<Transaction> year: Main.currentAccount.getYears_Transaction()){
+////            tabPane.getTabs().add(new Tab(year.get(0).getDate().getYear()+"", new TransactionTable(year)));
+////        }
+//        new SumTable().putInto(sumContainer);
+//        // ******
+//        // *** Threads tracken ***
+//        Main.editController.renameRunningProperty().addListener((observableValue, aBoolean, t1) -> {
+//            if(t1){
+//                renamer = Main.editController.getRenamer();
+//                pb_year1.progressProperty().bind(renamer.progressYearProperty());
+//                pb_transa1.progressProperty().bind(renamer.progressTransactionProperty());
+//                chPane.setVisible(true);
+//            }else {
+//                renamer =null;
+//                chPane.setVisible(false);
+//            }
+//        });
+//        Main.ioController.saveRunningProperty().addListener((observableValue, aBoolean, t1) -> {
+//            if(t1){
+//                saver = Main.ioController.getSaver();
+//                pb_year.progressProperty().bind(saver.progressYearProperty());
+//                pb_transa.progressProperty().bind(saver.progressTransactionProperty());
+//                savePane.setVisible(true);
+//            }else {
+//                saver =null;
+//                savePane.setVisible(false);
+//            }
+//        });
+//        Main.ioController.pdfLoadRunningProperty().addListener((observableValue, aBoolean, t1) -> {
+//            if(t1){
+//                pdfLoad = Main.ioController.getPdfLoader();
+//                pb_pdf.progressProperty().bind(pdfLoad.progressProperty());
+//                pdfPane.setVisible(true);
+//            }else {
+//                pdfLoad =null;
+//                pdfPane.setVisible(false);
+//            }
+//        });
+//        // ******
+//    }
+//
+//
+//
+//    public void back(){
+//        Main.windowManager.changeSceneTo(Main.windows.Start);
+//    }
+//
+//    public void newTransaction() {
+//        Main.windowManager.openStageOf(Main.windows.NewTransaction);
+//    }
+//
+//    public void save() {
+//
+//    }
+//
+//    public void saveUnder() {
+//        ViewUtils.setPath();
+//        Main.ioController.startSave();
+//        mi_save.setDisable(true);
+//    }
+//
+//
+//    public void readPDF()  {
+//        FileChooser chooser = new FileChooser();
+//        chooser.setTitle("PDF auswählen");
+//        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
+//        List<File> files = chooser.showOpenMultipleDialog(Main.primaryStage);
+//        Main.ioController.startPDFImport(files);
+//    }
+//
+//    public void renameReason(){
+//        Main.windowManager.openStageOf(Main.windows.RenameWindow);
+//        mi_save.setDisable(false);
+//    }
 }

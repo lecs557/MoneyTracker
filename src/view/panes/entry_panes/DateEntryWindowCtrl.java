@@ -1,10 +1,12 @@
-package view.panes;
+package view.panes.entry_panes;
 
 import javafx.scene.control.TextField;
+import view.panes.contentable;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class DateEntryWindowCtrl {
+public class DateEntryWindowCtrl implements contentable {
 
     public TextField tf_day;
     public TextField tf_month;
@@ -37,5 +39,11 @@ public class DateEntryWindowCtrl {
                 tf_year.setText(oldValue);
             }
         });
+    }
+
+    @Override
+    public String getContent() {
+        String date = tf_year.getText()+"-"+tf_month.getText()+"-"+tf_day.getText();
+        return date;
     }
 }

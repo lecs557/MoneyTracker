@@ -15,11 +15,9 @@ public class Main extends Application {
     public static Stage secStage;
 
     public enum types {Lastschrift, Gutschrift, Gehalt, Überweisung}
-    public static Profile currentAccount;
+
 
     // *** Controller ***
-    public static WindowManager windowManager;
-    public static ProfileAccountManager accountManager;
     public static IOController ioController;
     public static EditController editController;
 
@@ -27,16 +25,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException{
         Main.primaryStage =primaryStage;
 
-        windowManager=new WindowManager();
-        accountManager= new ProfileAccountManager();
         ioController = new IOController();
         editController = new EditController();
 
-        ArrayList<Profile> ssdd = DatabaseController.loadStoreClass(Profile.class);
-        accountManager.setProfiles(ssdd);
+        ArrayList<Profile> profiles = DatabaseController.loadStoreClass(Profile.class);
+        ProfileAccountManager.setProfiles(profiles);
 
-        windowManager.changeSceneTo(windows.Start);
-        primaryStage.setTitle("Finanzen");
+        WindowManager.changeSceneTo(windows.Start);
+        primaryStage.setTitle("Aurum Observa");
         primaryStage.show();
     }
 

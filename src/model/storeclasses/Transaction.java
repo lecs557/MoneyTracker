@@ -1,41 +1,35 @@
 package model.storeclasses;
 
-import java.time.LocalDate;
+import view.panes.entry_panes.AmountEntry;
+import view.panes.entry_panes.DateEntry;
+import view.panes.entry_panes.StringEntry;
+
 import java.util.ArrayList;
 
 public class Transaction extends StoreClass {
 
-    private int id;
-    private LocalDate date;
+    private String date;
     private String purpose;
-    private int amount;
+    private String amount;
     private int balance;
 
     public Transaction() {
         setTableName("Transactions");
         ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("Id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
-        fieldNames.add(new FieldName("Date", "date","DATE"));
-        fieldNames.add(new FieldName("Purpose", "purpose","TEXT"));
-        fieldNames.add(new FieldName("Amount", "amount","int"));
+        fieldNames.add(FieldName.storeId());
+        fieldNames.add(new FieldName("Date", "date","DATE", DateEntry.class));
+        fieldNames.add(new FieldName("Purpose", "purpose","TEXT", StringEntry.class));
+        fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
         setFieldNames(fieldNames);
-        ArrayList<FieldName> foreignKeys = new ArrayList<FieldName>();
-        foreignKeys.add(new FieldName("BankAccount","bank_account_id","INTEGER"));
+        ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
+        foreignKeys.add(new ForeignKey<BankAccount>("Bank_Account", new BankAccount()));
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -47,11 +41,11 @@ public class Transaction extends StoreClass {
         this.purpose = purpose;
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -62,5 +56,4 @@ public class Transaction extends StoreClass {
     public void setBalance(int balance) {
         this.balance = balance;
     }
-
 }

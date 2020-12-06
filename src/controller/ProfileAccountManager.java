@@ -6,17 +6,26 @@ import java.util.ArrayList;
 
 public class ProfileAccountManager {
 
-    private ArrayList<Profile> profiles = new ArrayList();
+    private static ArrayList<Profile> profiles = new ArrayList<>();
+    private static Profile currentAccount;
 
-    public void addProfile(Profile acc){
+    public static void addProfile(Profile acc){
         profiles.add(acc);
     }
 
-    public ArrayList<Profile> getProfiles() {
+    public static ArrayList<Profile> getProfiles() {
         return profiles;
     }
 
-    public void setProfiles(ArrayList<Profile> profiles) {
-        this.profiles = profiles;
+    public static void setProfiles(ArrayList<Profile> profiles) {
+        ProfileAccountManager.profiles = profiles;
+    }
+
+    public static Profile getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public static void setCurrentAccount(Profile currentAccount) {
+        ProfileAccountManager.currentAccount = currentAccount;
     }
 }

@@ -2,7 +2,7 @@ package view.windows;
 
 import javafx.scene.layout.Pane;
 import model.Main;
-import view.panes.StringEntryWindowCtrl;
+import view.panes.entry_panes.StringEntryWindowCtrl;
 
 public class NewTransactionCtrl {
 

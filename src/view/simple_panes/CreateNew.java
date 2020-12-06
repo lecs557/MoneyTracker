@@ -10,12 +10,15 @@ import model.storeclasses.FieldName;
 import model.storeclasses.StoreClass;
 import view.panes.EntryPane;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class CreateNew extends Region {
 
     private StoreClass storeClass;
     private SimpleStringProperty className = new SimpleStringProperty("model.storeclasses.Transaction");
 
-    public CreateNew() {
+    public CreateNew() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         try {
             storeClass = (StoreClass) Class.forName(classNameProperty().get()).getDeclaredConstructor().newInstance();
             getChildren().clear();
@@ -30,7 +33,8 @@ public class CreateNew extends Region {
                 HBox hbox = new HBox();
                 Label label = new Label(name.getProgramName());
                 label.setPrefWidth(190);
-                EntryPane entryPane = new EntryPane(name.getProgramName(), save, storeClass);
+                Constructor<? extends EntryPane> constructor = name.getEntryClass().getDeclaredConstructor(String.class,Button.class,StoreClass.class);
+                EntryPane entryPane = constructor.newInstance(name.getProgramName(), save, storeClass);
                 hbox.getChildren().addAll(label, entryPane.getPane());
                 vBox.getChildren().add(hbox);
             }

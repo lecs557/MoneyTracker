@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.panes.DateEntryWindowCtrl">
+<HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.panes.entry_panes.DateEntryWindowCtrl">
    <children>
       <TextField fx:id="tf_day" prefHeight="25.0" prefWidth="33.0" />
       <Label text=".">

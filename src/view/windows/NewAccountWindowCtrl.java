@@ -40,7 +40,7 @@ public class NewAccountWindowCtrl {
         Profile profile = new Profile();
         profile.setName(tb_name.getText());
         profile.setId(DatabaseController.storeObject(profile));
-        Main.accountManager.addProfile(profile);
+//        Main.accountManager.addProfile(profile);
         Main.secStage.close();
     }
 

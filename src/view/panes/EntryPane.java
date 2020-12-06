@@ -53,7 +53,8 @@ public abstract class EntryPane {
         return new TextField();
     }
 
-    public void setMyNode(MyNode myNode) {
-        this.myNode = myNode;
+    public void setMyNodePath(String path) {
+        this.myNode = new MyNode();
+        myNode.setPath(path);
     }
 }

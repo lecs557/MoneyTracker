@@ -1,5 +1,7 @@
 package model.storeclasses;
 
+import view.panes.entry_panes.StringEntry;
+
 import java.util.ArrayList;
 
 public class Profile extends StoreClass {
@@ -12,7 +14,7 @@ public class Profile extends StoreClass {
         setTableName("Profiles");
         ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
         fieldNames.add(FieldName.storeId());
-        fieldNames.add(new FieldName("Name", "name","TEXT"));
+        fieldNames.add(new FieldName("Name", "name","TEXT", StringEntry.class));
         setFieldNames(fieldNames);
     }
 
@@ -21,6 +23,7 @@ public class Profile extends StoreClass {
     }
 
     public void setName(String name) {
+        System.out.println("NAME SET");
         this.name = name;
     }
 

@@ -1,5 +1,7 @@
 package model.storeclasses;
 
+import view.panes.entry_panes.StringEntry;
+
 import java.util.ArrayList;
 
 public class BankAccount extends StoreClass {
@@ -12,7 +14,7 @@ public class BankAccount extends StoreClass {
         setTableName("BankAccount");
         ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
         fieldNames.add(FieldName.storeId());
-        fieldNames.add(new FieldName("BankName", "bank_name","TEXT"));
+        fieldNames.add(new FieldName("BankName", "bank_name","TEXT", StringEntry.class));
         setFieldNames(fieldNames);
         ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
         foreignKeys.add(new ForeignKey<Profile>("Profiles", new Profile()));
@@ -35,16 +37,4 @@ public class BankAccount extends StoreClass {
         this.bankName = bankName;
     }
 
-    @Override
-    public String getTableName() {
-        return "Back_Accounts";
-    }
-
-    @Override
-    public ArrayList<FieldName> getFieldNames() {
-        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(new FieldName("Id", "id","INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT"));
-        fieldNames.add(new FieldName("BankName", "bank_name","TEXT"));
-        return fieldNames;
-    }
 }
