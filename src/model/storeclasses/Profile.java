@@ -23,7 +23,6 @@ public class Profile extends StoreClass {
     }
 
     public void setName(String name) {
-        System.out.println("NAME SET");
         this.name = name;
     }
 

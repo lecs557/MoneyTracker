@@ -1,11 +1,10 @@
 package controller;
 
-import javafx.application.Platform;
-import view.windows.StartWindowCtrl;
+import view.windows.LogInWindowCtrl;
 
 public class ViewController {
 
-    private StartWindowCtrl startWindowCtrl;
+    private LogInWindowCtrl startWindowCtrl;
 
 
 }

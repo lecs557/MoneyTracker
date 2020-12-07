@@ -2,6 +2,7 @@ package view.windows;
 
 
 import controller.ProfileAccountManager;
+import controller.WindowManager;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -13,10 +14,9 @@ import model.Main;
 import model.threads.Loader;
 
 
-public class StartWindowCtrl extends BaseWindowCtrl {
+public class LogInWindowCtrl extends BaseWindowCtrl {
 
     public ChoiceBox<Profile> chb_profiles;
-
 
     public void initialize() {
         chb_profiles.getItems().addAll(ProfileAccountManager.getProfiles());
@@ -40,6 +40,7 @@ public class StartWindowCtrl extends BaseWindowCtrl {
         Profile selected = chb_profiles.getSelectionModel().getSelectedItem();
         if(selected!=null){
             ProfileAccountManager.setCurrentAccount(selected);
+            WindowManager.changeSceneTo(Main.windows.Overview);
         }
     }
 }

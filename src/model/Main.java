@@ -4,13 +4,14 @@ import controller.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.storeclasses.Profile;
+import view.simple_panes.CreateNew;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main extends Application {
 
-    public enum windows {Start,Account,NewAccount,NewTransaction,RenameWindow,TransactionWindow};
+    public enum windows {LogIn, Overview ,NewAccount,NewTransaction,RenameWindow,TransactionWindow};
     public static Stage primaryStage;
     public static Stage secStage;
 
@@ -31,9 +32,13 @@ public class Main extends Application {
         ArrayList<Profile> profiles = DatabaseController.loadStoreClass(Profile.class);
         ProfileAccountManager.setProfiles(profiles);
 
-        WindowManager.changeSceneTo(windows.Start);
+        CreateNew createNew = new CreateNew();
+        createNew.setClassName("model.storeclasses.BankAccount");
+        WindowManager.openStageOf(createNew);
+        WindowManager.changeSceneTo(windows.LogIn);
         primaryStage.setTitle("Aurum Observa");
         primaryStage.show();
+        primaryStage.centerOnScreen();
     }
 
     public static void main(String[] args) {

@@ -32,8 +32,6 @@ public abstract class EntryPane {
             Method setter = storeClass.getClass().getMethod("set"+name, Class.forName("java.lang.String"));
             if (myNode != null) {
                 setter.invoke(storeClass, myNode.getContent());
-            } else {
-                setter.invoke(storeClass, myNode.getContent());
             }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

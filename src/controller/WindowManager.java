@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Main;
+import view.simple_panes.CreateNew;
 
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ public class WindowManager {
             loadWindow.set(true);
             Parent parent = FXMLLoader.load(WindowManager.class.getResource("/view/windows/"+window.name()+".fxml"));
             Main.primaryStage.setScene(new Scene(parent));
+            Main.primaryStage.centerOnScreen();
             loadWindow.set(false);
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,6 +37,16 @@ public class WindowManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void openStageOf(CreateNew createNew){
+            Main.secStage =new Stage();
+            loadWindow.set(true);
+            Parent root = createNew;
+            Main.secStage.setScene(new Scene(root));
+            Main.secStage.centerOnScreen();
+            loadWindow.set(false);
+            Main.secStage.show();
     }
 
     public static SimpleBooleanProperty loadWindowProperty() {

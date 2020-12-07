@@ -4,13 +4,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXMLLoader;
 
 import javafx.scene.layout.Region;
+import model.PathStore;
 
 import java.io.IOException;
 
 public class MyNode extends Region {
 
     private FXMLLoader loader;
-    private SimpleStringProperty path = new SimpleStringProperty("/view/panes/test");
+    private SimpleStringProperty path = new SimpleStringProperty(PathStore.ENTRYPANE+"StringEntry");
 
     public MyNode()  {
         try {
