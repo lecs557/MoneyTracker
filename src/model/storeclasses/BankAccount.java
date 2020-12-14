@@ -21,6 +21,10 @@ public class BankAccount extends StoreClass {
         setForeignKeys(foreignKeys);
     }
 
+    public void setForeignKeyProfile(Profile profile){
+        ((ForeignKey<Profile>)getForeignKeys().get(0)).setForeign(profile);
+    }
+
     public int getId() {
         return id;
     }

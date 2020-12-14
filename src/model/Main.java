@@ -32,9 +32,6 @@ public class Main extends Application {
         ArrayList<Profile> profiles = DatabaseController.loadStoreClass(Profile.class);
         ProfileAccountManager.setProfiles(profiles);
 
-        CreateNew createNew = new CreateNew();
-        createNew.setClassName("model.storeclasses.BankAccount");
-        WindowManager.openStageOf(createNew);
         WindowManager.changeSceneTo(windows.LogIn);
         primaryStage.setTitle("Aurum Observa");
         primaryStage.show();

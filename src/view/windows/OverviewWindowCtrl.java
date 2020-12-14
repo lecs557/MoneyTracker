@@ -1,5 +1,6 @@
 package view.windows;
 
+import controller.DatabaseController;
 import controller.ProfileAccountManager;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
@@ -7,6 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import model.Main;
+import model.storeclasses.BankAccount;
+import model.storeclasses.ForeignKey;
+import model.storeclasses.Group;
+import model.storeclasses.Profile;
 import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
@@ -20,6 +25,9 @@ import java.util.List;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
+    private Profile currentAccount;
+    private BankAccount bankAccount;
+
     public Label lbl_account;
     public TabPane tabPane;
     public Pane diagrammContainer;
@@ -28,12 +36,18 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public Pane savePane;
     public Pane chPane;
     public Pane pdfPane;
+    public ListView<BankAccount> lv_bankAccounts;
 
     private Saver saver;
     private PDFImporter pdfLoad;
     private Renamer renamer;
 
     public void initialize() {
+        currentAccount = ProfileAccountManager.getCurrentAccount();
+        bankAccount = new BankAccount();
+        bankAccount.setForeignKeyProfile(currentAccount);
+        lbl_account.setText(currentAccount.getName());
+        lv_bankAccounts.getItems().addAll(DatabaseController.loadStoreClassFrom(bankAccount));
 
     }
 
@@ -44,8 +58,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
 
     public void newBA(ActionEvent actionEvent) {
-        CreateNew createNew = new CreateNew();
-        createNew.setClassName("model.storeclasses.BankAccount");
+        CreateNew<BankAccount> createNew = new CreateNew<>(bankAccount);
         WindowManager.openStageOf(createNew);
     }
 }

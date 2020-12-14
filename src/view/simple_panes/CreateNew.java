@@ -13,21 +13,24 @@ import view.panes.EntryPane;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class CreateNew extends Region {
+public class CreateNew<T extends StoreClass> extends VBox {
 
-    private StoreClass storeClass;
-    private SimpleStringProperty className = new SimpleStringProperty("model.storeclasses.Profile");
+    private VBox vb_fields;
+    private Button btn_save;
 
-    public CreateNew() {
-        try {
-            storeClass = (StoreClass) Class.forName(classNameProperty().get()).getDeclaredConstructor().newInstance();
-            getChildren().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        VBox vBox = new VBox();
-        Button save = new Button("SAVE");
-        vBox.setSpacing(15);
+    private T storeClass;
+
+    public CreateNew(T storeCls){
+        storeClass=storeCls;
+        vb_fields = new VBox();
+        vb_fields.setSpacing(15);
+        btn_save = new Button("SAVE");
+        addStoreClassFields();
+    }
+
+    private void addStoreClassFields() {
+        Label lbl_header = new Label("Erstelle: " + storeClass.getTableName());
+        lbl_header.getStyleClass().add("lbl_header");
         for (FieldName name : storeClass.getFieldNames()) {
             if (!name.getProgramName().equals("Id")) {
                 HBox hbox = new HBox();
@@ -36,53 +39,16 @@ public class CreateNew extends Region {
                 Constructor<? extends EntryPane> constructor = null;
                 try {
                     constructor = name.getEntryClass().getDeclaredConstructor(String.class, Button.class, StoreClass.class);
-                    EntryPane entryPane = constructor.newInstance(name.getProgramName(), save, storeClass);
+                    EntryPane entryPane = constructor.newInstance(name.getProgramName(), btn_save, storeClass);
                     hbox.getChildren().addAll(label, entryPane.getPane());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                vBox.getChildren().add(hbox);
+                vb_fields.getChildren().add(hbox);
             }
         }
-        vBox.getChildren().add(save);
-        getChildren().add(vBox);
-
-        className.addListener((observableValue, s, t1) -> {
-            try {
-                storeClass = (StoreClass) Class.forName(classNameProperty().get()).getDeclaredConstructor().newInstance();
-                getChildren().clear();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            vBox.getChildren().clear();
-            vBox.setSpacing(15);
-            for (FieldName name : storeClass.getFieldNames()) {
-                if (!name.getProgramName().equals("Id")) {
-                    HBox hbox = new HBox();
-                    Label label = new Label(name.getProgramName());
-                    label.setPrefWidth(190);
-                    Constructor<? extends EntryPane> constructor = null;
-                    try {
-                        constructor = name.getEntryClass().getDeclaredConstructor(String.class, Button.class, StoreClass.class);
-                        EntryPane entryPane = constructor.newInstance(name.getProgramName(), save, storeClass);
-                        hbox.getChildren().addAll(label, entryPane.getPane());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    vBox.getChildren().add(hbox);
-                }
-            }
-            vBox.getChildren().add(save);
-            getChildren().add(vBox);
-        });
-    }
-
-
-    public SimpleStringProperty classNameProperty() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className.set(className);
+        vb_fields.getChildren().add(btn_save);
+        getChildren().add(lbl_header);
+        getChildren().add(vb_fields);
     }
 }
