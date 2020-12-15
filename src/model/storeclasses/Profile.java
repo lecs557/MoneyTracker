@@ -1,5 +1,6 @@
 package model.storeclasses;
 
+import controller.ProfileAccountManager;
 import view.panes.entry_panes.StringEntry;
 
 import java.util.ArrayList;
@@ -30,5 +31,12 @@ public class Profile extends StoreClass {
         return name;
     }
 
+    public ArrayList<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public void addBankAccount(BankAccount bankAccount){
+        bankAccounts.add(bankAccount);
+    }
 }
 

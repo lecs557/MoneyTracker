@@ -1,11 +1,15 @@
 package view.simple_panes;
 
+import controller.DatabaseController;
+import controller.ViewController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import model.Main;
 import model.storeclasses.FieldName;
 import model.storeclasses.StoreClass;
 import view.panes.EntryPane;
@@ -47,6 +51,11 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 vb_fields.getChildren().add(hbox);
             }
         }
+        btn_save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent ->{
+            DatabaseController.storeObject(storeClass);
+            ViewController.refresh();
+            Main.secStage.close();
+        });
         vb_fields.getChildren().add(btn_save);
         getChildren().add(lbl_header);
         getChildren().add(vb_fields);

@@ -2,6 +2,7 @@ package view.windows;
 
 import controller.DatabaseController;
 import controller.ProfileAccountManager;
+import controller.ViewController;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -48,7 +49,23 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         bankAccount.setForeignKeyProfile(currentAccount);
         lbl_account.setText(currentAccount.getName());
         lv_bankAccounts.getItems().addAll(DatabaseController.loadStoreClassFrom(bankAccount));
+        lv_bankAccounts.setCellFactory(bankAccountListView -> {
+            ListCell<BankAccount> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(BankAccount bankAccount, boolean b) {
+                    super.updateItem(bankAccount, b);
+                    if (bankAccount != null) {
+                        setText(bankAccount.getBankName());
+                    } else {
+                        setText("");
+                    }
+                }
+            };
+            return cell;
+        });
 
+        ViewController.setBankAccount(bankAccount);
+        ViewController.setLv_bankAccounts(lv_bankAccounts);
     }
 
     public void backToLogin(ActionEvent actionEvent) {
@@ -56,9 +73,12 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         WindowManager.changeSceneTo(Main.windows.LogIn);
     }
 
-
     public void newBA(ActionEvent actionEvent) {
         CreateNew<BankAccount> createNew = new CreateNew<>(bankAccount);
         WindowManager.openStageOf(createNew);
+    }
+
+    public void refresh(){
+
     }
 }

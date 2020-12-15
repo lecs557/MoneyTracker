@@ -88,19 +88,20 @@ public class DatabaseController {
                 }
                 storeClasses.add(storeClass);
             }
+            close();
         } catch(SQLException se){
             se.printStackTrace();
+            close();
+            createTable(storeClass.getClass());
             System.out.println("CREATE TABLE");
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
             close();
         }
         return  storeClasses;
     }
 
-    public static <T extends StoreClass> String storeObject(T storeClass){
-        String id="-1" ;
+    public static <T extends StoreClass> void storeObject(T storeClass){
         try {
             open();
             StringBuilder insert = new StringBuilder("INSERT INTO ");
@@ -117,13 +118,17 @@ public class DatabaseController {
                     if (fieldNameIterator.hasNext()) {
                         insert.append(", ");
                         values.append(", ");
-                    }else {
-                        insert.append(", ");
-                        values.append(")");
                     }
                 }
             }
             Iterator<ForeignKey<? extends StoreClass>> foreignIterator = storeClass.getForeignKeys().iterator();
+            if(foreignIterator.hasNext()){
+                insert.append(", ");
+                values.append(", ");
+            }else {
+                insert.append(")");
+                values.append(")");
+            }
             while (foreignIterator.hasNext()) {
                 ForeignKey<? extends StoreClass> name = foreignIterator.next();
                 insert.append(name.getSqlName());
@@ -132,23 +137,21 @@ public class DatabaseController {
                     insert.append(", ");
                     values.append(", ");
                 }else {
-                    insert.append(", ");
+                    insert.append(")");
                     values.append(")");
                 }
             }
             System.out.println(insert.toString()+values.toString());
             stmt.executeUpdate(insert.toString()+values.toString());
-            ResultSet rs = stmt.executeQuery("SELECT id FROM "+ storeClass.getTableName() +" ORDER BY id DESC LIMIT 1");
-            id = rs.getString("id");
+            close();
         } catch(SQLException se){
             se.printStackTrace();
             System.out.println("CREATE TABLE");
+            close();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
             close();
         }
-        return id;
     }
 
     public static <T extends StoreClass> void  createTable(Class<T> storeClass) {
@@ -161,7 +164,7 @@ public class DatabaseController {
             Iterator<FieldName> iterator = dummyClass.getFieldNames().iterator();
             while(iterator.hasNext()){
                 FieldName name = iterator.next();
-                sql.append("'").append(name.getSqlType()).append("' ");
+                sql.append(name.getSqlName()).append(" ");
                 sql.append(name.getSqlType());
                 if(iterator.hasNext()){
                     sql.append(", ");
@@ -175,7 +178,7 @@ public class DatabaseController {
                 ForeignKey<? extends StoreClass> key = foreignkeyIterator.next();
                 sql.append(key.getSqlName()).append(" INTEGER");
                 sql.append(", ");
-                sql.append("FOREIGN KEY(").append(key).append(") ");
+                sql.append("FOREIGN KEY(").append(key.getSqlName()).append(") ");
                 sql.append("REFERENCES ").append(key.getForeign().getTableName());
                 if (foreignkeyIterator.hasNext()) {
                     sql.append(", ");
@@ -189,9 +192,9 @@ public class DatabaseController {
         } catch(SQLException se){
             se.printStackTrace();
             System.out.println("CREATE DataBase");
+            close();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally{
             close();
         }
     }
@@ -206,8 +209,7 @@ public class DatabaseController {
             System.out.println("Database created successfully...");
         } catch(Exception se){
             se.printStackTrace();
-        } finally{
-           close();
+            close();
         }
     }
 
