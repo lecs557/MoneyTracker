@@ -4,6 +4,8 @@ import view.panes.entry_panes.AmountEntry;
 import view.panes.entry_panes.DateEntry;
 import view.panes.entry_panes.StringEntry;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Transaction extends StoreClass {
@@ -22,11 +24,16 @@ public class Transaction extends StoreClass {
         fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
         setFieldNames(fieldNames);
         ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
-        foreignKeys.add(new ForeignKey<BankAccount>("Bank_Account", new BankAccount()));
+        foreignKeys.add(new ForeignKey<>("bank_account_id", new BankAccount()));
+        foreignKeys.add(new ForeignKey<>("group_id", new Group()));
     }
 
     public String getDate() {
         return date;
+    }
+
+    public LocalDate getLocalDate(){
+        return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     public void setDate(String date) {

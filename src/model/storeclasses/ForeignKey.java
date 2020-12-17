@@ -6,7 +6,6 @@ public class ForeignKey<T extends StoreClass> {
 
     private String sqlName;
     private T foreign;
-    private ArrayList<Integer> ids = new ArrayList<>();
 
     public ForeignKey(String sqlName, T foreign) {
         this.sqlName = sqlName;
@@ -23,9 +22,5 @@ public class ForeignKey<T extends StoreClass> {
 
     public void setForeign(T foreign) {
         this.foreign = foreign;
-    }
-
-    public ArrayList<Integer> getIds() {
-        return ids;
     }
 }

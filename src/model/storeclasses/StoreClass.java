@@ -8,6 +8,7 @@ public abstract class StoreClass {
     private String tableName;
     private ArrayList<FieldName> fieldNames;
     private ArrayList<ForeignKey<? extends StoreClass>> foreignKeys;
+    private ArrayList<ForeignKey<? extends StoreClass>> foreignObjects;
 
     public int getId() {
         return id;
@@ -39,5 +40,13 @@ public abstract class StoreClass {
 
     public void setForeignKeys(ArrayList<ForeignKey<? extends StoreClass>> foreignKeys) {
         this.foreignKeys = foreignKeys;
+    }
+
+    public ArrayList<ForeignKey<? extends StoreClass>> getForeignObjects() {
+        return foreignObjects;
+    }
+
+    public void setForeignObjects(ArrayList<ForeignKey<? extends StoreClass>> foreignObjects) {
+        this.foreignObjects = foreignObjects;
     }
 }

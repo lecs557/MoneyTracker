@@ -101,6 +101,104 @@ public class DatabaseController {
         return  storeClasses;
     }
 
+    public static <T extends StoreClass> ArrayList<T> loadtESTStoreClassFrom(T storeClass) {
+        ArrayList<T> storeClasses = new ArrayList<>();
+        try{
+            open();
+            StringBuilder selectBuilder = new StringBuilder("SELECT ");
+            StringBuilder fromBuilder = new StringBuilder("FROM ");
+            StringBuilder whereBuilder = new StringBuilder("WHERE ");
+            Iterator<FieldName> fieldNameIterator = storeClass.getFieldNames().iterator();
+            Iterator<ForeignKey<? extends StoreClass>> foreignObjectIterator = storeClass.getForeignObjects().iterator();
+            fromBuilder.append(storeClass.getTableName());
+
+            while(fieldNameIterator.hasNext()){
+                FieldName fieldName = fieldNameIterator.next();
+                selectBuilder.append(storeClass.getTableName());
+                selectBuilder.append(".").append(fieldName.getSqlName());
+                selectBuilder.append(" AS ").append(storeClass.getTableName());
+                selectBuilder.append(fieldName.getSqlName());
+
+                if(fieldNameIterator.hasNext()){
+                    selectBuilder.append(", ");
+                }
+            }
+
+            if(foreignObjectIterator.hasNext()){
+                selectBuilder.append(", ");
+                fromBuilder.append(", ");
+
+                while(foreignObjectIterator.hasNext()) {
+
+                    ForeignKey<? extends StoreClass> foreignObject = foreignObjectIterator.next();
+
+                    fromBuilder.append(foreignObject.getForeign().getTableName());
+                    whereBuilder.append(foreignObject.getSqlName()).append("=");
+                    whereBuilder.append(foreignObject.getForeign().getTableName());
+                    whereBuilder.append(".id");
+
+                    Iterator<FieldName> foreignObjectFieldNameIterator = foreignObject.getForeign().getFieldNames().iterator();
+                    while (foreignObjectFieldNameIterator.hasNext()) {
+                        FieldName foreignFieldName = foreignObjectFieldNameIterator.next();
+                        selectBuilder.append(foreignObject.getForeign().getTableName());
+                        selectBuilder.append(".").append(foreignFieldName.getSqlName());
+                        selectBuilder.append(" AS ").append(foreignObject.getForeign().getTableName());
+                        selectBuilder.append(foreignFieldName.getSqlName());
+                        if (foreignObjectFieldNameIterator.hasNext()) {
+                            selectBuilder.append(", ");
+                        }
+                    }
+                    if (foreignObjectIterator.hasNext()) {
+                        whereBuilder.append(" AND ");
+                        fromBuilder.append(", ");
+                    }
+                }
+            }
+            Iterator<ForeignKey<? extends StoreClass>> foreignIterator = storeClass.getForeignKeys().iterator();
+            if(!storeClass.getForeignObjects().isEmpty()){
+                whereBuilder.append(" AND ");
+            }
+            while(foreignIterator.hasNext()){
+                ForeignKey<? extends StoreClass> key = foreignIterator.next();
+                whereBuilder.append(key.getSqlName()).append("=").append(key.getForeign().getId());
+                if(foreignIterator.hasNext()){
+                    whereBuilder.append(", ");
+                }
+            }
+
+            System.out.println(selectBuilder+" "+fromBuilder+" "+whereBuilder);
+            ResultSet rs = stmt.executeQuery(selectBuilder+" "+fromBuilder+" "+whereBuilder);
+
+            while(rs.next()){
+                T tempStoreClass = (T) storeClass.getClass().getDeclaredConstructor().newInstance();
+                for(FieldName fieldName: storeClass.getFieldNames()){
+                    Method method = storeClass.getClass().getMethod("set"+fieldName.getProgramName(),Class.forName("java.lang.String"));
+                    method.invoke(tempStoreClass,rs.getString(storeClass.getTableName()+fieldName.getSqlName()));
+                }
+
+                for(ForeignKey<? extends StoreClass> foreignObject: tempStoreClass.getForeignObjects()){
+                    for(FieldName foreignObjectFieldName: foreignObject.getForeign().getFieldNames()){
+                        Method method = foreignObject.getForeign().getClass().getMethod("set"+foreignObjectFieldName.getProgramName(),Class.forName("java.lang.String"));
+                        method.invoke(foreignObject.getForeign(),rs.getString(foreignObject.getForeign().getTableName()+foreignObjectFieldName.getSqlName()));
+                    }
+                    Class<? extends StoreClass> tempclazz = foreignObject.getForeign().getClass();
+                    Method method = storeClass.getClass().getMethod("set"+tempclazz.getSimpleName(),tempclazz);
+                    method.invoke(tempStoreClass,foreignObject.getForeign());
+                }
+                storeClasses.add(tempStoreClass);
+            }
+            close();
+        } catch(SQLException se){
+            se.printStackTrace();
+            close();
+            System.out.println("CREATE TABLE");
+        } catch (Exception e) {
+            e.printStackTrace();
+            close();
+        }
+        return  storeClasses;
+    }
+
     public static <T extends StoreClass> void storeObject(T storeClass){
         try {
             open();
@@ -154,7 +252,7 @@ public class DatabaseController {
         }
     }
 
-    public static <T extends StoreClass> void  createTable(Class<T> storeClass) {
+    public static <T extends StoreClass> void createTable(Class<T> storeClass) {
         try{
             T dummyClass = storeClass.getDeclaredConstructor().newInstance();
             open();

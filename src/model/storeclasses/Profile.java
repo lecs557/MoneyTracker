@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class Profile extends StoreClass {
 
-    private int id;
     private String name;
     private ArrayList<BankAccount> bankAccounts;
 
@@ -17,10 +16,6 @@ public class Profile extends StoreClass {
         fieldNames.add(FieldName.storeId());
         fieldNames.add(new FieldName("Name", "name","TEXT", StringEntry.class));
         setFieldNames(fieldNames);
-    }
-
-    public void setId(String id) {
-        this.id = Integer.parseInt(id);
     }
 
     public void setName(String name) {

@@ -48,7 +48,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         bankAccount = new BankAccount();
         bankAccount.setForeignKeyProfile(currentAccount);
         lbl_account.setText(currentAccount.getName());
-        lv_bankAccounts.getItems().addAll(DatabaseController.loadStoreClassFrom(bankAccount));
+        lv_bankAccounts.getItems().addAll(DatabaseController.loadtESTStoreClassFrom(bankAccount));
         lv_bankAccounts.setCellFactory(bankAccountListView -> {
             ListCell<BankAccount> cell = new ListCell<>() {
                 @Override

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class BankAccount extends StoreClass {
 
-    private int id;
     private String bankName;
-    private ArrayList<Transaction> transactions;
+    private ArrayList<ArrayList<Transaction>> years_transactions;
+    private Profile profile;
 
     public BankAccount() {
         setTableName("BankAccount");
@@ -19,11 +19,39 @@ public class BankAccount extends StoreClass {
         setFieldNames(fieldNames);
         ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
         foreignKeys.add(new ForeignKey<Profile>("profile_id", new Profile()));
+        ArrayList<ForeignKey<? extends StoreClass>> foreignObjects = new ArrayList<>();
+        foreignObjects.add(new ForeignKey<Profile>("profile_id", new Profile()));
         setForeignKeys(foreignKeys);
+        setForeignObjects(foreignObjects);
     }
 
     public void setForeignKeyProfile(Profile profile){
         ((ForeignKey<Profile>)getForeignKeys().get(0)).setForeign(profile);
+    }
+
+    public void processTransactions(ArrayList<Transaction> transactions){
+        int year=0;
+        ArrayList<Transaction> yearTraList = null;
+        for(Transaction curTransaction: transactions){
+            if(curTransaction.getLocalDate().getYear()==year){
+                yearTraList.add(curTransaction);
+            } else {
+                year= curTransaction.getLocalDate().getYear();
+                years_transactions.add(yearTraList);
+                yearTraList=new ArrayList<>();
+            }
+        }
+
+
+
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public String getBankName() {
