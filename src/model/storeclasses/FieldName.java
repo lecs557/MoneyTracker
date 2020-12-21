@@ -8,7 +8,8 @@ public class FieldName {
     private final String programName;
     private final String sqlName;
     private final String sqlType;
-    private final Class<? extends EntryPane> entryClass;
+
+    private  Class<? extends EntryPane> entryClass;
 
     public FieldName(String programName, String sqlName, String sqlType, Class<? extends EntryPane> entryClass) {
         this.programName = programName;
@@ -31,6 +32,10 @@ public class FieldName {
 
     public Class<? extends EntryPane> getEntryClass() {
         return entryClass;
+    }
+
+    public void setEntryClass(Class<? extends EntryPane> entryClass) {
+        this.entryClass = entryClass;
     }
 
     public static FieldName storeId(){

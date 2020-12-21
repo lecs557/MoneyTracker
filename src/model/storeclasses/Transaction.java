@@ -14,26 +14,24 @@ public class Transaction extends StoreClass {
     private String purpose;
     private String amount;
     private int balance;
+    private Group group;
 
     public Transaction() {
-        setTableName("Transactions");
-        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(FieldName.storeId());
+        tableName = "Transactions";
         fieldNames.add(new FieldName("Date", "date","DATE", DateEntry.class));
         fieldNames.add(new FieldName("Purpose", "purpose","TEXT", StringEntry.class));
         fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
-        setFieldNames(fieldNames);
-        ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
         foreignKeys.add(new ForeignKey<>("bank_account_id", new BankAccount()));
         foreignKeys.add(new ForeignKey<>("group_id", new Group()));
     }
 
-    public String getDate() {
-        return date;
-    }
 
     public LocalDate getLocalDate(){
         return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void setDate(String date) {
@@ -62,5 +60,13 @@ public class Transaction extends StoreClass {
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

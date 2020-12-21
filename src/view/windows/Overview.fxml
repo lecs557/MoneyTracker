@@ -19,10 +19,10 @@
          <menus>
             <Menu fx:id="m_file" mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false"  text="Neu" />
-                  <MenuItem mnemonicParsing="false"  text="Änderung" />
-                  <MenuItem mnemonicParsing="false"  text="Importieren..." />
-                  <MenuItem fx:id="mi_save" mnemonicParsing="false"  text="Speichern" />
+                  <MenuItem mnemonicParsing="false" text="Neu" />
+                  <MenuItem mnemonicParsing="false" text="Änderung" />
+                  <MenuItem mnemonicParsing="false" text="Importieren..." />
+                  <MenuItem fx:id="mi_save" mnemonicParsing="false" text="Speichern" />
                   <MenuItem mnemonicParsing="false" text="Speichern unter..." />
                   <MenuItem fx:id="mi_close" mnemonicParsing="false" onAction="#close" text="Schließen" />
                </items>
@@ -87,7 +87,13 @@
             <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="37.0">
                <children>
                   <ListView fx:id="lv_bankAccounts" prefHeight="200.0" prefWidth="173.0" />
-                  <Button fx:id="btn_newBA" mnemonicParsing="false" text="Neues Konto" onAction="#newBA" />
+                  <Button fx:id="btn_newBA" mnemonicParsing="false" onAction="#newBA" text="Neues Konto" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="187.0" layoutY="37.0">
+               <children>
+                  <ListView fx:id="lv_groups" prefHeight="200.0" prefWidth="173.0" />
+                  <Button fx:id="btn_newGroup" mnemonicParsing="false" onAction="#newGroup" text="Neue Gruppe" />
                </children>
             </VBox>
          </children>

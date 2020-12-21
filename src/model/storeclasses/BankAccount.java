@@ -1,6 +1,5 @@
 package model.storeclasses;
 
-import controller.ProfileAccountManager;
 import view.panes.entry_panes.StringEntry;
 
 import java.util.ArrayList;
@@ -9,24 +8,19 @@ public class BankAccount extends StoreClass {
 
     private String bankName;
     private ArrayList<ArrayList<Transaction>> years_transactions;
-    private Profile profile;
 
     public BankAccount() {
-        setTableName("BankAccount");
-        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(FieldName.storeId());
+        tableName="BankAccount";
         fieldNames.add(new FieldName("BankName", "bank_name","TEXT", StringEntry.class));
-        setFieldNames(fieldNames);
-        ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
-        foreignKeys.add(new ForeignKey<Profile>("profile_id", new Profile()));
-        ArrayList<ForeignKey<? extends StoreClass>> foreignObjects = new ArrayList<>();
-        foreignObjects.add(new ForeignKey<Profile>("profile_id", new Profile()));
-        setForeignKeys(foreignKeys);
-        setForeignObjects(foreignObjects);
+        foreignKeys.add(new ForeignKey<>("profile_id", new Profile()));
+    }
+
+    public void setForeignKeysProfile(ArrayList<Profile> profiles){
+        ((ForeignKey<Profile>)getForeignKeys().get(0)).setForeigns(profiles);
     }
 
     public void setForeignKeyProfile(Profile profile){
-        ((ForeignKey<Profile>)getForeignKeys().get(0)).setForeign(profile);
+        ((ForeignKey<Profile>)getForeignKeys().get(0)).getForeigns().set(0,profile);
     }
 
     public void processTransactions(ArrayList<Transaction> transactions){
@@ -41,17 +35,6 @@ public class BankAccount extends StoreClass {
                 yearTraList=new ArrayList<>();
             }
         }
-
-
-
-    }
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
     }
 
     public String getBankName() {

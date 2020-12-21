@@ -11,11 +11,9 @@ public class Profile extends StoreClass {
     private ArrayList<BankAccount> bankAccounts;
 
     public Profile() {
-        setTableName("Profiles");
-        ArrayList<FieldName> fieldNames = new ArrayList<FieldName>();
-        fieldNames.add(FieldName.storeId());
+        tableName = "Profiles";
+        choiceBoxMethodName="Name";
         fieldNames.add(new FieldName("Name", "name","TEXT", StringEntry.class));
-        setFieldNames(fieldNames);
     }
 
     public void setName(String name) {

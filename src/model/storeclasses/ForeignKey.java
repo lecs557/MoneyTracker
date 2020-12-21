@@ -1,26 +1,28 @@
 package model.storeclasses;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class ForeignKey<T extends StoreClass> {
 
     private String sqlName;
-    private T foreign;
+    private ArrayList<T> foreigns = new ArrayList<>();
 
     public ForeignKey(String sqlName, T foreign) {
         this.sqlName = sqlName;
-        this.foreign=foreign;
+        this.foreigns.add(foreign);
     }
 
     public String getSqlName() {
         return sqlName;
     }
 
-    public T getForeign() {
-        return foreign;
+    public ArrayList<T> getForeigns() {
+        return foreigns;
     }
 
-    public void setForeign(T foreign) {
-        this.foreign = foreign;
+    public void setForeigns(ArrayList<T> foreigns) {
+        this.foreigns = foreigns;
     }
 }

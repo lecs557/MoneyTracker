@@ -1,14 +1,20 @@
 package model.storeclasses;
 
+import view.panes.EntryPane;
+
 import java.util.ArrayList;
 
 public abstract class StoreClass {
 
     private int id;
-    private String tableName;
-    private ArrayList<FieldName> fieldNames;
-    private ArrayList<ForeignKey<? extends StoreClass>> foreignKeys;
-    private ArrayList<ForeignKey<? extends StoreClass>> foreignObjects;
+    protected String tableName;
+    protected String choiceBoxMethodName;
+    protected ArrayList<FieldName> fieldNames = new ArrayList<>();
+    protected ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
+
+    public StoreClass() {
+        fieldNames.add(FieldName.storeId());
+    }
 
     public int getId() {
         return id;
@@ -18,35 +24,20 @@ public abstract class StoreClass {
         this.id = Integer.parseInt(id);
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getChoiceBoxMethodName() {
+        return choiceBoxMethodName;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public String getTableName() {
+        return tableName;
     }
 
     public ArrayList<FieldName> getFieldNames() {
         return fieldNames;
     }
 
-    public void setFieldNames(ArrayList<FieldName> fieldNames) {
-        this.fieldNames = fieldNames;
-    }
-
     public ArrayList<ForeignKey<? extends StoreClass>> getForeignKeys() {
         return foreignKeys;
     }
 
-    public void setForeignKeys(ArrayList<ForeignKey<? extends StoreClass>> foreignKeys) {
-        this.foreignKeys = foreignKeys;
-    }
-
-    public ArrayList<ForeignKey<? extends StoreClass>> getForeignObjects() {
-        return foreignObjects;
-    }
-
-    public void setForeignObjects(ArrayList<ForeignKey<? extends StoreClass>> foreignObjects) {
-        this.foreignObjects = foreignObjects;
-    }
 }

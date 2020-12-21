@@ -10,7 +10,7 @@ public class ViewController {
     private static BankAccount bankAccount;
 
     public static void refresh(){
-        lv_bankAccounts.getItems().addAll(DatabaseController.loadStoreClassFrom(bankAccount));
+        lv_bankAccounts.getItems().addAll(DatabaseController.computeStoreClasses(bankAccount));
     }
 
     public static void setLv_bankAccounts(ListView<BankAccount> lv_bankAccounts) {

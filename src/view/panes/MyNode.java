@@ -14,6 +14,16 @@ public class MyNode extends Region {
     private SimpleStringProperty path = new SimpleStringProperty(PathStore.ENTRYPANE+"StringEntry");
 
     public MyNode()  {
+        construct();
+        path.addListener((observableValue, s, t1) -> construct());
+    }
+
+    public MyNode(String path){
+        this.path.set(path);
+        construct();
+    }
+
+    private void construct(){
         try {
             loader = new FXMLLoader(getClass().getResource( path.get()+".fxml"));
             this.getChildren().clear();
@@ -21,15 +31,6 @@ public class MyNode extends Region {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        path.addListener((observableValue, s, t1) -> {
-            try {
-                loader = new FXMLLoader(getClass().getResource( path.get()+".fxml"));
-                this.getChildren().clear();
-                this.getChildren().add(loader.load());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     public String getContent(){

@@ -7,25 +7,20 @@ import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import model.Main;
 import model.storeclasses.BankAccount;
-import model.storeclasses.ForeignKey;
 import model.storeclasses.Group;
 import model.storeclasses.Profile;
 import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.CreateNew;
-import view.simple_panes.SumTable;
-import view.simple_panes.TransactionChart;
-import view.simple_panes.ViewUtils;
 
-import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
+    public ListView lv_groups;
     private Profile currentAccount;
     private BankAccount bankAccount;
 
@@ -48,7 +43,9 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         bankAccount = new BankAccount();
         bankAccount.setForeignKeyProfile(currentAccount);
         lbl_account.setText(currentAccount.getName());
-        lv_bankAccounts.getItems().addAll(DatabaseController.loadtESTStoreClassFrom(bankAccount));
+
+        ArrayList<BankAccount> allBankaccounts = DatabaseController.computeStoreClasses(bankAccount);
+        lv_bankAccounts.getItems().addAll(allBankaccounts);
         lv_bankAccounts.setCellFactory(bankAccountListView -> {
             ListCell<BankAccount> cell = new ListCell<>() {
                 @Override
@@ -63,6 +60,13 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
             };
             return cell;
         });
+
+
+
+
+        Group group = new Group();
+        group.setForeignKeyBankAccount(allBankaccounts);
+        lv_groups.getItems().setAll(DatabaseController.computeStoreClasses(group));
 
         ViewController.setBankAccount(bankAccount);
         ViewController.setLv_bankAccounts(lv_bankAccounts);
@@ -79,6 +83,10 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void refresh(){
+
+    }
+
+    public void newGroup(ActionEvent actionEvent) {
 
     }
 }

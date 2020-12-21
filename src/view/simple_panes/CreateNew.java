@@ -2,20 +2,19 @@ package view.simple_panes;
 
 import controller.DatabaseController;
 import controller.ViewController;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import model.Main;
 import model.storeclasses.FieldName;
+import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
 import view.panes.EntryPane;
+import view.panes.entry_panes.ChoiceBoxEntry;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class CreateNew<T extends StoreClass> extends VBox {
 
@@ -51,6 +50,17 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 vb_fields.getChildren().add(hbox);
             }
         }
+        for (ForeignKey<? extends StoreClass> foreignKey : storeClass.getForeignKeys()) {
+            HBox hbox = new HBox();
+            Label label = new Label(foreignKey.getForeigns().get(0).getClass().getSimpleName());
+            label.setPrefWidth(190);
+            Constructor<? extends EntryPane> constructor = null;
+            EntryPane entryPane = new ChoiceBoxEntry("Id", btn_save, foreignKey.getForeigns().get(0));
+            hbox.getChildren().addAll(label, entryPane.getPane());
+            vb_fields.getChildren().add(hbox);
+        }
+
+
         btn_save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent ->{
             DatabaseController.storeObject(storeClass);
             ViewController.refresh();

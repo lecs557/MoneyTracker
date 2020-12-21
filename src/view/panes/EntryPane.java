@@ -1,24 +1,17 @@
 package view.panes;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import model.storeclasses.StoreClass;
-import view.panes.MyNode;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.LocalDate;
 
 public abstract class EntryPane {
 
     private String name;
-    private MyNode myNode;
     private StoreClass storeClass;
 
     public EntryPane(String name, Button save, StoreClass storeClass) {
@@ -30,9 +23,7 @@ public abstract class EntryPane {
     public void save(){
         try {
             Method setter = storeClass.getClass().getMethod("set"+name, Class.forName("java.lang.String"));
-            if (myNode != null) {
-                setter.invoke(storeClass, myNode.getContent());
-            }
+            setter.invoke(storeClass, getContent());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -44,15 +35,7 @@ public abstract class EntryPane {
         }
     }
 
-    public Region getPane(){
-        if (myNode != null) {
-            return myNode;
-        }
-        return new TextField();
-    }
+    public abstract Region getPane();
 
-    public void setMyNodePath(String path) {
-        this.myNode = new MyNode();
-        myNode.setPath(path);
-    }
+    public abstract String getContent();
 }

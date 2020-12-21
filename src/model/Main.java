@@ -4,7 +4,6 @@ import controller.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.storeclasses.Profile;
-import view.simple_panes.CreateNew;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class Main extends Application {
         ioController = new IOController();
         editController = new EditController();
 
-        ArrayList<Profile> profiles = DatabaseController.loadStoreClass(Profile.class);
+        ArrayList<Profile> profiles = DatabaseController.computeStoreClasses(new Profile());
         ProfileAccountManager.setProfiles(profiles);
 
         WindowManager.changeSceneTo(windows.LogIn);
