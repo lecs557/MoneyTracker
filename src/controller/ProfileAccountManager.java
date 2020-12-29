@@ -1,6 +1,9 @@
 package controller;
 
+import model.storeclasses.BankAccount;
+import model.storeclasses.Group;
 import model.storeclasses.Profile;
+import model.storeclasses.StoreClass;
 
 import java.util.ArrayList;
 
@@ -27,5 +30,15 @@ public class ProfileAccountManager {
 
     public static void setCurrentAccount(Profile currentAccount) {
         ProfileAccountManager.currentAccount = currentAccount;
+    }
+
+    public static ArrayList<? extends StoreClass> getAllProfileList(StoreClass store) {
+        if (store instanceof BankAccount) {
+            return currentAccount.getBankAccounts();
+        } else if (store instanceof Group) {
+            return currentAccount.getGroupss();
+        } else {
+            return new ArrayList<>();
+        }
     }
 }

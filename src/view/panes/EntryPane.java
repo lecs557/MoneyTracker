@@ -8,11 +8,18 @@ import model.storeclasses.StoreClass;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public abstract class EntryPane {
 
     private String name;
     private StoreClass storeClass;
+
+    public EntryPane(String name, Button save, ArrayList<? extends StoreClass> storeClasses) {
+        this.storeClass = storeClasses.get(0);
+        this.name = name;
+        save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> save());
+    }
 
     public EntryPane(String name, Button save, StoreClass storeClass) {
         this.storeClass = storeClass;

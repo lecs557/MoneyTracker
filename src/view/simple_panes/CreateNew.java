@@ -50,12 +50,11 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 vb_fields.getChildren().add(hbox);
             }
         }
-        for (ForeignKey<? extends StoreClass> foreignKey : storeClass.getForeignKeys()) {
+        for (ForeignKey<? extends StoreClass> foreignKey : storeClass.getForeignKeyIterator()) {
             HBox hbox = new HBox();
             Label label = new Label(foreignKey.getForeigns().get(0).getClass().getSimpleName());
             label.setPrefWidth(190);
-            Constructor<? extends EntryPane> constructor = null;
-            EntryPane entryPane = new ChoiceBoxEntry("Id", btn_save, foreignKey.getForeigns().get(0));
+            EntryPane entryPane = new ChoiceBoxEntry("Id", btn_save, foreignKey.getForeigns());
             hbox.getChildren().addAll(label, entryPane.getPane());
             vb_fields.getChildren().add(hbox);
         }

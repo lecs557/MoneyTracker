@@ -1,6 +1,5 @@
 package model.storeclasses;
 
-import view.panes.entry_panes.DateEntry;
 import view.panes.entry_panes.StringEntry;
 
 import java.util.ArrayList;
@@ -14,12 +13,12 @@ public class Group extends StoreClass {
       tableName = "Groups";
       fieldNames.add(new FieldName("GroupName", "group_name","TEXT", StringEntry.class));
       fieldNames.add(new FieldName("Color", "color","TEXT", StringEntry.class));
-      foreignKeys.add(new ForeignKey<>("bank_account_id", new BankAccount()));
+      foreignKeyIterator.add(new ForeignKey<>("bank_account_id", new BankAccount()));
       choiceBoxMethodName ="GroupName";
    }
 
    public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
-      ((ForeignKey<BankAccount>)getForeignKeys().get(0)).setForeigns(bankAccounts);
+      ((ForeignKey<BankAccount>) getForeignKeyIterator().get(0)).setForeigns(bankAccounts);
    }
 
    public String getGroupName() {

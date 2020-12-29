@@ -39,7 +39,7 @@
             </Menu>
          </menus>
       </MenuBar>
-      <AnchorPane layoutX="14.0" layoutY="25.0" prefHeight="580.0" prefWidth="983.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <AnchorPane fx:id="pane" layoutX="14.0" layoutY="25.0" prefHeight="580.0" prefWidth="983.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
             <Pane fx:id="savePane" layoutX="500.0" layoutY="200.0" prefHeight="200.0" prefWidth="430.0" visible="false">
                <children>
@@ -96,6 +96,8 @@
                   <Button fx:id="btn_newGroup" mnemonicParsing="false" onAction="#newGroup" text="Neue Gruppe" />
                </children>
             </VBox>
+            <Button layoutX="474.0" layoutY="42.0" mnemonicParsing="false" onAction="#newTransaction" text="Neue Transaction" />
+            <Button layoutX="475.0" layoutY="151.0" mnemonicParsing="false" onAction="#importTra" text="Importieren" />
          </children>
       </AnchorPane>
    </children>

@@ -3,15 +3,12 @@ package view.windows;
 
 import controller.ProfileAccountManager;
 import controller.WindowManager;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 import model.storeclasses.Profile;
 import model.Main;
-import model.threads.Loader;
+import view.simple_panes.CreateNew;
 
 
 public class LogInWindowCtrl extends BaseWindowCtrl {
@@ -34,6 +31,8 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
                 return null;
             }
         });
+
+        Profile.setItemRegion(() -> chb_profiles.getItems() );
     }
 
     public void ok(ActionEvent actionEvent) {
@@ -42,5 +41,10 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
             ProfileAccountManager.setCurrentAccount(selected);
             WindowManager.changeSceneTo(Main.windows.Overview);
         }
+    }
+
+    public void addProfile(ActionEvent actionEvent) {
+        CreateNew<Profile> createNew = new CreateNew<>(new Profile());
+        WindowManager.openStageOf(createNew);
     }
 }

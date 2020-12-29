@@ -1,6 +1,7 @@
 package view.panes.entry_panes;
 
 import controller.DatabaseController;
+import controller.ProfileAccountManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Region;
@@ -11,14 +12,15 @@ import view.panes.EntryPane;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public class ChoiceBoxEntry extends EntryPane {
 
-    ChoiceBox<StoreClass> chb = new ChoiceBox<>();
+    private ChoiceBox<StoreClass> chb = new ChoiceBox<>();
 
-    public ChoiceBoxEntry(String name, Button save, StoreClass storeClass) {
+    public ChoiceBoxEntry(String name, Button save, ArrayList<? extends StoreClass> storeClass) {
         super(name, save, storeClass);
-        chb.getItems().addAll(DatabaseController.computeStoreClasses(storeClass));
+        chb.getItems().addAll(storeClass);
         chb.setConverter(new StringConverter<StoreClass>() {
             @Override
             public String toString(StoreClass storeClass) {

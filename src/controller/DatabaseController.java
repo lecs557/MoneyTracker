@@ -42,7 +42,7 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<ForeignKey<? extends StoreClass>> foreignIterator = storeClass.getForeignKeys().iterator();
+            Iterator<ForeignKey<? extends StoreClass>> foreignIterator = storeClass.getForeignKeyIterator().iterator();
             if(!foreignIterator.hasNext()) {
                 whereBuilder = new StringBuilder();
             } else {
@@ -110,7 +110,7 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<ForeignKey<? extends StoreClass>> foreignIterator = storeClass.getForeignKeys().iterator();
+            Iterator<ForeignKey<? extends StoreClass>> foreignIterator = storeClass.getForeignKeyIterator().iterator();
             if(foreignIterator.hasNext()){
                 insertBuilder.append(", ");
                 valuesBuilder.append(", ");
@@ -161,7 +161,7 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = dummyClass.getForeignKeys().iterator();
+            Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = dummyClass.getForeignKeyIterator().iterator();
             if(foreignKeyIterator.hasNext()){
                 createTableBuilder.append(", ");
             }

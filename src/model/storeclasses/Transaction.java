@@ -6,7 +6,6 @@ import view.panes.entry_panes.StringEntry;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class Transaction extends StoreClass {
 
@@ -21,8 +20,8 @@ public class Transaction extends StoreClass {
         fieldNames.add(new FieldName("Date", "date","DATE", DateEntry.class));
         fieldNames.add(new FieldName("Purpose", "purpose","TEXT", StringEntry.class));
         fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
-        foreignKeys.add(new ForeignKey<>("bank_account_id", new BankAccount()));
-        foreignKeys.add(new ForeignKey<>("group_id", new Group()));
+        foreignKeyIterator.add(new ForeignKey<>("bank_account_id", new BankAccount()));
+        foreignKeyIterator.add(new ForeignKey<>("group_id", new Group()));
     }
 
 

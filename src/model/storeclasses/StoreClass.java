@@ -1,27 +1,27 @@
 package model.storeclasses;
 
-import view.panes.EntryPane;
-
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public abstract class StoreClass {
 
-    private int id;
+    private String id;
     protected String tableName;
     protected String choiceBoxMethodName;
+    protected String foreignName;
     protected ArrayList<FieldName> fieldNames = new ArrayList<>();
-    protected ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
+    protected ArrayList<ArrayList<? extends StoreClass>> foreignKeys = new ArrayList<>();
 
     public StoreClass() {
         fieldNames.add(FieldName.storeId());
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = Integer.parseInt(id);
+        this.id = id;
     }
 
     public String getChoiceBoxMethodName() {
@@ -32,12 +32,16 @@ public abstract class StoreClass {
         return tableName;
     }
 
-    public ArrayList<FieldName> getFieldNames() {
-        return fieldNames;
+    public String getForeignName() {
+        return foreignName;
     }
 
-    public ArrayList<ForeignKey<? extends StoreClass>> getForeignKeys() {
+    public ArrayList<ArrayList<? extends StoreClass>> getForeignKeys() {
         return foreignKeys;
+    }
+
+    public ArrayList<FieldName> getFieldNames() {
+        return fieldNames;
     }
 
 }

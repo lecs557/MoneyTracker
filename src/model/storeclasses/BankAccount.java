@@ -3,6 +3,7 @@ package model.storeclasses;
 import view.panes.entry_panes.StringEntry;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BankAccount extends StoreClass {
 
@@ -12,15 +13,17 @@ public class BankAccount extends StoreClass {
     public BankAccount() {
         tableName="BankAccount";
         fieldNames.add(new FieldName("BankName", "bank_name","TEXT", StringEntry.class));
-        foreignKeys.add(new ForeignKey<>("profile_id", new Profile()));
+        foreignKeys.add(new ArrayList<Profile>());
+        choiceBoxMethodName="BankName";
     }
 
     public void setForeignKeysProfile(ArrayList<Profile> profiles){
-        ((ForeignKey<Profile>)getForeignKeys().get(0)).setForeigns(profiles);
+        ((ArrayList<Profile>) foreignKeys.get(0)).clear();
+        ((ArrayList<Profile>) foreignKeys.get(0)).addAll(profiles);
     }
 
     public void setForeignKeyProfile(Profile profile){
-        ((ForeignKey<Profile>)getForeignKeys().get(0)).getForeigns().set(0,profile);
+        ((ArrayList<Profile>) getForeignKeys().get(0)).set(0,profile);
     }
 
     public void processTransactions(ArrayList<Transaction> transactions){
@@ -44,5 +47,6 @@ public class BankAccount extends StoreClass {
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
+
 
 }

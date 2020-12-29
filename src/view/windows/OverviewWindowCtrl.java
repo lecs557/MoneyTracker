@@ -6,23 +6,29 @@ import controller.ViewController;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.Main;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
 import model.storeclasses.Profile;
+import model.storeclasses.Transaction;
 import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.CreateNew;
+import view.simple_panes.StoreClassTable;
 
 import java.util.ArrayList;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
     public ListView lv_groups;
+    public AnchorPane pane;
     private Profile currentAccount;
     private BankAccount bankAccount;
+    private Group group;
+    private Transaction transaction;
 
     public Label lbl_account;
     public TabPane tabPane;
@@ -41,7 +47,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public void initialize() {
         currentAccount = ProfileAccountManager.getCurrentAccount();
         bankAccount = new BankAccount();
-        bankAccount.setForeignKeyProfile(currentAccount);
+        bankAccount.getForeignKeyIterator().setForeignKeyProfile(currentAccount);
         lbl_account.setText(currentAccount.getName());
 
         ArrayList<BankAccount> allBankaccounts = DatabaseController.computeStoreClasses(bankAccount);
@@ -61,12 +67,12 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
             return cell;
         });
 
-
-
-
-        Group group = new Group();
+        group = new Group();
         group.setForeignKeyBankAccount(allBankaccounts);
         lv_groups.getItems().setAll(DatabaseController.computeStoreClasses(group));
+
+        transaction = new Transaction();
+
 
         ViewController.setBankAccount(bankAccount);
         ViewController.setLv_bankAccounts(lv_bankAccounts);
@@ -87,6 +93,16 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newGroup(ActionEvent actionEvent) {
+        CreateNew<Group> createNew = new CreateNew<>(group);
+        WindowManager.openStageOf(createNew);
+    }
+
+    public void newTransaction(ActionEvent actionEvent) {
+        CreateNew<Transaction> createNew = new CreateNew<>(transaction);
+        WindowManager.openStageOf(createNew);
+    }
+
+    public void importTra(ActionEvent actionEvent) {
 
     }
 }
