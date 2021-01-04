@@ -8,17 +8,20 @@ public class Group extends StoreClass {
 
    private String groupName;
    private String colorHex;
+   private String bankAccountId;
 
    public Group() {
       tableName = "Groups";
+      foreignName = new FieldName("GroupId","group_id","",null);
       fieldNames.add(new FieldName("GroupName", "group_name","TEXT", StringEntry.class));
       fieldNames.add(new FieldName("Color", "color","TEXT", StringEntry.class));
-      foreignKeyIterator.add(new ForeignKey<>("bank_account_id", new BankAccount()));
+      foreignKeys.add(new ArrayList<BankAccount>());
       choiceBoxMethodName ="GroupName";
    }
 
    public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
-      ((ForeignKey<BankAccount>) getForeignKeyIterator().get(0)).setForeigns(bankAccounts);
+      foreignKeys.get(0).clear();
+      ((ArrayList<BankAccount>) foreignKeys.get(0)).addAll(bankAccounts);
    }
 
    public String getGroupName() {

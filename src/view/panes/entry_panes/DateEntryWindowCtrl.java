@@ -46,4 +46,12 @@ public class DateEntryWindowCtrl implements contentable {
         String date = tf_year.getText()+"-"+tf_month.getText()+"-"+tf_day.getText();
         return date;
     }
+
+    @Override
+    public void setContent(String content) {
+        String[] stringArray =content.split("-");
+        tf_year.setText(stringArray[0]);
+        tf_month.setText(stringArray[1]);
+        tf_day.setText(stringArray[2]);
+    }
 }

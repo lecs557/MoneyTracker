@@ -24,4 +24,9 @@ public class AmountEntry extends EntryPane {
     public String getContent() {
         return myNode.getContent();
     }
+
+    @Override
+    public void setContent(String content) {
+        myNode.setContent(content);
+    }
 }

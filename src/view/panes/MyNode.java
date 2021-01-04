@@ -33,6 +33,12 @@ public class MyNode extends Region {
         }
     }
 
+    public void setContent(String content) {
+        if (loader.getController() instanceof contentable) {
+            ((contentable) loader.getController()).setContent(content);
+        }
+    }
+
     public String getContent(){
         if(loader.getController() instanceof contentable){
             return ((contentable) loader.getController()).getContent();

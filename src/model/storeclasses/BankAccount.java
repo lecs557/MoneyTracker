@@ -8,10 +8,12 @@ import java.util.Iterator;
 public class BankAccount extends StoreClass {
 
     private String bankName;
+    private String profileId;
     private ArrayList<ArrayList<Transaction>> years_transactions;
 
     public BankAccount() {
         tableName="BankAccount";
+        foreignName = new FieldName("BankAccountId","bankaccount_id","",null);
         fieldNames.add(new FieldName("BankName", "bank_name","TEXT", StringEntry.class));
         foreignKeys.add(new ArrayList<Profile>());
         choiceBoxMethodName="BankName";

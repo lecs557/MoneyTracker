@@ -10,12 +10,13 @@ public class Profile extends StoreClass {
     private String name;
     private static ItemRegion itemRegion;
     private ArrayList<BankAccount> bankAccounts;
-    private ArrayList<Group> groupss;
+    private ArrayList<Group> groups;
 
     public Profile() {
         tableName = "Profiles";
-        choiceBoxMethodName="Name";
+        foreignName = new FieldName("ProfileId","profile_id","",null);
         fieldNames.add(new FieldName("Name", "name","TEXT", StringEntry.class));
+        choiceBoxMethodName="Name";
     }
 
     public void setName(String name) {
@@ -38,12 +39,12 @@ public class Profile extends StoreClass {
         this.bankAccounts = bankAccounts;
     }
 
-    public ArrayList<Group> getGroupss() {
-        return groupss;
+    public ArrayList<Group> getGroups() {
+        return groups;
     }
 
-    public void setGroupss(ArrayList<Group> groupss) {
-        this.groupss = groupss;
+    public void setGroups(ArrayList<Group> groups) {
+        this.groups = groups;
     }
 
     public ArrayList<BankAccount> getBankAccounts() {

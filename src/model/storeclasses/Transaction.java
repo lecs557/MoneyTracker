@@ -6,24 +6,36 @@ import view.panes.entry_panes.StringEntry;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Transaction extends StoreClass {
 
     private String date;
     private String purpose;
     private String amount;
+    private String bankackountId;
+    private String groupId;
     private int balance;
-    private Group group;
 
     public Transaction() {
         tableName = "Transactions";
+        foreignName = new FieldName("TransactionId","transaction_id","",null);
         fieldNames.add(new FieldName("Date", "date","DATE", DateEntry.class));
         fieldNames.add(new FieldName("Purpose", "purpose","TEXT", StringEntry.class));
         fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
-        foreignKeyIterator.add(new ForeignKey<>("bank_account_id", new BankAccount()));
-        foreignKeyIterator.add(new ForeignKey<>("group_id", new Group()));
+        foreignKeys.add(new ArrayList<BankAccount>());
+        foreignKeys.add(new ArrayList<Group>());
     }
 
+    public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
+        foreignKeys.get(0).clear();
+        ((ArrayList<BankAccount>) foreignKeys.get(0)).addAll(bankAccounts);
+    }
+
+    public void setForeignKeyGroup(ArrayList<Group> groups){
+        foreignKeys.get(1).clear();
+        ((ArrayList<Group>) foreignKeys.get(1)).addAll(groups);
+    }
 
     public LocalDate getLocalDate(){
         return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
@@ -61,11 +73,4 @@ public class Transaction extends StoreClass {
         this.balance = balance;
     }
 
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
 }

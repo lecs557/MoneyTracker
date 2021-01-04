@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 import view.panes.contentable;
 
 public class AmountEntryWindowCtrl implements contentable {
+
     public TextField tf_money;
     public TextField tf_cents;
 
@@ -14,5 +15,12 @@ public class AmountEntryWindowCtrl implements contentable {
     @Override
     public String getContent() {
         return tf_money.getText()+tf_cents.getText();
+    }
+
+    @Override
+    public void setContent(String content) {
+        int length = content.length();
+        tf_money.setText(content.substring(0, length-1));
+        tf_cents.setText(content.substring(length-1, length+1));
     }
 }

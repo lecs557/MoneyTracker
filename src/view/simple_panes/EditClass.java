@@ -9,7 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Main;
 import model.storeclasses.FieldName;
-import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
 import view.panes.EntryPane;
 import view.panes.entry_panes.ChoiceBoxEntry;
@@ -17,47 +16,41 @@ import view.panes.entry_panes.ChoiceBoxEntry;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
-public class CreateNew<T extends StoreClass> extends VBox {
+public class EditClass<T extends StoreClass> extends HBox {
 
-    private VBox vb_fields;
+    private VBox vb_origin;
+    private VBox vb_change;
     private Button btn_save;
-    private Label lbl_header;
 
     private T storeClass;
-    private boolean edit;
 
-    public CreateNew(T storeCls, boolean edit){
+    public EditClass(T storeCls){
         storeClass=storeCls;
-        this.edit = edit;
-        vb_fields = new VBox();
-        vb_fields.setSpacing(15);
+        vb_origin = new VBox();
+        vb_origin.setSpacing(15);
+        vb_change = new VBox();
+        vb_change.setSpacing(15);
         btn_save = new Button("SAVE");
         addStoreClassFields();
     }
 
     private void addStoreClassFields() {
-        if (edit) {
-            lbl_header = new Label("Bearbeite: " + storeClass.getTableName());
-        } else {
-            lbl_header = new Label("Erstelle: " + storeClass.getTableName());
-        }
+        Label lbl_header = new Label("Erstelle: " + storeClass.getTableName());
         lbl_header.getStyleClass().add("lbl_header");
         for (FieldName name : storeClass.getFieldNames()) {
             if (!name.getProgramName().equals("Id")) {
                 HBox hbox = new HBox();
                 Label label = new Label(name.getProgramName());
                 label.setPrefWidth(190);
+                Constructor<? extends EntryPane> constructor = null;
                 try {
-                    Constructor<? extends EntryPane> constructor = name.getEntryClass().getDeclaredConstructor(String.class, Button.class, StoreClass.class);
+                    constructor = name.getEntryClass().getDeclaredConstructor(String.class, Button.class, StoreClass.class);
                     EntryPane entryPane = constructor.newInstance(name.getProgramName(), btn_save, storeClass);
                     hbox.getChildren().addAll(label, entryPane.getPane());
-                    if(edit){
-                        entryPane.showContent();
-                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                vb_fields.getChildren().add(hbox);
+                vb_origin.getChildren().add(hbox);
             }
         }
         for (ArrayList<? extends StoreClass> foreignKey : storeClass.getForeignKeys()) {
@@ -66,24 +59,17 @@ public class CreateNew<T extends StoreClass> extends VBox {
             label.setPrefWidth(190);
             EntryPane entryPane = new ChoiceBoxEntry("Id", btn_save, foreignKey);
             hbox.getChildren().addAll(label, entryPane.getPane());
-            if(edit){
-                entryPane.showContent();
-            }
-            vb_fields.getChildren().add(hbox);
+            vb_origin.getChildren().add(hbox);
         }
 
 
         btn_save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent ->{
-            if(edit){
-                DatabaseController.updateObject(storeClass);
-            } else {
-               DatabaseController.storeObject(storeClass);
-            }
+            DatabaseController.storeObject(storeClass);
             ViewController.refresh();
             Main.secStage.close();
         });
-        vb_fields.getChildren().add(btn_save);
+        vb_origin.getChildren().add(btn_save);
         getChildren().add(lbl_header);
-        getChildren().add(vb_fields);
+        getChildren().add(vb_origin);
     }
 }

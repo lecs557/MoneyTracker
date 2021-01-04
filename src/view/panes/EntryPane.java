@@ -27,6 +27,20 @@ public abstract class EntryPane {
         save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> save());
     }
 
+    public void showContent(){
+        try {
+            Method getter = storeClass.getClass().getMethod("get"+name);
+            String content = (String)getter.invoke(storeClass);
+            setContent(content);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void save(){
         try {
             Method setter = storeClass.getClass().getMethod("set"+name, Class.forName("java.lang.String"));
@@ -45,4 +59,6 @@ public abstract class EntryPane {
     public abstract Region getPane();
 
     public abstract String getContent();
+
+    public abstract void setContent(String content);
 }

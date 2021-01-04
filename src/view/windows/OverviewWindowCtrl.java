@@ -17,20 +17,21 @@ import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.CreateNew;
-import view.simple_panes.StoreClassTable;
 
 import java.util.ArrayList;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
-    public ListView lv_groups;
-    public AnchorPane pane;
     private Profile currentAccount;
-    private BankAccount bankAccount;
-    private Group group;
-    private Transaction transaction;
+    private BankAccount profilesBankAccount;
+    private Group profilesGroup;
+    private Transaction profilesTransaction;
 
+    public AnchorPane pane;
     public Label lbl_account;
+    public ListView<BankAccount> lv_bankAccounts;
+    public ListView<Group> lv_groups;
+
     public TabPane tabPane;
     public Pane diagrammContainer;
     public Pane sumContainer;
@@ -38,7 +39,6 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public Pane savePane;
     public Pane chPane;
     public Pane pdfPane;
-    public ListView<BankAccount> lv_bankAccounts;
 
     private Saver saver;
     private PDFImporter pdfLoad;
@@ -46,11 +46,21 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
     public void initialize() {
         currentAccount = ProfileAccountManager.getCurrentAccount();
-        bankAccount = new BankAccount();
-        bankAccount.getForeignKeyIterator().setForeignKeyProfile(currentAccount);
         lbl_account.setText(currentAccount.getName());
 
-        ArrayList<BankAccount> allBankaccounts = DatabaseController.computeStoreClasses(bankAccount);
+        profilesBankAccount = new BankAccount();
+        profilesBankAccount.setForeignKeyProfile(currentAccount);
+        ArrayList<BankAccount> allBankaccounts = DatabaseController.computeStoreClasses(profilesBankAccount);
+
+        profilesGroup = new Group();
+        profilesGroup.setForeignKeyBankAccount(allBankaccounts);
+        ArrayList<Group> allGroups = DatabaseController.computeStoreClasses(profilesGroup);
+
+        profilesTransaction = new Transaction();
+        profilesTransaction.setForeignKeyBankAccount(allBankaccounts);
+        profilesTransaction.setForeignKeyGroup(allGroups);
+        ArrayList<Transaction> allTransactions = DatabaseController.computeStoreClasses(profilesTransaction);
+
         lv_bankAccounts.getItems().addAll(allBankaccounts);
         lv_bankAccounts.setCellFactory(bankAccountListView -> {
             ListCell<BankAccount> cell = new ListCell<>() {
@@ -67,14 +77,10 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
             return cell;
         });
 
-        group = new Group();
-        group.setForeignKeyBankAccount(allBankaccounts);
-        lv_groups.getItems().setAll(DatabaseController.computeStoreClasses(group));
 
-        transaction = new Transaction();
+        lv_groups.getItems().setAll(allGroups);
 
-
-        ViewController.setBankAccount(bankAccount);
+        ViewController.setBankAccount(profilesBankAccount);
         ViewController.setLv_bankAccounts(lv_bankAccounts);
     }
 
@@ -84,7 +90,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newBA(ActionEvent actionEvent) {
-        CreateNew<BankAccount> createNew = new CreateNew<>(bankAccount);
+        CreateNew<BankAccount> createNew = new CreateNew<>(profilesBankAccount, false);
         WindowManager.openStageOf(createNew);
     }
 
@@ -93,12 +99,12 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newGroup(ActionEvent actionEvent) {
-        CreateNew<Group> createNew = new CreateNew<>(group);
+        CreateNew<Group> createNew = new CreateNew<>(profilesGroup, false);
         WindowManager.openStageOf(createNew);
     }
 
     public void newTransaction(ActionEvent actionEvent) {
-        CreateNew<Transaction> createNew = new CreateNew<>(transaction);
+        CreateNew<Transaction> createNew = new CreateNew<>(profilesTransaction, false);
         WindowManager.openStageOf(createNew);
     }
 

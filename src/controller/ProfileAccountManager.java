@@ -36,7 +36,7 @@ public class ProfileAccountManager {
         if (store instanceof BankAccount) {
             return currentAccount.getBankAccounts();
         } else if (store instanceof Group) {
-            return currentAccount.getGroupss();
+            return currentAccount.getGroups();
         } else {
             return new ArrayList<>();
         }

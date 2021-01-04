@@ -8,7 +8,7 @@ public abstract class StoreClass {
     private String id;
     protected String tableName;
     protected String choiceBoxMethodName;
-    protected String foreignName;
+    protected FieldName foreignName;
     protected ArrayList<FieldName> fieldNames = new ArrayList<>();
     protected ArrayList<ArrayList<? extends StoreClass>> foreignKeys = new ArrayList<>();
 
@@ -32,7 +32,7 @@ public abstract class StoreClass {
         return tableName;
     }
 
-    public String getForeignName() {
+    public FieldName getForeignName() {
         return foreignName;
     }
 
