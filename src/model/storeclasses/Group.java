@@ -12,16 +12,14 @@ public class Group extends StoreClass {
 
    public Group() {
       tableName = "Groups";
-      foreignName = new FieldName("GroupId","group_id","",null);
       fieldNames.add(new FieldName("GroupName", "group_name","TEXT", StringEntry.class));
       fieldNames.add(new FieldName("Color", "color","TEXT", StringEntry.class));
-      foreignKeys.add(new ArrayList<BankAccount>());
+      foreignKeys.add(new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount()));
       choiceBoxMethodName ="GroupName";
    }
 
    public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
-      foreignKeys.get(0).clear();
-      ((ArrayList<BankAccount>) foreignKeys.get(0)).addAll(bankAccounts);
+      ((ForeignKey<BankAccount>) foreignKeys.get(0)).setForeignObjects(bankAccounts);
    }
 
    public String getGroupName() {

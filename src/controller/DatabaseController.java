@@ -42,32 +42,34 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<ArrayList<? extends StoreClass>> foreignIterator = storeClass.getForeignKeys().iterator();
-            if(!foreignIterator.hasNext()) {
+            Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = storeClass.getForeignKeys().iterator();
+            if(!foreignKeyIterator.hasNext()) {
                 whereBuilder = new StringBuilder();
             } else {
-                whereBuilder.append("(");
-                selectBuilder.append(", ");
-                while (foreignIterator.hasNext()) {
-                    ArrayList<? extends StoreClass> key = foreignIterator.next();
-                    Iterator<? extends StoreClass> keyIterator = key.iterator();
+                while (foreignKeyIterator.hasNext()) {
+                    ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
+                    Iterator<? extends StoreClass> objectIterator = key.getForeignObjects().iterator();
 
-                    selectBuilder.append(key.get(0).getForeignName().getSqlName());
-                    while (keyIterator.hasNext()) {
-                        StoreClass foreign = keyIterator.next();
+                    if (objectIterator.hasNext()){
+                        if(whereBuilder.toString().contains(")")){
+                            whereBuilder.append(" AND ");
+                        }
+                        whereBuilder.append("(");
+                    }
+                    selectBuilder.append(", ");
+                    selectBuilder.append(key.getSqlName());
+                    while (objectIterator.hasNext()) {
+                        StoreClass object = objectIterator.next();
 
-                        whereBuilder.append(foreign.getForeignName().getSqlName()).append("=").append(foreign.getId());
+                        whereBuilder.append(key.getSqlName()).append("=").append(object.getId());
 
-                        if (keyIterator.hasNext()) {
+                        if (objectIterator.hasNext()) {
                             whereBuilder.append(" OR ");
+                        } else{
+                            whereBuilder.append(")");
                         }
                     }
-                    if (foreignIterator.hasNext()) {
-                        whereBuilder.append(") AND (");
-                        selectBuilder.append(", ");
-                    }
                 }
-                whereBuilder.append(")");
             }
             System.out.println(selectBuilder+" "+fromBuilder+" "+whereBuilder);
             ResultSet rs = stmt.executeQuery(selectBuilder+" "+fromBuilder+" "+whereBuilder);
@@ -78,9 +80,9 @@ public class DatabaseController {
                     Method method = storeClass.getClass().getMethod("set"+fieldName.getProgramName(),Class.forName("java.lang.String"));
                     method.invoke(tempStoreClass,rs.getString(fieldName.getSqlName()));
                 }
-                for(ArrayList<? extends StoreClass> foreigns: storeClass.getForeignKeys()){
-                    Method method = storeClass.getClass().getMethod("set"+foreigns.get(0).getForeignName().getProgramName(),Class.forName("java.lang.String"));
-                    method.invoke(tempStoreClass,rs.getString(foreigns.get(0).getForeignName().getSqlName()));
+                for(ForeignKey<? extends StoreClass> key: storeClass.getForeignKeys()){
+                    Method method = storeClass.getClass().getMethod("set"+key.getProgramName(),Class.forName("java.lang.String"));
+                    method.invoke(tempStoreClass,rs.getString(key.getSqlName()));
                 }
                 storeClasses.add(tempStoreClass);
             }
@@ -116,19 +118,19 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<ArrayList<? extends StoreClass>> foreignIterator = storeClass.getForeignKeys().iterator();
-            if(foreignIterator.hasNext()){
+            Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = storeClass.getForeignKeys().iterator();
+            if(foreignKeyIterator.hasNext()){
                 insertBuilder.append(", ");
                 valuesBuilder.append(", ");
             }else {
                 insertBuilder.append(")");
                 valuesBuilder.append(")");
             }
-            while (foreignIterator.hasNext()) {
-                ArrayList<? extends StoreClass> name = foreignIterator.next();
-                insertBuilder.append(name.get(0).getForeignName().getSqlName());
-                valuesBuilder.append("'").append(name.get(0).getId()).append("'");
-                if (foreignIterator.hasNext()) {
+            while (foreignKeyIterator.hasNext()) {
+                ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
+                insertBuilder.append(key.getSqlName());
+                valuesBuilder.append("'").append(key.getForeignObjects().get(0).getId()).append("'");
+                if (foreignKeyIterator.hasNext()) {
                     insertBuilder.append(", ");
                     valuesBuilder.append(", ");
                 }else {
@@ -173,15 +175,15 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<ArrayList<? extends StoreClass>> foreignIterator = storeClass.getForeignKeys().iterator();
-            if(foreignIterator.hasNext()){
+            Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = storeClass.getForeignKeys().iterator();
+            if(foreignKeyIterator.hasNext()){
                 setBuilder.append(", ");
             }
-            while (foreignIterator.hasNext()) {
-                ArrayList<? extends StoreClass> name = foreignIterator.next();
-                setBuilder.append(name.get(0).getForeignName().getSqlName()).append(" = ");
-                setBuilder.append("'").append(name.get(0).getId()).append("'");
-                if (foreignIterator.hasNext()) {
+            while (foreignKeyIterator.hasNext()) {
+                ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
+                setBuilder.append(key.getSqlName()).append(" = ");
+                setBuilder.append("'").append(key.getForeignObjects().get(0).getId()).append("'");
+                if (foreignKeyIterator.hasNext()) {
                     setBuilder.append(", ");
                 }
             }
@@ -203,6 +205,7 @@ public class DatabaseController {
             T dummyClass = storeClass.getDeclaredConstructor().newInstance();
             open();
             StringBuilder createTableBuilder = new StringBuilder("CREATE TABLE ");
+            StringBuilder foreignKeyBuilder = new StringBuilder();
             createTableBuilder.append(dummyClass.getTableName());
             createTableBuilder.append("(");
 
@@ -216,24 +219,25 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<ArrayList<? extends StoreClass>> foreignKeyIterator = dummyClass.getForeignKeys().iterator();
+            Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = dummyClass.getForeignKeys().iterator();
             if(foreignKeyIterator.hasNext()){
                 createTableBuilder.append(", ");
             }
             while (foreignKeyIterator.hasNext()) {
-                ArrayList<? extends StoreClass> key = foreignKeyIterator.next();
-                createTableBuilder.append(key.get(0).getForeignName().getSqlName()).append(" INTEGER");
-                createTableBuilder.append(", ");
-                createTableBuilder.append("FOREIGN KEY(").append(key.get(0).getForeignName().getSqlName()).append(") ");
-                createTableBuilder.append("REFERENCES ").append(key.get(0).getTableName());
+                ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
+                createTableBuilder.append(key.getSqlName()).append(" INTEGER");
+                foreignKeyBuilder.append("FOREIGN KEY(").append(key.getSqlName()).append(") ");
+                foreignKeyBuilder.append("REFERENCES ").append(key.getForeignObjects().get(0).getTableName());
                 if (foreignKeyIterator.hasNext()) {
                     createTableBuilder.append(", ");
+                    foreignKeyBuilder.append(", ");
                 } else {
-                    createTableBuilder.append(")");
+                    createTableBuilder.append(",");
+                    foreignKeyBuilder.append(")");
                 }
             }
-            System.out.println(createTableBuilder);
-            stmt.executeUpdate(createTableBuilder.toString());
+            System.out.println(createTableBuilder+" "+foreignKeyBuilder);
+            stmt.executeUpdate(createTableBuilder+" "+foreignKeyBuilder);
             System.out.println("Table created successfully...");
         } catch(SQLException se){
             se.printStackTrace();

@@ -13,28 +13,25 @@ public class Transaction extends StoreClass {
     private String date;
     private String purpose;
     private String amount;
-    private String bankackountId;
+    private String bankAccountId;
     private String groupId;
     private int balance;
 
     public Transaction() {
         tableName = "Transactions";
-        foreignName = new FieldName("TransactionId","transaction_id","",null);
         fieldNames.add(new FieldName("Date", "date","DATE", DateEntry.class));
         fieldNames.add(new FieldName("Purpose", "purpose","TEXT", StringEntry.class));
         fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
-        foreignKeys.add(new ArrayList<BankAccount>());
-        foreignKeys.add(new ArrayList<Group>());
+        foreignKeys.add(new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount()));
+        foreignKeys.add(new ForeignKey<Group>("GroupId","group_id", new Group()));
     }
 
     public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
-        foreignKeys.get(0).clear();
-        ((ArrayList<BankAccount>) foreignKeys.get(0)).addAll(bankAccounts);
+        ((ForeignKey<BankAccount>) foreignKeys.get(0)).setForeignObjects(bankAccounts);
     }
 
     public void setForeignKeyGroup(ArrayList<Group> groups){
-        foreignKeys.get(1).clear();
-        ((ArrayList<Group>) foreignKeys.get(1)).addAll(groups);
+        ((ForeignKey<Group>) foreignKeys.get(1)).setForeignObjects(groups);
     }
 
     public LocalDate getLocalDate(){
@@ -63,6 +60,22 @@ public class Transaction extends StoreClass {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getBankAccountId() {
+        return bankAccountId;
+    }
+
+    public void setBankAccountId(String bankAccountId) {
+        this.bankAccountId = bankAccountId;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public int getBalance() {

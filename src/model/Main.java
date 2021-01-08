@@ -3,6 +3,7 @@ package model;
 import controller.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.storeclasses.BankAccount;
 import model.storeclasses.Profile;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class Main extends Application {
 
         WindowManager.changeSceneTo(windows.LogIn);
         primaryStage.setTitle("Aurum Observa");
+
         primaryStage.show();
         primaryStage.centerOnScreen();
     }

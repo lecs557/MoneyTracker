@@ -17,11 +17,13 @@ import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.CreateNew;
+import view.simple_panes.StoreClassTable;
 
 import java.util.ArrayList;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
+    public Pane tableContainer;
     private Profile currentAccount;
     private BankAccount profilesBankAccount;
     private Group profilesGroup;
@@ -50,18 +52,18 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
         profilesBankAccount = new BankAccount();
         profilesBankAccount.setForeignKeyProfile(currentAccount);
-        ArrayList<BankAccount> allBankaccounts = DatabaseController.computeStoreClasses(profilesBankAccount);
+        ArrayList<BankAccount> allBankAccounts = DatabaseController.computeStoreClasses(profilesBankAccount);
 
         profilesGroup = new Group();
-        profilesGroup.setForeignKeyBankAccount(allBankaccounts);
+        profilesGroup.setForeignKeyBankAccount(allBankAccounts);
         ArrayList<Group> allGroups = DatabaseController.computeStoreClasses(profilesGroup);
 
         profilesTransaction = new Transaction();
-        profilesTransaction.setForeignKeyBankAccount(allBankaccounts);
+        profilesTransaction.setForeignKeyBankAccount(allBankAccounts);
         profilesTransaction.setForeignKeyGroup(allGroups);
         ArrayList<Transaction> allTransactions = DatabaseController.computeStoreClasses(profilesTransaction);
 
-        lv_bankAccounts.getItems().addAll(allBankaccounts);
+        lv_bankAccounts.getItems().addAll(allBankAccounts);
         lv_bankAccounts.setCellFactory(bankAccountListView -> {
             ListCell<BankAccount> cell = new ListCell<>() {
                 @Override
@@ -79,6 +81,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
 
         lv_groups.getItems().setAll(allGroups);
+        tableContainer.getChildren().add(new StoreClassTable(allTransactions, new Transaction()));
 
         ViewController.setBankAccount(profilesBankAccount);
         ViewController.setLv_bankAccounts(lv_bankAccounts);

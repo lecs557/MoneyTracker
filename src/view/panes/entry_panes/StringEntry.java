@@ -24,4 +24,9 @@ public class StringEntry extends EntryPane {
     public String getContent() {
         return textField.getText();
     }
+
+    @Override
+    public void setContent(String content) {
+        textField.setText(content);
+    }
 }

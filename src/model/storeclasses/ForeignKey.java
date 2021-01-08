@@ -1,28 +1,35 @@
 package model.storeclasses;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class ForeignKey<T extends StoreClass> {
 
+    private T dummyClazz;
+    private String programName;
     private String sqlName;
-    private ArrayList<T> foreigns = new ArrayList<>();
+    private ArrayList<T> foreignObjects = new ArrayList<>();
 
-    public ForeignKey(String sqlName, T foreign) {
+    public ForeignKey(String programName, String sqlName, T dummyClazz) {
+        this.programName = programName;
         this.sqlName = sqlName;
-        this.foreigns.add(foreign);
+        this.dummyClazz = dummyClazz;
+        foreignObjects.add(dummyClazz);
     }
 
     public String getSqlName() {
         return sqlName;
     }
 
-    public ArrayList<T> getForeigns() {
-        return foreigns;
+    public String getProgramName() {
+        return programName;
     }
 
-    public void setForeigns(ArrayList<T> foreigns) {
-        this.foreigns = foreigns;
+    public ArrayList<T> getForeignObjects() {
+        return foreignObjects;
+    }
+
+    public void setForeignObjects(ArrayList<T> foreignObjects) {
+        this.foreignObjects = foreignObjects;
     }
 }

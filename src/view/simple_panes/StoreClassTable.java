@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class StoreClassTable extends TableView {
 
-    public StoreClassTable(ArrayList<? extends StoreClass> list) {
+    public <T extends StoreClass> StoreClassTable(ArrayList<T> list, T dummyObject) {
         super();
-        for (FieldName name : list.get(0).getFieldNames()) {
+        for (FieldName name : dummyObject.getFieldNames()) {
             TableColumn<StoreClass, String> temp =new TableColumn<>(name.getProgramName());
             temp.setCellValueFactory(new PropertyValueFactory<>(name.getProgramName()));
             temp.setCellFactory(new Callback<TableColumn<StoreClass, String>, TableCell<StoreClass, String>>() {

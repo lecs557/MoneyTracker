@@ -44,7 +44,7 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
     }
 
     public void addProfile(ActionEvent actionEvent) {
-        CreateNew<Profile> createNew = new CreateNew<>(new Profile());
+        CreateNew<Profile> createNew = new CreateNew<>(new Profile(), false);
         WindowManager.openStageOf(createNew);
     }
 }

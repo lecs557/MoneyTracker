@@ -14,7 +14,6 @@ public class Profile extends StoreClass {
 
     public Profile() {
         tableName = "Profiles";
-        foreignName = new FieldName("ProfileId","profile_id","",null);
         fieldNames.add(new FieldName("Name", "name","TEXT", StringEntry.class));
         choiceBoxMethodName="Name";
     }
