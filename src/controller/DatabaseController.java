@@ -30,13 +30,12 @@ public class DatabaseController {
             StringBuilder selectBuilder = new StringBuilder("SELECT ");
             StringBuilder fromBuilder = new StringBuilder("FROM ");
             StringBuilder whereBuilder = new StringBuilder("WHERE ");
-            Iterator<FieldName> fieldNameIterator = storeClass.getFieldNames().iterator();
             fromBuilder.append(storeClass.getTableName());
 
+            Iterator<FieldName> fieldNameIterator = storeClass.getFieldNames().iterator();
             while(fieldNameIterator.hasNext()){
                 FieldName fieldName = fieldNameIterator.next();
                 selectBuilder.append(fieldName.getSqlName());
-
                 if(fieldNameIterator.hasNext()){
                     selectBuilder.append(", ");
                 }
@@ -54,9 +53,12 @@ public class DatabaseController {
                         if(whereBuilder.toString().contains(")")){
                             whereBuilder.append(" AND ");
                         }
+                        if (!selectBuilder.toString().endsWith("SELECT ")) {
+                            selectBuilder.append(", ");
+                        }
                         whereBuilder.append("(");
                     }
-                    selectBuilder.append(", ");
+
                     selectBuilder.append(key.getSqlName());
                     while (objectIterator.hasNext()) {
                         StoreClass object = objectIterator.next();
@@ -67,6 +69,7 @@ public class DatabaseController {
                             whereBuilder.append(" OR ");
                         } else{
                             whereBuilder.append(")");
+                            selectBuilder.append(", ");
                         }
                     }
                 }
@@ -119,7 +122,7 @@ public class DatabaseController {
             }
 
             Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = storeClass.getForeignKeys().iterator();
-            if(foreignKeyIterator.hasNext()){
+            if(!insertBuilder.toString().endsWith("(") && foreignKeyIterator.hasNext() ){
                 insertBuilder.append(", ");
                 valuesBuilder.append(", ");
             }else {
@@ -176,7 +179,7 @@ public class DatabaseController {
             }
 
             Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = storeClass.getForeignKeys().iterator();
-            if(foreignKeyIterator.hasNext()){
+            if(foreignKeyIterator.hasNext() && !setBuilder.toString().endsWith("SET ")){
                 setBuilder.append(", ");
             }
             while (foreignKeyIterator.hasNext()) {
@@ -220,7 +223,7 @@ public class DatabaseController {
             }
 
             Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = dummyClass.getForeignKeys().iterator();
-            if(foreignKeyIterator.hasNext()){
+            if(foreignKeyIterator.hasNext() && !createTableBuilder.toString().endsWith("(")){
                 createTableBuilder.append(", ");
             }
             while (foreignKeyIterator.hasNext()) {

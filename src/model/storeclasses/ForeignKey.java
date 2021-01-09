@@ -17,6 +17,10 @@ public class ForeignKey<T extends StoreClass> {
         foreignObjects.add(dummyClazz);
     }
 
+    public T getDummyClazz() {
+        return dummyClazz;
+    }
+
     public String getSqlName() {
         return sqlName;
     }

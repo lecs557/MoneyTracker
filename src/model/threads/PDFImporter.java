@@ -39,6 +39,7 @@ public class PDFImporter extends Thread {
                     for (int i=1;i<pdfReader.getNumberOfPages();i++){
                         String content = PdfTextExtractor.getTextFromPage(pdfReader, i,	strategy);
                     }
+                    pdfReader.close();
                 } catch (IOException e) {
                     System.out.println("Problem bei: "+path);
                     e.printStackTrace();

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import model.Main;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
@@ -19,7 +20,9 @@ import model.threads.Saver;
 import view.simple_panes.CreateNew;
 import view.simple_panes.StoreClassTable;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
@@ -112,6 +115,11 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void importTra(ActionEvent actionEvent) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("PDF auswählen");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
+        List<File> files = chooser.showOpenMultipleDialog(Main.primaryStage);
+        Main.ioController.startPDFImport(files);
 
     }
 }
