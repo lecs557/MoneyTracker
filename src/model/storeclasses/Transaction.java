@@ -23,19 +23,23 @@ public class Transaction extends StoreClass {
         fieldNames.add(new FieldName("Purpose", "purpose","TEXT", StringEntry.class));
         fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
         foreignKeys.add(new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount()));
-        foreignKeys.add(new ForeignKey<Group>("GroupId","group_id", new Group()));
     }
 
     public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
         ((ForeignKey<BankAccount>) foreignKeys.get(0)).setForeignObjects(bankAccounts);
     }
 
-    public void setForeignKeyGroup(ArrayList<Group> groups){
-        ((ForeignKey<Group>) foreignKeys.get(1)).setForeignObjects(groups);
+    public void setForeignKeyBankAccount(BankAccount bankAccount){
+        foreignKeys.get(0).getForeignObjects().clear();
+        ((ForeignKey<BankAccount>) foreignKeys.get(0)).getForeignObjects().add(bankAccount);
     }
 
     public LocalDate getLocalDate(){
         return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+    }
+
+    public void setLocalDate(LocalDate date){
+        this.date=date.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     public String getDate() {

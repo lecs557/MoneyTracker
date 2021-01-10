@@ -4,9 +4,9 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import model.Main;
-import view.simple_panes.CreateNew;
 
 import java.io.IOException;
 
@@ -39,7 +39,7 @@ public class WindowManager {
         }
     }
 
-    public static void openStageOf(CreateNew createNew){
+    public static void openStageOf(Region createNew){
             Main.secStage =new Stage();
             loadWindow.set(true);
             Parent root = createNew;

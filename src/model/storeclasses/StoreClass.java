@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public abstract class StoreClass {
 
-    private String id;
+    private String id = "NULL";
     protected String tableName;
     protected String choiceBoxMethodName;
     protected ArrayList<FieldName> fieldNames = new ArrayList<>();

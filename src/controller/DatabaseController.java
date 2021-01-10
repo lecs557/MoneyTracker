@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class DatabaseController {
-    static final String DB_NAME = "Aurum_Observa";
-    static final String DB_PATH = "JDBC:sqlite:"+DB_NAME+".db";
+    static String DB_NAME = "Aurum_Observa";
+    static String DB_PATH = "JDBC:sqlite:"+DB_NAME+".db";
 
     private static Connection conn = null;
     private static Statement stmt = null;
@@ -44,7 +44,11 @@ public class DatabaseController {
             Iterator<ForeignKey<? extends StoreClass>> foreignKeyIterator = storeClass.getForeignKeys().iterator();
             if(!foreignKeyIterator.hasNext()) {
                 whereBuilder = new StringBuilder();
+
             } else {
+                if (!selectBuilder.toString().endsWith("SELECT ")) {
+                    selectBuilder.append(", ");
+                }
                 while (foreignKeyIterator.hasNext()) {
                     ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
                     Iterator<? extends StoreClass> objectIterator = key.getForeignObjects().iterator();
@@ -53,24 +57,21 @@ public class DatabaseController {
                         if(whereBuilder.toString().contains(")")){
                             whereBuilder.append(" AND ");
                         }
-                        if (!selectBuilder.toString().endsWith("SELECT ")) {
-                            selectBuilder.append(", ");
-                        }
                         whereBuilder.append("(");
                     }
-
                     selectBuilder.append(key.getSqlName());
+
                     while (objectIterator.hasNext()) {
                         StoreClass object = objectIterator.next();
-
                         whereBuilder.append(key.getSqlName()).append("=").append(object.getId());
-
                         if (objectIterator.hasNext()) {
                             whereBuilder.append(" OR ");
                         } else{
                             whereBuilder.append(")");
-                            selectBuilder.append(", ");
                         }
+                    }
+                    if (foreignKeyIterator.hasNext()) {
+                        selectBuilder.append(", ");
                     }
                 }
             }
@@ -102,6 +103,12 @@ public class DatabaseController {
     public static <T extends StoreClass> void storeObject(T storeClass){
         try {
             open();
+            ResultSet table = conn.getMetaData().getTables(null,null,storeClass.getTableName(),null);
+            if (!table.next()){
+                System.out.println("Tabelle "+storeClass.getTableName()+" existiert nicht");
+                createTable(storeClass.getClass());
+            }
+
             StringBuilder insertBuilder = new StringBuilder("INSERT INTO ");
             StringBuilder valuesBuilder = new StringBuilder("VALUES( ");
             insertBuilder.append(storeClass.getTableName());
@@ -143,6 +150,10 @@ public class DatabaseController {
             }
             System.out.println(insertBuilder+" "+valuesBuilder);
             stmt.executeUpdate(insertBuilder+" "+valuesBuilder);
+            ResultSet rs = stmt.executeQuery("SELECT id FROM "+ storeClass.getTableName() +" ORDER BY id DESC LIMIT 1");
+            String id;
+            id = rs.getString("id");
+            storeClass.setId(id);
             close();
         } catch(SQLException se){
             se.printStackTrace();
@@ -266,10 +277,13 @@ public class DatabaseController {
         }
     }
 
+    public static void setDbName(String dbName) {
+        DB_NAME = dbName;
+    }
+
     private static void open() throws ClassNotFoundException, SQLException {
         if( (conn == null || conn.isClosed()) ){
             System.out.println("Connecting to database...");
-            //Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(DB_PATH);
         }
         if( (stmt == null || stmt.isClosed()) ){

@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import model.storeclasses.BankAccount;
 import model.threads.Loader;
 import model.threads.PDFImporter;
 import model.threads.Saver;

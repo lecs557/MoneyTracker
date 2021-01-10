@@ -18,6 +18,7 @@ import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.CreateNew;
+import view.simple_panes.ImportForBankaccount;
 import view.simple_panes.StoreClassTable;
 
 import java.io.File;
@@ -48,6 +49,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     private Saver saver;
     private PDFImporter pdfLoad;
     private Renamer renamer;
+    private ArrayList<BankAccount> allBankAccounts;
 
     public void initialize() {
         currentAccount = ProfileAccountManager.getCurrentAccount();
@@ -55,7 +57,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
         profilesBankAccount = new BankAccount();
         profilesBankAccount.setForeignKeyProfile(currentAccount);
-        ArrayList<BankAccount> allBankAccounts = DatabaseController.computeStoreClasses(profilesBankAccount);
+        allBankAccounts = DatabaseController.computeStoreClasses(profilesBankAccount);
 
         profilesGroup = new Group();
         profilesGroup.setForeignKeyBankAccount(allBankAccounts);
@@ -63,7 +65,6 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
         profilesTransaction = new Transaction();
         profilesTransaction.setForeignKeyBankAccount(allBankAccounts);
-        profilesTransaction.setForeignKeyGroup(allGroups);
         ArrayList<Transaction> allTransactions = DatabaseController.computeStoreClasses(profilesTransaction);
 
         lv_bankAccounts.getItems().addAll(allBankAccounts);
@@ -115,11 +116,8 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void importTra(ActionEvent actionEvent) {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("PDF auswählen");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
-        List<File> files = chooser.showOpenMultipleDialog(Main.primaryStage);
-        Main.ioController.startPDFImport(files);
+        ImportForBankaccount ifb = new ImportForBankaccount(allBankAccounts);
+        WindowManager.openStageOf(ifb);
 
     }
 }
