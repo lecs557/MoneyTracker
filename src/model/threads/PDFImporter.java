@@ -36,7 +36,7 @@ public class PDFImporter extends Thread {
                 try {
                     InvoiceFile infile = new InvoiceFile();
                     infile.setPath(path);
-                    DatabaseController.storeObject(infile);
+                    DatabaseController.storeObject(infile, true);
                     pdfReader = new PdfReader(path);
                     RenderFilter info = new FontFilter();
                     TextExtractionStrategy strategy = new FilteredTextRenderListener(

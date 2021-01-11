@@ -42,7 +42,7 @@ public class FontFilter extends RenderFilter {
                 tran.setAmount(amount);
                 System.out.println(purpose);
                 tran.setPurpose(purpose);
-                DatabaseController.storeObject(tran);
+                DatabaseController.storeObject(tran,true);
                 System.out.println("----------------");
                 ignoreNext=false;
                 purpose ="";
@@ -63,7 +63,7 @@ public class FontFilter extends RenderFilter {
                         tran.setAmount(amount);
                         System.out.println(purpose);
                         tran.setPurpose(purpose);
-                        DatabaseController.storeObject(tran);
+                        DatabaseController.storeObject(tran,true);
                         System.out.println("----------------");
                         ignoreNext=false;
                         purpose ="";

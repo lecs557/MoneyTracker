@@ -49,6 +49,9 @@ public class ChoiceBoxEntry extends EntryPane {
 
     @Override
     public String getContent() {
+        if (chb.getSelectionModel().getSelectedItem() == null) {
+            return "NULL";
+        }
         return (chb.getSelectionModel().getSelectedIndex()+1)+"";
     }
 

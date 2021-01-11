@@ -63,7 +63,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
         for (ForeignKey<? extends StoreClass> key : storeClass.getForeignKeys()) {
             if(!key.getForeignObjects().isEmpty()) {
                 HBox hbox = new HBox();
-                Label label = new Label(key.getForeignObjects().get(0).getClass().getSimpleName());
+                Label label = new Label(key.getDummyClazz().getClass().getSimpleName());
                 label.setPrefWidth(190);
                 EntryPane entryPane = new ChoiceBoxEntry("Id", btn_save, key.getForeignObjects());
                 hbox.getChildren().addAll(label, entryPane.getPane());
@@ -79,7 +79,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
             if(edit){
                 DatabaseController.updateObject(storeClass);
             } else {
-               DatabaseController.storeObject(storeClass);
+               DatabaseController.storeObject(storeClass, false);
             }
             ViewController.refresh();
             Main.secStage.close();

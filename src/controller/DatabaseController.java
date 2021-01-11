@@ -16,7 +16,7 @@ public class DatabaseController {
     private static Connection conn = null;
     private static Statement stmt = null;
 
-    public static <T extends StoreClass> ArrayList<T> computeStoreClasses(T storeClass) {
+    public static <T extends StoreClass> ArrayList<T> computeStoreClasses(T storeClass, String orderBy) {
         ArrayList<T> storeClasses = new ArrayList<>();
         try{
             open();
@@ -75,8 +75,12 @@ public class DatabaseController {
                     }
                 }
             }
-            System.out.println(selectBuilder+" "+fromBuilder+" "+whereBuilder);
-            ResultSet rs = stmt.executeQuery(selectBuilder+" "+fromBuilder+" "+whereBuilder);
+            String sql = selectBuilder+" "+fromBuilder+" "+whereBuilder;
+            if (!orderBy.isEmpty()){
+                sql+=" OREDER BY "+orderBy;
+            }
+            System.out.println(sql);
+            ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
                 T tempStoreClass = (T) storeClass.getClass().getDeclaredConstructor().newInstance();
@@ -100,7 +104,7 @@ public class DatabaseController {
         return  storeClasses;
     }
 
-    public static <T extends StoreClass> void storeObject(T storeClass){
+    public static <T extends StoreClass> void storeObject(T storeClass, boolean checkIfExists){
         try {
             open();
             ResultSet table = conn.getMetaData().getTables(null,null,storeClass.getTableName(),null);
@@ -111,6 +115,7 @@ public class DatabaseController {
 
             StringBuilder insertBuilder = new StringBuilder("INSERT INTO ");
             StringBuilder valuesBuilder = new StringBuilder("VALUES( ");
+            StringBuilder existsBuilder = new StringBuilder("WHERE ");
             insertBuilder.append(storeClass.getTableName());
             insertBuilder.append("(");
 
@@ -119,11 +124,15 @@ public class DatabaseController {
                 FieldName name = fieldNameIterator.next();
                 if (!name.getProgramName().equals("Id")) {
                     insertBuilder.append(name.getSqlName());
+                    existsBuilder.append(name.getSqlName()).append("=");
                     Method method = storeClass.getClass().getMethod("get" + name.getProgramName());
-                    valuesBuilder.append("'").append(method.invoke(storeClass)).append("'");
+                    String content = (String) method.invoke(storeClass);
+                    valuesBuilder.append("'").append(content).append("'");
+                    existsBuilder.append("'").append(content).append("'");
                     if (fieldNameIterator.hasNext()) {
                         insertBuilder.append(", ");
                         valuesBuilder.append(", ");
+                        existsBuilder.append(" AND ");
                     }
                 }
             }
@@ -139,7 +148,11 @@ public class DatabaseController {
             while (foreignKeyIterator.hasNext()) {
                 ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
                 insertBuilder.append(key.getSqlName());
-                valuesBuilder.append("'").append(key.getForeignObjects().get(0).getId()).append("'");
+                if (key.getForeignObjects().get(0) != null) {
+                    valuesBuilder.append("'").append(key.getForeignObjects().get(0).getId()).append("'");
+                } else {
+                    valuesBuilder.append("'").append("NULL").append("'");
+                }
                 if (foreignKeyIterator.hasNext()) {
                     insertBuilder.append(", ");
                     valuesBuilder.append(", ");
@@ -148,12 +161,33 @@ public class DatabaseController {
                     valuesBuilder.append(")");
                 }
             }
-            System.out.println(insertBuilder+" "+valuesBuilder);
-            stmt.executeUpdate(insertBuilder+" "+valuesBuilder);
-            ResultSet rs = stmt.executeQuery("SELECT id FROM "+ storeClass.getTableName() +" ORDER BY id DESC LIMIT 1");
-            String id;
-            id = rs.getString("id");
-            storeClass.setId(id);
+
+            String id="b";
+            if (checkIfExists){
+                System.out.println("CHECK IF EXISTS");
+                String sql = "SELECT id FROM "+ storeClass.getTableName() +" "+existsBuilder;
+                System.out.println(sql);
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    id = rs.getString("id");
+                    storeClass.setId(id);
+                    System.out.println("EXISTS");
+                }
+            }
+            if (id.equals("b")) {
+                System.out.println("DOES NOT EXIST OR NOT CHECKED");
+                String sql = insertBuilder + " " + valuesBuilder;
+                System.out.println(sql);
+                stmt.executeUpdate(sql);
+                String sql1 = "SELECT id FROM " + storeClass.getTableName() + " ORDER BY id DESC LIMIT 1";
+                ResultSet rs = stmt.executeQuery(sql1);
+                while (rs.next()) {
+                    id = rs.getString("id");
+                    storeClass.setId(id);
+                }
+            }
+
+
             close();
         } catch(SQLException se){
             se.printStackTrace();
@@ -178,9 +212,9 @@ public class DatabaseController {
             while (fieldNameIterator.hasNext()) {
                 FieldName name = fieldNameIterator.next();
                 if (name.getProgramName().equals("Id")) {
-                    whereBuilder.append("id = ").append(storeClass.getId());
+                    whereBuilder.append("id=").append(storeClass.getId());
                 } else {
-                    setBuilder.append(name.getSqlName()).append(" = ");
+                    setBuilder.append(name.getSqlName()).append("=");
                     Method method = storeClass.getClass().getMethod("get" + name.getProgramName());
                     setBuilder.append("'").append(method.invoke(storeClass)).append("'");
                     if (fieldNameIterator.hasNext()) {
@@ -195,7 +229,7 @@ public class DatabaseController {
             }
             while (foreignKeyIterator.hasNext()) {
                 ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
-                setBuilder.append(key.getSqlName()).append(" = ");
+                setBuilder.append(key.getSqlName()).append("=");
                 setBuilder.append("'").append(key.getForeignObjects().get(0).getId()).append("'");
                 if (foreignKeyIterator.hasNext()) {
                     setBuilder.append(", ");
@@ -283,12 +317,11 @@ public class DatabaseController {
 
     private static void open() throws ClassNotFoundException, SQLException {
         if( (conn == null || conn.isClosed()) ){
-            System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_PATH);
         }
         if( (stmt == null || stmt.isClosed()) ){
             stmt = conn.createStatement();
-            System.out.println("new statement...");
+            System.out.println("SQL START");
         }
     }
 
@@ -296,6 +329,7 @@ public class DatabaseController {
         try{
             if(stmt!=null) {
                 stmt.close();
+                System.out.println("SQL END");
             }
         }catch(SQLException se2){
             se2.printStackTrace();
@@ -303,7 +337,6 @@ public class DatabaseController {
         try{
             if(conn!=null) {
                 conn.close();
-                System.out.println("Connection closed");
             }
         }catch(SQLException se){
             se.printStackTrace();

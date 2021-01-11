@@ -29,7 +29,7 @@ public class Main extends Application {
         ioController = new IOController();
         editController = new EditController();
 
-        ArrayList<Profile> profiles = DatabaseController.computeStoreClasses(new Profile());
+        ArrayList<Profile> profiles = DatabaseController.computeStoreClasses(new Profile(),"");
         ProfileAccountManager.setProfiles(profiles);
 
         WindowManager.changeSceneTo(windows.LogIn);

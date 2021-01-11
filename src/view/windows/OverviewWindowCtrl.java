@@ -57,15 +57,15 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
         profilesBankAccount = new BankAccount();
         profilesBankAccount.setForeignKeyProfile(currentAccount);
-        allBankAccounts = DatabaseController.computeStoreClasses(profilesBankAccount);
+        allBankAccounts = DatabaseController.computeStoreClasses(profilesBankAccount,"");
 
         profilesGroup = new Group();
         profilesGroup.setForeignKeyBankAccount(allBankAccounts);
-        ArrayList<Group> allGroups = DatabaseController.computeStoreClasses(profilesGroup);
+        ArrayList<Group> allGroups = DatabaseController.computeStoreClasses(profilesGroup,"");
 
         profilesTransaction = new Transaction();
         profilesTransaction.setForeignKeyBankAccount(allBankAccounts);
-        ArrayList<Transaction> allTransactions = DatabaseController.computeStoreClasses(profilesTransaction);
+        ArrayList<Transaction> allTransactions = DatabaseController.computeStoreClasses(profilesTransaction,"");
 
         lv_bankAccounts.getItems().addAll(allBankAccounts);
         lv_bankAccounts.setCellFactory(bankAccountListView -> {
