@@ -3,6 +3,7 @@ package model.threads;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.*;
 import controller.DatabaseController;
+import controller.ViewController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import model.FontFilter;

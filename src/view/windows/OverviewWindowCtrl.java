@@ -28,10 +28,6 @@ import java.util.List;
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
     public Pane tableContainer;
-    private Profile currentAccount;
-    private BankAccount profilesBankAccount;
-    private Group profilesGroup;
-    private Transaction profilesTransaction;
 
     public AnchorPane pane;
     public Label lbl_account;
@@ -49,25 +45,11 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     private Saver saver;
     private PDFImporter pdfLoad;
     private Renamer renamer;
-    private ArrayList<BankAccount> allBankAccounts;
 
     public void initialize() {
-        currentAccount = ProfileAccountManager.getCurrentAccount();
-        lbl_account.setText(currentAccount.getName());
+        lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
 
-        profilesBankAccount = new BankAccount();
-        profilesBankAccount.setForeignKeyProfile(currentAccount);
-        allBankAccounts = DatabaseController.computeStoreClasses(profilesBankAccount,"");
-
-        profilesGroup = new Group();
-        profilesGroup.setForeignKeyBankAccount(allBankAccounts);
-        ArrayList<Group> allGroups = DatabaseController.computeStoreClasses(profilesGroup,"");
-
-        profilesTransaction = new Transaction();
-        profilesTransaction.setForeignKeyBankAccount(allBankAccounts);
-        ArrayList<Transaction> allTransactions = DatabaseController.computeStoreClasses(profilesTransaction,"");
-
-        lv_bankAccounts.getItems().addAll(allBankAccounts);
+        lv_bankAccounts.getItems().addAll(ProfileAccountManager.getBankAccounts());
         lv_bankAccounts.setCellFactory(bankAccountListView -> {
             ListCell<BankAccount> cell = new ListCell<>() {
                 @Override
@@ -82,22 +64,22 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
             };
             return cell;
         });
+        lv_groups.getItems().setAll(ProfileAccountManager.getGroups());
+        StoreClassTable storeClassTable = new StoreClassTable(ProfileAccountManager.getTransactions(), new Transaction());
+        tableContainer.getChildren().add(storeClassTable);
 
-
-        lv_groups.getItems().setAll(allGroups);
-        tableContainer.getChildren().add(new StoreClassTable(allTransactions, new Transaction()));
-
-        ViewController.setBankAccount(profilesBankAccount);
         ViewController.setLv_bankAccounts(lv_bankAccounts);
+        ViewController.setLv_group(lv_groups);
+        ViewController.setLv_transaction(storeClassTable);
+
     }
 
     public void backToLogin(ActionEvent actionEvent) {
-        ProfileAccountManager.setCurrentAccount(null);
         WindowManager.changeSceneTo(Main.windows.LogIn);
     }
 
     public void newBA(ActionEvent actionEvent) {
-        CreateNew<BankAccount> createNew = new CreateNew<>(profilesBankAccount, false);
+        CreateNew<BankAccount> createNew = new CreateNew<>(ProfileAccountManager.getProfilesBankAccount(), false);
         WindowManager.openStageOf(createNew);
     }
 
@@ -106,17 +88,17 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newGroup(ActionEvent actionEvent) {
-        CreateNew<Group> createNew = new CreateNew<>(profilesGroup, false);
+        CreateNew<Group> createNew = new CreateNew<>(ProfileAccountManager.getProfilesGroup(), false);
         WindowManager.openStageOf(createNew);
     }
 
     public void newTransaction(ActionEvent actionEvent) {
-        CreateNew<Transaction> createNew = new CreateNew<>(profilesTransaction, false);
+        CreateNew<Transaction> createNew = new CreateNew<>(ProfileAccountManager.getProfilesTransaction(), false);
         WindowManager.openStageOf(createNew);
     }
 
     public void importTra(ActionEvent actionEvent) {
-        ImportForBankaccount ifb = new ImportForBankaccount(allBankAccounts);
+        ImportForBankaccount ifb = new ImportForBankaccount(ProfileAccountManager.getBankAccounts());
         WindowManager.openStageOf(ifb);
 
     }

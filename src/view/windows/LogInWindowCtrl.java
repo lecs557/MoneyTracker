@@ -1,6 +1,7 @@
 package view.windows;
 
 
+import controller.DatabaseController;
 import controller.ProfileAccountManager;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
     public ChoiceBox<Profile> chb_profiles;
 
     public void initialize() {
-        chb_profiles.getItems().addAll(ProfileAccountManager.getProfiles());
+        chb_profiles.getItems().addAll(DatabaseController.computeStoreClasses(new Profile(),""));
         chb_profiles.setConverter(new StringConverter<Profile>() {
             @Override
             public String toString(Profile profile) {
@@ -38,7 +39,7 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
     public void ok(ActionEvent actionEvent) {
         Profile selected = chb_profiles.getSelectionModel().getSelectedItem();
         if(selected!=null){
-            ProfileAccountManager.setCurrentAccount(selected);
+            ProfileAccountManager.setupProfile(selected);
             WindowManager.changeSceneTo(Main.windows.Overview);
         }
     }

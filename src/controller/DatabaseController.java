@@ -9,6 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ *
+ */
 public class DatabaseController {
     static String DB_NAME = "Aurum_Observa";
     static String DB_PATH = "JDBC:sqlite:"+DB_NAME+".db";

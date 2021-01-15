@@ -81,7 +81,6 @@ public class CreateNew<T extends StoreClass> extends VBox {
             } else {
                DatabaseController.storeObject(storeClass, false);
             }
-            ViewController.refresh();
             Main.secStage.close();
         });
         vb_fields.getChildren().add(btn_save);
