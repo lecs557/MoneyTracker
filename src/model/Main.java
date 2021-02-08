@@ -21,7 +21,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException{
-        Main.primaryStage =primaryStage;
+        Main.primaryStage = primaryStage;
 
         WindowManager.changeSceneTo(windows.LogIn);
         primaryStage.setTitle("Aurum Observa");

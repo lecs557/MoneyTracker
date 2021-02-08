@@ -10,6 +10,11 @@ public class MyClassNode extends Region {
     private Region region;
     private SimpleStringProperty className = new SimpleStringProperty("view.simple_panes.PDFViewer");
 
+    public MyClassNode(String path){
+
+    }
+
+
     public MyClassNode() {
 
         try {
@@ -50,6 +55,14 @@ public class MyClassNode extends Region {
 
     public SimpleStringProperty classNameProperty() {
         return className;
+    }
+
+    public void setClassName(String className) {
+        this.className.set(className);
+    }
+
+    public String getClassName() {
+        return className.get();
     }
 
     public Region getRegion() {

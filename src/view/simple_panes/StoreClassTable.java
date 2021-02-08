@@ -11,6 +11,9 @@ import model.storeclasses.StoreClass;
 
 import java.util.ArrayList;
 
+/**
+ * Die Tabelle, wie sie auch in der DB gespeichert ist
+ */
 public class StoreClassTable extends TableView {
 
     public <T extends StoreClass> StoreClassTable(ArrayList<T> list, T dummyObject) {

@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Application;
 import model.storeclasses.FieldName;
 import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
@@ -130,6 +131,9 @@ public class DatabaseController {
                     existsBuilder.append(name.getSqlName()).append("=");
                     Method method = storeClass.getClass().getMethod("get" + name.getProgramName());
                     String content = (String) method.invoke(storeClass);
+                    if(content.isEmpty()){
+                        content="NULL";
+                    }
                     valuesBuilder.append("'").append(content).append("'");
                     existsBuilder.append("'").append(content).append("'");
                     if (fieldNameIterator.hasNext()) {

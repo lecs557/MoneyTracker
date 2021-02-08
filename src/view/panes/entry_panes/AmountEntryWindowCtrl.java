@@ -21,6 +21,6 @@ public class AmountEntryWindowCtrl implements contentable {
     public void setContent(String content) {
         int length = content.length();
         tf_money.setText(content.substring(0, length-1));
-        tf_cents.setText(content.substring(length-1, length+1));
+        tf_cents.setText(content.substring(length-2, length));
     }
 }

@@ -1,5 +1,6 @@
 package model.storeclasses;
 
+import controller.ProfileAccountManager;
 import view.panes.entry_panes.AmountEntry;
 import view.panes.entry_panes.DateEntry;
 import view.panes.entry_panes.StringEntry;
@@ -14,8 +15,10 @@ public class Transaction extends StoreClass {
     private String purpose;
     private String amount;
     private String bankAccountId;
-    private String groupId;
+
+    private ArrayList<String> groupsIds;
     private int balance;
+
 
     public Transaction() {
         tableName = "Transactions";
@@ -32,6 +35,23 @@ public class Transaction extends StoreClass {
     public void setForeignKeyBankAccount(BankAccount bankAccount){
         foreignKeys.get(0).getForeignObjects().clear();
         ((ForeignKey<BankAccount>) foreignKeys.get(0)).getForeignObjects().add(bankAccount);
+    }
+
+    public BankAccount getBankAccount(){
+        for(BankAccount bankAccount:ProfileAccountManager.getBankAccounts()){
+            if (bankAccount.getId().equals(bankAccount)){
+                return bankAccount;
+            }
+        }
+        return null;
+    }
+
+    public int getIntAmount(){
+        return Integer.parseInt(amount);
+    }
+
+    public Group getGroup(){
+        return null;
     }
 
     public LocalDate getLocalDate(){
@@ -72,14 +92,6 @@ public class Transaction extends StoreClass {
 
     public void setBankAccountId(String bankAccountId) {
         this.bankAccountId = bankAccountId;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
     }
 
     public int getBalance() {

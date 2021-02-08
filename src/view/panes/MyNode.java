@@ -3,6 +3,7 @@ package view.panes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXMLLoader;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import model.PathStore;
 
@@ -25,10 +26,10 @@ public class MyNode extends Region {
 
     private void construct(){
         try {
-            loader = new FXMLLoader(getClass().getResource( path.get()+".fxml"));
-            this.getChildren().clear();
-            this.getChildren().add(loader.load());
-        } catch (IOException e) {
+            loader = new FXMLLoader(getClass().getResource( pathProperty().get()+".fxml"));
+            getChildren().clear();
+            getChildren().add(loader.load());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

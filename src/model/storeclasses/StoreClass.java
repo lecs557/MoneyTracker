@@ -3,6 +3,10 @@ package model.storeclasses;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * abstrakte Klasse. Sie bestimmt, wie eine Tabelle in der
+ * Datenenbank aussieht
+ */
 public abstract class StoreClass {
 
     private String id = "NULL";

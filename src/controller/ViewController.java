@@ -4,12 +4,13 @@ import javafx.scene.control.ListView;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
 import view.simple_panes.StoreClassTable;
+import view.simple_panes.TransactionTable;
 
 public class ViewController {
 
     private static ListView<BankAccount> lv_bankAccounts;
     private static ListView<Group> lv_group;
-    private static StoreClassTable sct_transaction;
+    private static TransactionTable sct_transaction;
 
     public static void refreshBankAccounts() {
         lv_bankAccounts.getItems().addAll(ProfileAccountManager.getBankAccounts());
@@ -31,7 +32,7 @@ public class ViewController {
         ViewController.lv_group = lv_group;
     }
 
-    public static void setLv_transaction(StoreClassTable sct_transaction) {
+    public static void setLv_transaction(TransactionTable sct_transaction) {
         ViewController.sct_transaction = sct_transaction;
     }
 }

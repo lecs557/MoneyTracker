@@ -13,6 +13,7 @@ public class ProfileAccountManager {
     private static Group profilesGroup;
     private static ArrayList<Transaction> transactions;
     private static Transaction profilesTransaction;
+    private static int sum=0 ;
 
 
     public static void setupProfile(Profile currentAccount) {
@@ -29,6 +30,15 @@ public class ProfileAccountManager {
         profilesTransaction = new Transaction();
         profilesTransaction.setForeignKeyBankAccount(bankAccounts);
         transactions = DatabaseController.computeStoreClasses(profilesTransaction,"");
+        for(Transaction transaction:transactions){
+            sum+=Integer.parseInt(transaction.getAmount());
+            transaction.setBalance(sum);
+            Group g = transaction.getGroup();
+            if (g != null) {
+                g.addSum(Integer.parseInt(transaction.getAmount()));
+            }
+        }
+
     }
 
     public static Profile getCurrentAccount() {

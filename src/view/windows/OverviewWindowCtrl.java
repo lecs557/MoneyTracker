@@ -20,6 +20,7 @@ import model.threads.Saver;
 import view.simple_panes.CreateNew;
 import view.simple_panes.ImportForBankaccount;
 import view.simple_panes.StoreClassTable;
+import view.simple_panes.TransactionTable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,12 +66,12 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
             return cell;
         });
         lv_groups.getItems().setAll(ProfileAccountManager.getGroups());
-        StoreClassTable storeClassTable = new StoreClassTable(ProfileAccountManager.getTransactions(), new Transaction());
-        tableContainer.getChildren().add(storeClassTable);
+        TransactionTable transactionTable = new TransactionTable(ProfileAccountManager.getTransactions());
+        tableContainer.getChildren().add(transactionTable);
 
         ViewController.setLv_bankAccounts(lv_bankAccounts);
         ViewController.setLv_group(lv_groups);
-        ViewController.setLv_transaction(storeClassTable);
+        ViewController.setLv_transaction(transactionTable);
 
     }
 

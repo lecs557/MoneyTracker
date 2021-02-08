@@ -21,16 +21,12 @@ import java.util.Base64;
 
 public class PDFViewer extends ScrollPane {
 
-    private WebView web = new WebView();
+    private WebView web;
     private String path;
 
     public PDFViewer() {
         path = "C:/Users/User/Desktop/Marcel/Geld/ING_DiBa/Kontoauszüge/Bilanz 2017/04.2017.pdf";
-        try {
-            PdfReader pdfReader = new PdfReader(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        web = new WebView();
         WebEngine engine = web.getEngine();
 
         engine.setJavaScriptEnabled(true);
@@ -52,7 +48,7 @@ public class PDFViewer extends ScrollPane {
                             String base64 = Base64.getEncoder().encodeToString(data);
                             // call JS function from Java code
                             engine.executeScript("openFileFromBase64('" + base64 + "')");
-                            System.out.println("OPEN");
+                      //      System.out.println("OPEN");
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
