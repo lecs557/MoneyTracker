@@ -1,6 +1,5 @@
 package view.windows;
 
-import controller.DatabaseController;
 import controller.ProfileAccountManager;
 import controller.ViewController;
 import controller.WindowManager;
@@ -8,23 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import model.Main;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
-import model.storeclasses.Profile;
 import model.storeclasses.Transaction;
 import model.threads.PDFImporter;
 import model.threads.Renamer;
 import model.threads.Saver;
 import view.simple_panes.CreateNew;
 import view.simple_panes.ImportForBankaccount;
-import view.simple_panes.StoreClassTable;
 import view.simple_panes.TransactionTable;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
 
@@ -80,7 +72,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newBA(ActionEvent actionEvent) {
-        CreateNew<BankAccount> createNew = new CreateNew<>(ProfileAccountManager.getProfilesBankAccount(), false);
+        CreateNew<BankAccount> createNew = new CreateNew<>(ProfileAccountManager.getSqlBankAccount(), false);
         WindowManager.openStageOf(createNew);
     }
 
@@ -89,12 +81,12 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newGroup(ActionEvent actionEvent) {
-        CreateNew<Group> createNew = new CreateNew<>(ProfileAccountManager.getProfilesGroup(), false);
+        CreateNew<Group> createNew = new CreateNew<>(ProfileAccountManager.getSqlGroup(), false);
         WindowManager.openStageOf(createNew);
     }
 
     public void newTransaction(ActionEvent actionEvent) {
-        CreateNew<Transaction> createNew = new CreateNew<>(ProfileAccountManager.getProfilesTransaction(), false);
+        CreateNew<Transaction> createNew = new CreateNew<>(ProfileAccountManager.getSqlTransaction(), false);
         WindowManager.openStageOf(createNew);
     }
 

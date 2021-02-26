@@ -19,6 +19,12 @@ public class Group extends StoreClass {
       choiceBoxMethodName ="GroupName";
    }
 
+   public static class Variables extends StoreClass.Variables{
+      public static String group_name = "group_name";
+      public static String color_hex="color_hex";
+      public static String bankAccount_id="bankAccount_id";
+   }
+
    public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
       ((ForeignKey<BankAccount>) foreignKeys.get(0)).setForeignObjects(bankAccounts);
    }

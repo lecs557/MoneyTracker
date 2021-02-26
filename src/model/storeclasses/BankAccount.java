@@ -17,6 +17,11 @@ public class BankAccount extends StoreClass {
         choiceBoxMethodName="BankName";
     }
 
+    public static class Variables extends StoreClass.Variables{
+        public static String bank_name = "bank_name";
+        public static String profile_id="profile_id";
+    }
+
     public void setForeignKeysProfile(ArrayList<Profile> profiles){
         ((ForeignKey<Profile>) foreignKeys.get(0)).setForeignObjects(profiles);
     }

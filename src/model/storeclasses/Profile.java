@@ -18,6 +18,11 @@ public class Profile extends StoreClass {
         choiceBoxMethodName="Name";
     }
 
+    public static class Variables extends StoreClass.Variables{
+        public static String name = "name";
+
+    }
+
     public void setName(String name) {
         this.name = name;
     }

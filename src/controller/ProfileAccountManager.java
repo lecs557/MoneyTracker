@@ -3,33 +3,43 @@ package controller;
 import model.storeclasses.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 
 public class ProfileAccountManager {
 
+    //From DataBase
     private static Profile currentAccount;
     private static ArrayList<BankAccount> bankAccounts;
-    private static BankAccount profilesBankAccount;
     private static ArrayList<Group> groups;
-    private static Group profilesGroup;
     private static ArrayList<Transaction> transactions;
-    private static Transaction profilesTransaction;
+
+    //From Software
+    private static Map<Integer, ArrayList<Transaction>> transactionMap;
     private static int sum=0 ;
+
+    //SQL-Objects
+    private static BankAccount sqlBankAccount;
+    private static Group sqlGroup;
+    private static Transaction sqlTransaction;
 
 
     public static void setupProfile(Profile currentAccount) {
         ProfileAccountManager.currentAccount = currentAccount;
 
-        profilesBankAccount = new BankAccount();
-        profilesBankAccount.setForeignKeyProfile(currentAccount);
-        bankAccounts = DatabaseController.computeStoreClasses(profilesBankAccount,"");
+        sqlBankAccount = new BankAccount();
+        sqlBankAccount.setForeignKeyProfile(currentAccount);
+        bankAccounts = DatabaseController.computeStoreClasses(sqlBankAccount,"");
 
-        profilesGroup = new Group();
-        profilesGroup.setForeignKeyBankAccount(bankAccounts);
-        groups = DatabaseController.computeStoreClasses(profilesGroup,"");
+        sqlGroup = new Group();
+        sqlGroup.setForeignKeyBankAccount(bankAccounts);
+        groups = DatabaseController.computeStoreClasses(sqlGroup,"");
 
-        profilesTransaction = new Transaction();
-        profilesTransaction.setForeignKeyBankAccount(bankAccounts);
-        transactions = DatabaseController.computeStoreClasses(profilesTransaction,"");
+        sqlTransaction = new Transaction();
+        sqlTransaction.setForeignKeyBankAccount(bankAccounts);
+        transactions = DatabaseController.computeStoreClasses(sqlTransaction,"");
+
+
         for(Transaction transaction:transactions){
             sum+=Integer.parseInt(transaction.getAmount());
             transaction.setBalance(sum);
@@ -49,23 +59,23 @@ public class ProfileAccountManager {
         return bankAccounts;
     }
 
-    public static BankAccount getProfilesBankAccount() {
-        return profilesBankAccount;
+    public static BankAccount getSqlBankAccount() {
+        return sqlBankAccount;
     }
 
     public static ArrayList<Group> getGroups() {
         return groups;
     }
 
-    public static Group getProfilesGroup() {
-        return profilesGroup;
+    public static Group getSqlGroup() {
+        return sqlGroup;
     }
 
     public static ArrayList<Transaction> getTransactions() {
         return transactions;
     }
 
-    public static Transaction getProfilesTransaction() {
-        return profilesTransaction;
+    public static Transaction getSqlTransaction() {
+        return sqlTransaction;
     }
 }

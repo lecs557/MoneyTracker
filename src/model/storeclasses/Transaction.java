@@ -46,6 +46,13 @@ public class Transaction extends StoreClass {
         return null;
     }
 
+    public static class Variables extends StoreClass.Variables{
+        public static String date="date";
+        public static String purpose="purpose";
+        public static String amount="amount";
+        public static String bankAccountId="BankAccountId";
+    }
+
     public int getIntAmount(){
         return Integer.parseInt(amount);
     }

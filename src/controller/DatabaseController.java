@@ -4,10 +4,13 @@ import javafx.application.Application;
 import model.storeclasses.FieldName;
 import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
+import model.storeclasses.Transaction;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -36,10 +39,10 @@ public class DatabaseController {
             StringBuilder whereBuilder = new StringBuilder("WHERE ");
             fromBuilder.append(storeClass.getTableName());
 
-            Iterator<FieldName> fieldNameIterator = storeClass.getFieldNames().iterator();
+            Iterator<Field> fieldNameIterator =  Arrays.asList(storeClass.getClass().getClasses()[0].getFields()).iterator();
             while(fieldNameIterator.hasNext()){
-                FieldName fieldName = fieldNameIterator.next();
-                selectBuilder.append(fieldName.getSqlName());
+                Field field = fieldNameIterator.next();
+                selectBuilder.append(field.get(storeClass));
                 if(fieldNameIterator.hasNext()){
                     selectBuilder.append(", ");
                 }
@@ -55,9 +58,9 @@ public class DatabaseController {
                 }
                 while (foreignKeyIterator.hasNext()) {
                     ForeignKey<? extends StoreClass> key = foreignKeyIterator.next();
-                    Iterator<? extends StoreClass> objectIterator = key.getForeignObjects().iterator();
+                    Iterator<? extends StoreClass> foreignObjectIterator = key.getForeignObjects().iterator();
 
-                    if (objectIterator.hasNext()){
+                    if (foreignObjectIterator.hasNext()){
                         if(whereBuilder.toString().contains(")")){
                             whereBuilder.append(" AND ");
                         }
@@ -65,10 +68,10 @@ public class DatabaseController {
                     }
                     selectBuilder.append(key.getSqlName());
 
-                    while (objectIterator.hasNext()) {
-                        StoreClass object = objectIterator.next();
+                    while (foreignObjectIterator.hasNext()) {
+                        StoreClass object = foreignObjectIterator.next();
                         whereBuilder.append(key.getSqlName()).append("=").append(object.getId());
-                        if (objectIterator.hasNext()) {
+                        if (foreignObjectIterator.hasNext()) {
                             whereBuilder.append(" OR ");
                         } else{
                             whereBuilder.append(")");

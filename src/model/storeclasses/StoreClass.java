@@ -19,6 +19,12 @@ public abstract class StoreClass {
         fieldNames.add(FieldName.storeId());
     }
 
+    public static class Variables {
+
+        public static String id ="id";
+
+    }
+
     public String getId() {
         return id;
     }

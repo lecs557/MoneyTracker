@@ -1,34 +1,23 @@
 package view.simple_panes;
 
-import com.itextpdf.text.pdf.PdfDocument;
-import com.itextpdf.text.pdf.PdfImage;
-import com.itextpdf.text.pdf.PdfReader;
 import javafx.concurrent.Worker;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
-
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Base64;
 
-public class PDFViewer extends ScrollPane {
+public final class PDFViewer extends ScrollPane{
 
-    private WebView web;
+    private final WebView web  = new WebView();
     private String path;
 
     public PDFViewer() {
         path = "C:/Users/User/Desktop/Marcel/Geld/ING_DiBa/Kontoauszüge/Bilanz 2017/04.2017.pdf";
-        web = new WebView();
         WebEngine engine = web.getEngine();
-
         engine.setJavaScriptEnabled(true);
         engine.load("file:///C:/Users/User/Desktop/web/viewer.html");
 
