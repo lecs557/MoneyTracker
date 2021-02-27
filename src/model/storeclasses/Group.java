@@ -13,20 +13,17 @@ public class Group extends StoreClass {
 
    public Group() {
       tableName = "Groups";
-      fieldNames.add(new FieldName("GroupName", "group_name","TEXT", StringEntry.class));
-      fieldNames.add(new FieldName("ColorHex", "color_hex","TEXT", StringEntry.class));
-      foreignKeys.add(new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount()));
       choiceBoxMethodName ="GroupName";
    }
 
-   public static class Variables extends StoreClass.Variables{
-      public static String group_name = "group_name";
-      public static String color_hex="color_hex";
-      public static String bankAccount_id="bankAccount_id";
+   public static class Variables {
+      public static FieldName id =FieldName.storeId();
+      public static FieldName group_name = new FieldName("GroupName", "group_name","TEXT", StringEntry.class);
+      public static FieldName color_hex= new FieldName("ColorHex", "color_hex","TEXT", StringEntry.class);
    }
 
-   public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
-      ((ForeignKey<BankAccount>) foreignKeys.get(0)).setForeignObjects(bankAccounts);
+   public static class ForeignKeys{
+      public static ForeignKey<BankAccount> bankAccount = new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount());
    }
 
    public void addSum(int s){

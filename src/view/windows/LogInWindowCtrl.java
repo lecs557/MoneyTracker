@@ -32,8 +32,6 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
                 return null;
             }
         });
-
-        Profile.setItemRegion(() -> chb_profiles.getItems() );
     }
 
     public void ok(ActionEvent actionEvent) {

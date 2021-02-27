@@ -35,7 +35,6 @@ public class FontFilter extends RenderFilter {
 			relevant=false;
 			if(!purpose.isEmpty()) {
                 Transaction tran = new Transaction();
-                tran.setForeignKeyBankAccount(ContentController.getBankAccount());
                 System.out.println("NEUE TRANSACTION vom: "+date.toString());
                 tran.setLocalDate(date);
                 System.out.println(amount);
@@ -56,7 +55,6 @@ public class FontFilter extends RenderFilter {
                 if( (68 < x && x < 72) && ( transacY-y < 0 ||  14 < transacY-y )){
                     if(!purpose.isEmpty()) {
                         Transaction tran = new Transaction();
-                        tran.setForeignKeyBankAccount(ContentController.getBankAccount());
                         System.out.println("NEUE TRANSACTION vom: "+date.toString());
                         tran.setLocalDate(date);
                         System.out.println(amount);

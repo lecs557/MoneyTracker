@@ -36,4 +36,8 @@ public class ForeignKey<T extends StoreClass> {
     public void setForeignObjects(ArrayList<T> foreignObjects) {
         this.foreignObjects = foreignObjects;
     }
+
+    public void set(T foreignObject){
+        this.foreignObjects.add(foreignObject);
+    }
 }

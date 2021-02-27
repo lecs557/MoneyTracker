@@ -9,6 +9,7 @@ import model.storeclasses.FieldName;
 import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,13 @@ public class StoreClassTable extends TableView {
 
     public <T extends StoreClass> StoreClassTable(ArrayList<T> list, T dummyObject) {
         super();
-        for (FieldName name : dummyObject.getFieldNames()) {
+        for (Field field : dummyObject.getClass().getClasses()[1].getFields()) {
+            FieldName name = null;
+            try {
+                name = (FieldName) field.get(dummyObject);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             TableColumn<StoreClass, String> temp = new TableColumn<>(name.getProgramName());
             temp.setCellValueFactory(new PropertyValueFactory<>(name.getProgramName()));
             temp.setCellFactory(new Callback<TableColumn<StoreClass, String>, TableCell<StoreClass, String>>() {
@@ -40,7 +47,13 @@ public class StoreClassTable extends TableView {
             });
             getColumns().add(temp);
         }
-        for (ForeignKey<? extends StoreClass> foreignKey : dummyObject.getForeignKeys()) {
+        for(Field field: dummyObject.getClass().getClasses()[0].getFields()){
+            ForeignKey<? extends StoreClass> foreignKey = null;
+            try {
+                foreignKey = (ForeignKey<? extends StoreClass>) field.get(dummyObject);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             TableColumn<StoreClass, String> temp = new TableColumn<>(foreignKey.getProgramName());
             temp.setCellValueFactory(new PropertyValueFactory<>(foreignKey.getProgramName()));
             temp.setCellFactory(new Callback<TableColumn<StoreClass, String>, TableCell<StoreClass, String>>() {

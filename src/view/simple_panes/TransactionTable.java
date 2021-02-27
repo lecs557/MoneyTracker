@@ -38,7 +38,6 @@ public class TransactionTable extends TableView<Transaction> {
                             setGraphic(b);
                             b.setOnMouseClicked(mouseEvent ->{
                                 Transaction edit = getTableRow().getItem();
-                                edit.setForeignKeyBankAccount(ProfileAccountManager.getBankAccounts());
                                 CreateNew<Transaction> createNew = new CreateNew<>(edit, true);
                                 WindowManager.openStageOf(createNew);
                             });

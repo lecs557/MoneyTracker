@@ -12,23 +12,16 @@ public class BankAccount extends StoreClass {
 
     public BankAccount() {
         tableName="BankAccount";
-        fieldNames.add(new FieldName("BankName", "bank_name","TEXT", StringEntry.class));
-        foreignKeys.add(new ForeignKey<Profile>("ProfileId","profile_id", new Profile()));
         choiceBoxMethodName="BankName";
     }
 
-    public static class Variables extends StoreClass.Variables{
-        public static String bank_name = "bank_name";
-        public static String profile_id="profile_id";
+    public static class Variables {
+        public static FieldName id = FieldName.storeId();
+        public static FieldName bank_name = new FieldName("BankName", "bank_name","TEXT", StringEntry.class);
     }
 
-    public void setForeignKeysProfile(ArrayList<Profile> profiles){
-        ((ForeignKey<Profile>) foreignKeys.get(0)).setForeignObjects(profiles);
-    }
-
-    public void setForeignKeyProfile(Profile profile){
-        ((ForeignKey<Profile>) foreignKeys.get(0)).getForeignObjects().clear();
-        ((ForeignKey<Profile>) foreignKeys.get(0)).getForeignObjects().add(profile);
+    public static class ForeignKeys{
+        public static ForeignKey<Profile> profile = new ForeignKey<>("ProfileId","profile_id", new Profile());
     }
 
     public void processTransactions(ArrayList<Transaction> transactions){

@@ -15,6 +15,7 @@ import view.panes.EntryPane;
 import view.panes.entry_panes.ChoiceBoxEntry;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class CreateNew<T extends StoreClass> extends VBox {
@@ -42,7 +43,13 @@ public class CreateNew<T extends StoreClass> extends VBox {
             lbl_header = new Label("Erstelle: " + storeClass.getTableName());
         }
         lbl_header.getStyleClass().add("lbl_header");
-        for (FieldName name : storeClass.getFieldNames()) {
+        for(Field field: storeClass.getClass().getClasses()[1].getFields()){
+            FieldName name = null;
+            try {
+                name = (FieldName) field.get(storeClass);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             if (!name.getProgramName().equals("Id")) {
                 HBox hbox = new HBox();
                 Label label = new Label(name.getProgramName());
@@ -60,7 +67,13 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 vb_fields.getChildren().add(hbox);
             }
         }
-        for (ForeignKey<? extends StoreClass> key : storeClass.getForeignKeys()) {
+        for(Field field: storeClass.getClass().getClasses()[0].getFields()){
+            ForeignKey<? extends StoreClass> key = null;
+            try {
+                key = (ForeignKey<? extends StoreClass>) field.get(storeClass);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             if(!key.getForeignObjects().isEmpty()) {
                 HBox hbox = new HBox();
                 Label label = new Label(key.getDummyClazz().getClass().getSimpleName());

@@ -22,35 +22,17 @@ public class Transaction extends StoreClass {
 
     public Transaction() {
         tableName = "Transactions";
-        fieldNames.add(new FieldName("Date", "date","DATE", DateEntry.class));
-        fieldNames.add(new FieldName("Purpose", "purpose","TEXT", StringEntry.class));
-        fieldNames.add(new FieldName("Amount", "amount","int", AmountEntry.class));
-        foreignKeys.add(new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount()));
     }
 
-    public void setForeignKeyBankAccount(ArrayList<BankAccount> bankAccounts){
-        ((ForeignKey<BankAccount>) foreignKeys.get(0)).setForeignObjects(bankAccounts);
+    public static class Variables {
+        public static FieldName id = FieldName.storeId();
+        public static FieldName date = new FieldName("Date", "date","DATE", DateEntry.class);
+        public static FieldName purpose = new FieldName("Purpose", "purpose","TEXT", StringEntry.class);
+        public static FieldName amount = new FieldName("Amount", "amount","int", AmountEntry.class);
     }
 
-    public void setForeignKeyBankAccount(BankAccount bankAccount){
-        foreignKeys.get(0).getForeignObjects().clear();
-        ((ForeignKey<BankAccount>) foreignKeys.get(0)).getForeignObjects().add(bankAccount);
-    }
-
-    public BankAccount getBankAccount(){
-        for(BankAccount bankAccount:ProfileAccountManager.getBankAccounts()){
-            if (bankAccount.getId().equals(bankAccount)){
-                return bankAccount;
-            }
-        }
-        return null;
-    }
-
-    public static class Variables extends StoreClass.Variables{
-        public static String date="date";
-        public static String purpose="purpose";
-        public static String amount="amount";
-        public static String bankAccountId="BankAccountId";
+    public static class ForeignKeys{
+        public static ForeignKey<BankAccount> bankAccount = new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount());
     }
 
     public int getIntAmount(){

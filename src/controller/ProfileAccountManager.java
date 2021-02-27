@@ -27,16 +27,16 @@ public class ProfileAccountManager {
     public static void setupProfile(Profile currentAccount) {
         ProfileAccountManager.currentAccount = currentAccount;
 
+        BankAccount.ForeignKeys.profile.set(currentAccount);
         sqlBankAccount = new BankAccount();
-        sqlBankAccount.setForeignKeyProfile(currentAccount);
         bankAccounts = DatabaseController.computeStoreClasses(sqlBankAccount,"");
 
         sqlGroup = new Group();
-        sqlGroup.setForeignKeyBankAccount(bankAccounts);
+        Group.ForeignKeys.bankAccount.setForeignObjects(bankAccounts);
         groups = DatabaseController.computeStoreClasses(sqlGroup,"");
 
         sqlTransaction = new Transaction();
-        sqlTransaction.setForeignKeyBankAccount(bankAccounts);
+        Transaction.ForeignKeys.bankAccount.setForeignObjects(bankAccounts);
         transactions = DatabaseController.computeStoreClasses(sqlTransaction,"");
 
 

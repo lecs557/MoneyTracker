@@ -19,12 +19,6 @@ public abstract class StoreClass {
         fieldNames.add(FieldName.storeId());
     }
 
-    public static class Variables {
-
-        public static String id ="id";
-
-    }
-
     public String getId() {
         return id;
     }
@@ -39,14 +33,6 @@ public abstract class StoreClass {
 
     public String getTableName() {
         return tableName;
-    }
-
-    public ArrayList<ForeignKey<? extends StoreClass>> getForeignKeys() {
-        return foreignKeys;
-    }
-
-    public ArrayList<FieldName> getFieldNames() {
-        return fieldNames;
     }
 
 }
