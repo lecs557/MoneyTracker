@@ -2,11 +2,9 @@ package model;
 
 import com.itextpdf.text.pdf.parser.RenderFilter;
 import com.itextpdf.text.pdf.parser.TextRenderInfo;
-import controller.ContentController;
 import controller.DatabaseController;
 import model.storeclasses.Transaction;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

@@ -279,9 +279,12 @@ public class DatabaseController {
                 }
             }
 
-            Iterator<Field> foreignKeyFieldIterator = Arrays.asList(storeClass.getClass().getClasses()[0].getFields()).iterator();
+            Iterator<Field> foreignKeyFieldIterator = Arrays.asList(dummyClass.getClass().getClasses()[0].getFields()).iterator();
             if(foreignKeyFieldIterator.hasNext() && !createTableBuilder.toString().endsWith("(")){
                 createTableBuilder.append(", ");
+            }
+            if (!foreignKeyFieldIterator.hasNext()){
+                createTableBuilder.append(")");
             }
             while (foreignKeyFieldIterator.hasNext()) {
                 ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(dummyClass);

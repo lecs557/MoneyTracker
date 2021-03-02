@@ -38,6 +38,7 @@ public class ForeignKey<T extends StoreClass> {
     }
 
     public void set(T foreignObject){
+        this.foreignObjects.clear();
         this.foreignObjects.add(foreignObject);
     }
 }

@@ -1,6 +1,7 @@
 package view.simple_panes;
 
 import controller.ContentController;
+import controller.IOController;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContentDisplay;
@@ -10,18 +11,19 @@ import javafx.util.StringConverter;
 import model.Main;
 import model.storeclasses.BankAccount;
 import model.storeclasses.StoreClass;
+import model.storeclasses.Transaction;
 
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImportForBankaccount extends VBox {
+public class BankAccountChooser extends VBox {
 
     private ArrayList<BankAccount>  entrys;
     private ChoiceBox<BankAccount> chb = new ChoiceBox<>();
 
-    public ImportForBankaccount(ArrayList<BankAccount> entrys) {
+    public BankAccountChooser(ArrayList<BankAccount> entrys) {
         this.entrys = entrys;
 
         chb.getItems().addAll(entrys);
@@ -49,8 +51,8 @@ public class ImportForBankaccount extends VBox {
             chooser.setTitle("PDF auswählen");
             chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
             List<File> files = chooser.showOpenMultipleDialog(Main.primaryStage);
-            ContentController.setBankAccount(chb.getSelectionModel().getSelectedItem());
-            Main.ioController.startPDFImport(files);
+            Transaction.ForeignKeys.bankAccount.set(chb.getSelectionModel().getSelectedItem());
+            IOController.startPDFImport(files);
         });
 
         getChildren().add(button);

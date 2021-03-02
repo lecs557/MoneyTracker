@@ -49,6 +49,7 @@ public class PDFImporter extends Thread {
                     pdfReader.close();
 
                 } catch (IOException e) {
+                    pdfReader.close();
                     System.out.println("Problem bei: "+path);
                     e.printStackTrace();
                 }
@@ -57,6 +58,7 @@ public class PDFImporter extends Thread {
             progress.set((double)p/size);
         }
         running.set(false);
+        ViewController.refreshTransactions();
     }
 
     public SimpleDoubleProperty progressProperty() {

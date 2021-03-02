@@ -9,14 +9,17 @@ public class InvoiceFile extends StoreClass{
     private String path;
 
     public InvoiceFile() {
-        tableName="Files";
-        fieldNames.add(new FieldName("Path", "path","TEXT", StringEntry.class));
-        choiceBoxMethodName="File";
+        tableName="InvoiceFiles";
+        choiceBoxMethodName="Invoice File";
     }
 
-    private String file(){
-        String[] temp = path.split("/");
-        return temp[temp.length-1];
+    public static class Variables {
+        public static FieldName id =FieldName.storeId();
+        public static FieldName path = new FieldName("Path", "path","TEXT", StringEntry.class);
+    }
+
+    public static class ForeignKeys{
+
     }
 
     public String getPath() {

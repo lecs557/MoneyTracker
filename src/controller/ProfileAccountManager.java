@@ -48,7 +48,10 @@ public class ProfileAccountManager {
                 g.addSum(Integer.parseInt(transaction.getAmount()));
             }
         }
+    }
 
+    public static void add(BankAccount bankAccount){
+        bankAccounts.add(bankAccount);
     }
 
     public static Profile getCurrentAccount() {
@@ -73,6 +76,10 @@ public class ProfileAccountManager {
 
     public static ArrayList<Transaction> getTransactions() {
         return transactions;
+    }
+
+    public static void setTransactions(ArrayList<Transaction> transactions) {
+        ProfileAccountManager.transactions = transactions;
     }
 
     public static Transaction getSqlTransaction() {

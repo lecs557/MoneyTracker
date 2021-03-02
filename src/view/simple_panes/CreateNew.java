@@ -1,6 +1,7 @@
 package view.simple_panes;
 
 import controller.DatabaseController;
+import controller.ProfileAccountManager;
 import controller.ViewController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Main;
+import model.storeclasses.BankAccount;
 import model.storeclasses.FieldName;
 import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
@@ -94,6 +96,10 @@ public class CreateNew<T extends StoreClass> extends VBox {
             } else {
                DatabaseController.storeObject(storeClass, false);
             }
+            if (storeClass instanceof BankAccount){
+                ProfileAccountManager.add((BankAccount) storeClass);
+            }
+            ViewController.refresh();
             Main.secStage.close();
         });
         vb_fields.getChildren().add(btn_save);

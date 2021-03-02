@@ -1,7 +1,6 @@
 package view.windows;
 
 import controller.ProfileAccountManager;
-import controller.ViewController;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -11,33 +10,21 @@ import model.Main;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
 import model.storeclasses.Transaction;
-import model.threads.PDFImporter;
-import model.threads.Renamer;
-import model.threads.Saver;
 import view.simple_panes.CreateNew;
-import view.simple_panes.ImportForBankaccount;
-import view.simple_panes.TransactionTable;
+import view.simple_panes.BankAccountChooser;
+import view.simple_panes.TransactionTabPane;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
-
-    public Pane tableContainer;
 
     public AnchorPane pane;
     public Label lbl_account;
     public ListView<BankAccount> lv_bankAccounts;
     public ListView<Group> lv_groups;
-
-    public TabPane tabPane;
-    public Pane diagrammContainer;
-    public Pane sumContainer;
     public ProgressBar pb_pdf, pb_year, pb_transa,pb_year1, pb_transa1;
     public Pane savePane;
     public Pane chPane;
     public Pane pdfPane;
-
-    private Saver saver;
-    private PDFImporter pdfLoad;
-    private Renamer renamer;
+    public TransactionTabPane tp_transactions;
 
     public void initialize() {
         lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
@@ -58,12 +45,8 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
             return cell;
         });
         lv_groups.getItems().setAll(ProfileAccountManager.getGroups());
-        TransactionTable transactionTable = new TransactionTable(ProfileAccountManager.getTransactions());
-        tableContainer.getChildren().add(transactionTable);
 
-        ViewController.setLv_bankAccounts(lv_bankAccounts);
-        ViewController.setLv_group(lv_groups);
-        ViewController.setLv_transaction(transactionTable);
+        tp_transactions.setTransactions(ProfileAccountManager.getTransactions());
 
     }
 
@@ -90,8 +73,8 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         WindowManager.openStageOf(createNew);
     }
 
-    public void importTra(ActionEvent actionEvent) {
-        ImportForBankaccount ifb = new ImportForBankaccount(ProfileAccountManager.getBankAccounts());
+    public void importTransactionViaPDF(ActionEvent actionEvent) {
+        BankAccountChooser ifb = new BankAccountChooser(ProfileAccountManager.getBankAccounts());
         WindowManager.openStageOf(ifb);
 
     }

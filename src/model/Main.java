@@ -14,11 +14,6 @@ public class Main extends Application {
 
     public enum types {Lastschrift, Gutschrift, Gehalt, Überweisung}
 
-
-    // *** Controller ***
-    public static IOController ioController;
-    public static EditController editController;
-
     @Override
     public void start(Stage primaryStage) throws IOException{
         Main.primaryStage = primaryStage;

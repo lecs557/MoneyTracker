@@ -19,11 +19,11 @@ import java.util.ArrayList;
 public class TransactionTable extends TableView<Transaction> {
 
 
-    public TransactionTable(ArrayList<Transaction> list)  {
+    public TransactionTable()  {
         //SEE
-        TableColumn<Transaction, LocalDate> delete =new TableColumn<>("");
-        delete.setCellValueFactory(new PropertyValueFactory<>("localDate"));
-        delete.setCellFactory(new Callback<>() {
+        TableColumn<Transaction, LocalDate> options =new TableColumn<>("");
+        options.setCellValueFactory(new PropertyValueFactory<>("localDate"));
+        options.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Transaction, LocalDate> call(TableColumn<Transaction, LocalDate> transactionStringTableColumn) {
                 TableCell<Transaction, LocalDate> cell = new TableCell<>() {
@@ -48,8 +48,6 @@ public class TransactionTable extends TableView<Transaction> {
                 return cell;
             }
         });
-
-
 
         //DATUM
         TableColumn<Transaction, LocalDate> date =new TableColumn<>("Datum");
@@ -77,10 +75,10 @@ public class TransactionTable extends TableView<Transaction> {
         });
 
         //ZWECK
-        TableColumn<Transaction, String> zweck =new TableColumn<>("zweck");
-        zweck.setMinWidth(200);
-        zweck.setCellValueFactory(new PropertyValueFactory<>("purpose"));
-        zweck.setCellFactory(new Callback<>() {
+        TableColumn<Transaction, String> purpose =new TableColumn<>("purpose");
+        purpose.setMinWidth(200);
+        purpose.setCellValueFactory(new PropertyValueFactory<>("purpose"));
+        purpose.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Transaction, String> call(TableColumn<Transaction, String> transactionStringTableColumn) {
                 TableCell<Transaction, String> cell = new TableCell<>() {
@@ -102,12 +100,11 @@ public class TransactionTable extends TableView<Transaction> {
             }
         });
 
-
         //BETRAG
-        TableColumn<Transaction, Integer> betrag =new TableColumn<Transaction, Integer>("betrag");
-        betrag.setMinWidth(80);
-        betrag.setCellValueFactory(new PropertyValueFactory<Transaction,Integer>("intAmount"));
-        betrag.setCellFactory(new Callback<>() {
+        TableColumn<Transaction, Integer> amount =new TableColumn<Transaction, Integer>("amount");
+        amount.setMinWidth(80);
+        amount.setCellValueFactory(new PropertyValueFactory<Transaction,Integer>("intAmount"));
+        amount.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Transaction, Integer> call(TableColumn<Transaction, Integer> transactionStringTableColumn) {
                 TableCell<Transaction, Integer> cell = new TableCell<>() {
@@ -136,10 +133,10 @@ public class TransactionTable extends TableView<Transaction> {
 
 
         //KONTOSTAND
-        TableColumn<Transaction, Integer> stand =new TableColumn<Transaction, Integer>("Kontostand");
-        stand.setMinWidth(100);
-        stand.setCellValueFactory(new PropertyValueFactory<Transaction,Integer>("balance"));
-        stand.setCellFactory(new Callback<>() {
+        TableColumn<Transaction, Integer> balance =new TableColumn<Transaction, Integer>("Kontostand");
+        balance.setMinWidth(100);
+        balance.setCellValueFactory(new PropertyValueFactory<Transaction,Integer>("balance"));
+        balance.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Transaction, Integer> call(TableColumn<Transaction, Integer> transactionStringTableColumn) {
                 TableCell<Transaction, Integer> cell = new TableCell<>() {
@@ -165,7 +162,10 @@ public class TransactionTable extends TableView<Transaction> {
                 return cell;
             }
         });
-        setItems(FXCollections.observableList(list));
-        getColumns().addAll(delete, date, zweck, betrag, stand);
+        getColumns().addAll(options, date, purpose, amount, balance);
+    }
+
+    public void addTransacion(Transaction transaction){
+        getItems().add(transaction);
     }
 }
