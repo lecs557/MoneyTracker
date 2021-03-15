@@ -1,10 +1,8 @@
 package controller;
 
-import javafx.application.Application;
 import model.storeclasses.FieldName;
 import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
-import model.storeclasses.Transaction;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -84,7 +82,7 @@ public class DatabaseController {
             }
             String sql = selectBuilder+" "+fromBuilder+" "+whereBuilder;
             if (!orderBy.isEmpty()){
-                sql+=" OREDER BY "+orderBy;
+                sql+=" ORDER BY "+orderBy;
             }
             System.out.println(sql);
             ResultSet rs = stmt.executeQuery(sql);
@@ -120,6 +118,7 @@ public class DatabaseController {
             if (!table.next()){
                 System.out.println("Tabelle "+storeClass.getTableName()+" existiert nicht");
                 createTable(storeClass.getClass());
+                open();
             }
 
             StringBuilder insertBuilder = new StringBuilder("INSERT INTO ");
@@ -160,11 +159,9 @@ public class DatabaseController {
             while (foreignKeyFieldIterator.hasNext()) {
                 ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(storeClass);
                 insertBuilder.append(key.getSqlName());
-                if (key.getForeignObjects().get(0) != null) {
-                    valuesBuilder.append("'").append(key.getForeignObjects().get(0).getId()).append("'");
-                } else {
-                    valuesBuilder.append("'").append("NULL").append("'");
-                }
+                Method method = storeClass.getClass().getMethod("get" + key.getProgramName());
+                String content = (String) method.invoke(storeClass);
+                valuesBuilder.append("'").append(content).append("'");
                 if (foreignKeyFieldIterator.hasNext()) {
                     insertBuilder.append(", ");
                     valuesBuilder.append(", ");
@@ -198,7 +195,6 @@ public class DatabaseController {
                     storeClass.setId(id);
                 }
             }
-
 
             close();
         } catch(SQLException se){
@@ -242,7 +238,8 @@ public class DatabaseController {
             while (foreignKeyFieldIterator.hasNext()) {
                 ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(storeClass);
                 setBuilder.append(key.getSqlName()).append("=");
-                setBuilder.append("'").append(key.getForeignObjects().get(0).getId()).append("'");
+                Method method = storeClass.getClass().getMethod("get" + key.getProgramName());
+                setBuilder.append("'").append(method.invoke(storeClass)).append("'");
                 if (foreignKeyFieldIterator.hasNext()) {
                     setBuilder.append(", ");
                 }
@@ -290,7 +287,7 @@ public class DatabaseController {
                 ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(dummyClass);
                 createTableBuilder.append(key.getSqlName()).append(" INTEGER");
                 foreignKeyBuilder.append("FOREIGN KEY(").append(key.getSqlName()).append(") ");
-                foreignKeyBuilder.append("REFERENCES ").append(key.getForeignObjects().get(0).getTableName());
+                foreignKeyBuilder.append("REFERENCES ").append(key.getDummyClazz().getTableName());
                 if (foreignKeyFieldIterator.hasNext()) {
                     createTableBuilder.append(", ");
                     foreignKeyBuilder.append(", ");
@@ -302,6 +299,7 @@ public class DatabaseController {
             System.out.println(createTableBuilder+" "+foreignKeyBuilder);
             stmt.executeUpdate(createTableBuilder+" "+foreignKeyBuilder);
             System.out.println("Table created successfully...");
+            close();
         } catch(SQLException se){
             se.printStackTrace();
             System.out.println("CREATE DataBase");

@@ -45,4 +45,12 @@ public class Group extends StoreClass {
    public void setColorHex(String colorHex) {
       this.colorHex = colorHex;
    }
+
+   public String getBankAccountId() {
+      return bankAccountId;
+   }
+
+   public void setBankAccountId(String bankAccountId) {
+      this.bankAccountId = bankAccountId;
+   }
 }

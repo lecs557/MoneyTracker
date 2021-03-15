@@ -1,6 +1,7 @@
 package view.windows;
 
 import controller.ProfileAccountManager;
+import controller.ViewController;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -29,7 +30,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public void initialize() {
         lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
 
-        lv_bankAccounts.getItems().addAll(ProfileAccountManager.getBankAccounts());
+        lv_bankAccounts.getItems().setAll(ProfileAccountManager.getBankAccounts());
         lv_bankAccounts.setCellFactory(bankAccountListView -> {
             ListCell<BankAccount> cell = new ListCell<>() {
                 @Override
@@ -45,8 +46,26 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
             return cell;
         });
         lv_groups.getItems().setAll(ProfileAccountManager.getGroups());
+        lv_groups.setCellFactory(groupListView -> {
+            ListCell<Group> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(Group group, boolean b) {
+                    super.updateItem(group, b);
+                    if (group != null) {
+                        setText(group.getGroupName());
+                    } else {
+                        setText("");
+                    }
+                }
+            };
+            return cell;
+        });
 
         tp_transactions.setTransactions(ProfileAccountManager.getTransactions());
+
+        ViewController.setLv_bankAccounts(lv_bankAccounts);
+        ViewController.setTp_transaction(tp_transactions);
+        ViewController.setLv_group(lv_groups);
 
     }
 

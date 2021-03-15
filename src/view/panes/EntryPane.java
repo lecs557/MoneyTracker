@@ -15,8 +15,8 @@ public abstract class EntryPane {
     private String name;
     private StoreClass storeClass;
 
-    public EntryPane(String name, Button save, ArrayList<? extends StoreClass> storeClasses) {
-        this.storeClass = storeClasses.get(0);
+    public EntryPane(String name, Button save, StoreClass storeClass, ArrayList<? extends StoreClass> storeClasses) {
+        this.storeClass = storeClass;
         this.name = name;
         save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> save());
     }

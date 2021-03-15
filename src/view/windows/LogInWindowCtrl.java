@@ -3,6 +3,7 @@ package view.windows;
 
 import controller.DatabaseController;
 import controller.ProfileAccountManager;
+import controller.ViewController;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -32,9 +33,10 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
                 return null;
             }
         });
+        ViewController.setChb_profiles(chb_profiles);
     }
 
-    public void ok(ActionEvent actionEvent) {
+    public void login(ActionEvent actionEvent) {
         Profile selected = chb_profiles.getSelectionModel().getSelectedItem();
         if(selected!=null){
             ProfileAccountManager.setupProfile(selected);

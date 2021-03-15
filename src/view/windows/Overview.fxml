@@ -99,7 +99,7 @@
             </VBox>
             <Button layoutX="45.0" layoutY="326.0" mnemonicParsing="false" onAction="#newTransaction" text="Neue Transaction" />
             <Button layoutX="52.0" layoutY="387.0" mnemonicParsing="false" onAction="#importTransactionViaPDF" text="Importieren" />
-            <TransactionTabPane fx:id="tp_transactions" layoutX="531.0" layoutY="37.0" />
+            <TransactionTabPane fx:id="tp_transactions" layoutX="531.0" layoutY="37.0" prefHeight="400.0" prefWidth="600.0" />
          </children>
       </AnchorPane>
    </children>

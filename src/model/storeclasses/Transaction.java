@@ -16,22 +16,28 @@ public class Transaction extends StoreClass {
     private String purpose;
     private String amount;
     private String bankAccountId;
-    private ArrayList<String> invoiceFileIds;
-    private ArrayList<String> groupsIds;
+    private static String defaultBankAccountId;
+    private final ArrayList<String> invoiceFileIds = new ArrayList<>();
+    private final ArrayList<String> groupIds = new ArrayList<>();
     private int balance;
 
 
     public Transaction() {
         tableName = "Transactions";
+        bankAccountId=defaultBankAccountId;
+    }
+
+    public static void setDefaultBankAccountId(String id) {
+        defaultBankAccountId=id;
     }
 
     public static class Variables {
         public static FieldName id = FieldName.storeId();
         public static FieldName date = new FieldName("Date", "date","DATE", DateEntry.class);
         public static FieldName purpose = new FieldName("Purpose", "purpose","TEXT", StringEntry.class);
-        public static FieldName amount = new FieldName("Amount", "amount","int", AmountEntry.class);
-        public static FieldName invoiceFileIds = new FieldName("InvoiceFileIds", "invoiceFileIds","Text", AmountEntry.class);
-        public static FieldName groupsIds = new FieldName("GroupIds", "groupIds","Text", AmountEntry.class);
+        public static FieldName amount = new FieldName("Amount", "amount","int", StringEntry.class);
+        public static FieldName invoiceFileIds = new FieldName("InvoiceFileIds", "invoiceFileIds","Text", StringEntry.class);
+        public static FieldName groupIds = new FieldName("GroupIds", "groupIds","Text", StringEntry.class);
     }
 
     public static class ForeignKeys{
@@ -54,9 +60,9 @@ public class Transaction extends StoreClass {
         this.invoiceFileIds.addAll(Arrays.asList(temp.split("; ")));
     }
 
-    public String getGroupsIds() {
+    public String getGroupIds() {
         String temp = "";
-        Iterator<String> iterator = groupsIds.iterator();
+        Iterator<String> iterator = groupIds.iterator();
         while (iterator.hasNext()){
             temp+=iterator.next();
             if (iterator.hasNext()){
@@ -66,8 +72,8 @@ public class Transaction extends StoreClass {
         return temp;
     }
 
-    public void setGroupsIds(String temp) {
-        this.groupsIds.addAll(Arrays.asList(temp.split("; ")));
+    public void setGroupIds(String temp) {
+        this.groupIds.addAll(Arrays.asList(temp.split("; ")));
     }
 
     public int getIntAmount(){

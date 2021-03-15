@@ -50,6 +50,10 @@ public class ProfileAccountManager {
         }
     }
 
+    public static <T extends StoreClass> void add(T storeClass){
+
+    }
+
     public static void add(BankAccount bankAccount){
         bankAccounts.add(bankAccount);
     }

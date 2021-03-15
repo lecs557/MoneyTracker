@@ -18,9 +18,9 @@ public class ChoiceBoxEntry extends EntryPane {
 
     private ChoiceBox<StoreClass> chb = new ChoiceBox<>();
 
-    public ChoiceBoxEntry(String name, Button save, ArrayList<? extends StoreClass> storeClass) {
-        super(name, save, storeClass);
-        chb.getItems().addAll(storeClass);
+    public ChoiceBoxEntry(String name, Button save, StoreClass storeClass, ArrayList<? extends StoreClass> storeClasses) {
+        super(name, save, storeClass, storeClasses);
+        chb.getItems().addAll(storeClasses);
         chb.setConverter(new StringConverter<StoreClass>() {
             @Override
             public String toString(StoreClass storeClass) {
@@ -40,6 +40,11 @@ public class ChoiceBoxEntry extends EntryPane {
                 return null;
             }
         });
+        if (name.contains("profile")){
+            chb.getSelectionModel().select(Integer.parseInt(ProfileAccountManager.getCurrentAccount().getId())-1);
+        } else{
+            chb.getSelectionModel().select(0);
+        }
     }
 
     @Override

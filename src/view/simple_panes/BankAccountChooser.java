@@ -1,20 +1,16 @@
 package view.simple_panes;
 
-import controller.ContentController;
 import controller.IOController;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 import model.Main;
 import model.storeclasses.BankAccount;
-import model.storeclasses.StoreClass;
 import model.storeclasses.Transaction;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +47,7 @@ public class BankAccountChooser extends VBox {
             chooser.setTitle("PDF auswählen");
             chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
             List<File> files = chooser.showOpenMultipleDialog(Main.primaryStage);
-            Transaction.ForeignKeys.bankAccount.set(chb.getSelectionModel().getSelectedItem());
+            Transaction.setDefaultBankAccountId(chb.getSelectionModel().getSelectedItem().getId());
             IOController.startPDFImport(files);
         });
 

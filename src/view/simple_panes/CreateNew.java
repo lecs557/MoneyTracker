@@ -9,10 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Main;
-import model.storeclasses.BankAccount;
-import model.storeclasses.FieldName;
-import model.storeclasses.ForeignKey;
-import model.storeclasses.StoreClass;
+import model.storeclasses.*;
 import view.panes.EntryPane;
 import view.panes.entry_panes.ChoiceBoxEntry;
 
@@ -80,7 +77,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 HBox hbox = new HBox();
                 Label label = new Label(key.getDummyClazz().getClass().getSimpleName());
                 label.setPrefWidth(190);
-                EntryPane entryPane = new ChoiceBoxEntry("Id", btn_save, key.getForeignObjects());
+                EntryPane entryPane = new ChoiceBoxEntry(key.getProgramName(), btn_save, storeClass, key.getForeignObjects());
                 hbox.getChildren().addAll(label, entryPane.getPane());
                 if (edit) {
                     entryPane.showContent();
@@ -96,10 +93,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
             } else {
                DatabaseController.storeObject(storeClass, false);
             }
-            if (storeClass instanceof BankAccount){
-                ProfileAccountManager.add((BankAccount) storeClass);
-            }
-            ViewController.refresh();
+            ViewController.refresh(storeClass);
             Main.secStage.close();
         });
         vb_fields.getChildren().add(btn_save);

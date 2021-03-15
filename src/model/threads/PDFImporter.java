@@ -10,6 +10,7 @@ import model.FontFilter;
 import model.Main;
 import model.storeclasses.BankAccount;
 import model.storeclasses.InvoiceFile;
+import model.storeclasses.Transaction;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class PDFImporter extends Thread {
     private List<File> files;
     private SimpleDoubleProperty progress = new SimpleDoubleProperty();
     private SimpleBooleanProperty running = new SimpleBooleanProperty();
+    private String bankAccountID="";
+    private String InvoiceFileID="";
     private PdfReader pdfReader;
 
     public PDFImporter(List<File> files) {
@@ -58,7 +61,7 @@ public class PDFImporter extends Thread {
             progress.set((double)p/size);
         }
         running.set(false);
-        ViewController.refreshTransactions();
+        ViewController.refresh(new Transaction());
     }
 
     public SimpleDoubleProperty progressProperty() {
