@@ -1,31 +1,33 @@
 package view.simple_panes;
 
-import javafx.collections.ObservableList;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.layout.Pane;
-import model.Main;
 import model.MyDate;
+import model.storeclasses.Transaction;
 
 import java.util.ArrayList;
 
 public class TransactionChart extends LineChart<MyDate,Number> {
 
+    private  Series<MyDate,Number> series;
+
     public TransactionChart() {
-        super(new LocalDateAxis(0,1200), new NumberAxis());
+        super(new LocalDateAxis(), new NumberAxis());
         getXAxis().setAutoRanging(false);
-        Series<MyDate,Number> series = new Series<>();
-//        for (ArrayList<Data<MyDate,Number>> t:Main.currentAccount.getYears_data()){
-//            series.getData().addAll(t);
-//        }
+        series = new Series<>();
         getData().add(series);
         series.setName("Mein Konto");
+        setTransactions(SampleClass.getSampleTransactions());
     }
 
-    public void putInto(Pane container){
-        setPrefHeight(container.getPrefHeight());
-        setPrefWidth(container.getPrefWidth());
-        container.getChildren().clear();
-        container.getChildren().add(this);
+    public void setTransactions(ArrayList<Transaction> transactions){
+        series.getData().clear();
+        int startYear = transactions.get(0).getLocalDate().getYear();
+        int endYear = transactions.get(transactions.size()-1).getLocalDate().getYear();;
+        for (Transaction t:transactions){
+            Data<MyDate,Number> data = new Data<>(new MyDate(t.getLocalDate()),(double)t.getBalance()/100);
+            series.getData().add(data);
+        }
+        ((LocalDateAxis)getXAxis()).setYears(startYear,endYear);
     }
 }

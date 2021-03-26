@@ -2,16 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import view.simple_panes.BankAccountList?>
+<?import view.simple_panes.GroupList?>
+<?import view.simple_panes.TransactionChart?>
 <?import view.simple_panes.TransactionTabPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="766.0" prefWidth="1259.0" styleClass="main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windows.OverviewWindowCtrl">
@@ -42,38 +41,6 @@
       </MenuBar>
       <AnchorPane fx:id="pane" layoutY="25.0" prefHeight="580.0" prefWidth="983.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Pane fx:id="savePane" layoutX="500.0" layoutY="200.0" prefHeight="200.0" prefWidth="430.0" visible="false">
-               <children>
-                  <Label layoutX="169.0" layoutY="29.0" text="Wird gespeichert">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ProgressBar fx:id="pb_year" layoutX="114.0" layoutY="60.0" prefWidth="200.0" progress="0.0" />
-                  <ProgressBar fx:id="pb_transa" layoutX="114.0" layoutY="118.0" prefWidth="200.0" progress="0.0" />
-               </children>
-            </Pane>
-            <Pane fx:id="pdfPane" layoutX="500.0" layoutY="200.0" prefHeight="200.0" prefWidth="430.0" visible="false">
-               <children>
-                  <Label layoutX="145.0" layoutY="43.0" text="PDF wird geladen">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ProgressBar fx:id="pb_pdf" layoutX="115.0" layoutY="151.0" prefWidth="200.0" progress="0.0" />
-               </children>
-            </Pane>
-            <Pane fx:id="chPane" layoutX="510.0" layoutY="210.0" prefHeight="200.0" prefWidth="430.0" visible="false">
-               <children>
-                  <Label layoutX="120.0" layoutY="22.0" text="Zwcks werden geändert">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ProgressBar fx:id="pb_year1" layoutX="114.0" layoutY="60.0" prefWidth="200.0" progress="0.0" />
-                  <ProgressBar fx:id="pb_transa1" layoutX="114.0" layoutY="118.0" prefWidth="200.0" progress="0.0" />
-               </children>
-            </Pane>
             <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="200.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <HBox prefHeight="30.0" prefWidth="200.0">
@@ -85,21 +52,14 @@
                   <Button fx:id="btn_back" mnemonicParsing="false" onAction="#backToLogin" text="Abmelden" />
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="37.0">
-               <children>
-                  <ListView fx:id="lv_bankAccounts" prefHeight="200.0" prefWidth="173.0" />
-                  <Button fx:id="btn_newBA" mnemonicParsing="false" onAction="#newBA" text="Neues Konto" />
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="187.0" layoutY="37.0">
-               <children>
-                  <ListView fx:id="lv_groups" prefHeight="200.0" prefWidth="173.0" />
-                  <Button fx:id="btn_newGroup" mnemonicParsing="false" onAction="#newGroup" text="Neue Gruppe" />
-               </children>
-            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="37.0" />
+            <VBox alignment="TOP_CENTER" layoutX="187.0" layoutY="37.0" />
             <Button layoutX="45.0" layoutY="326.0" mnemonicParsing="false" onAction="#newTransaction" text="Neue Transaction" />
             <Button layoutX="52.0" layoutY="387.0" mnemonicParsing="false" onAction="#importTransactionViaPDF" text="Importieren" />
-            <TransactionTabPane fx:id="tp_transactions" layoutX="531.0" layoutY="37.0" prefHeight="400.0" prefWidth="600.0" />
+            <BankAccountList layoutX="101.0" layoutY="54.0" prefHeight="181.0" prefWidth="240.0" />
+            <GroupList layoutX="430.0" layoutY="88.0" prefHeight="162.0" prefWidth="191.0" />
+            <TransactionTabPane layoutX="644.0" layoutY="163.0" prefHeight="145.0" prefWidth="580.0" />
+            <TransactionChart layoutX="209.0" layoutY="308.0" />
          </children>
       </AnchorPane>
    </children>

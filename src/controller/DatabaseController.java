@@ -171,19 +171,19 @@ public class DatabaseController {
                 }
             }
 
-            String id="b";
+            int id=-1;
             if (checkIfExists){
                 System.out.println("CHECK IF EXISTS");
                 String sql = "SELECT id FROM "+ storeClass.getTableName() +" "+existsBuilder;
                 System.out.println(sql);
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {
-                    id = rs.getString("id");
+                    id = rs.getInt("id");
                     storeClass.setId(id);
                     System.out.println("EXISTS");
                 }
             }
-            if (id.equals("b")) {
+            if (id==-1) {
                 System.out.println("DOES NOT EXIST OR NOT CHECKED");
                 String sql = insertBuilder + " " + valuesBuilder;
                 System.out.println(sql);
@@ -191,7 +191,7 @@ public class DatabaseController {
                 String sql1 = "SELECT id FROM " + storeClass.getTableName() + " ORDER BY id DESC LIMIT 1";
                 ResultSet rs = stmt.executeQuery(sql1);
                 while (rs.next()) {
-                    id = rs.getString("id");
+                    id = rs.getInt("id");
                     storeClass.setId(id);
                 }
             }

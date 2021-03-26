@@ -31,37 +31,11 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
 
         lv_bankAccounts.getItems().setAll(ProfileAccountManager.getBankAccounts());
-        lv_bankAccounts.setCellFactory(bankAccountListView -> {
-            ListCell<BankAccount> cell = new ListCell<>() {
-                @Override
-                protected void updateItem(BankAccount bankAccount, boolean b) {
-                    super.updateItem(bankAccount, b);
-                    if (bankAccount != null) {
-                        setText(bankAccount.getBankName());
-                    } else {
-                        setText("");
-                    }
-                }
-            };
-            return cell;
-        });
-        lv_groups.getItems().setAll(ProfileAccountManager.getGroups());
-        lv_groups.setCellFactory(groupListView -> {
-            ListCell<Group> cell = new ListCell<>() {
-                @Override
-                protected void updateItem(Group group, boolean b) {
-                    super.updateItem(group, b);
-                    if (group != null) {
-                        setText(group.getGroupName());
-                    } else {
-                        setText("");
-                    }
-                }
-            };
-            return cell;
-        });
 
-        tp_transactions.setTransactions(ProfileAccountManager.getTransactions());
+        lv_groups.getItems().setAll(ProfileAccountManager.getGroups());
+
+
+        tp_transactions.setTransactions(ProfileAccountManager.getTransactions(),ProfileAccountManager.getGroups());
 
         ViewController.setLv_bankAccounts(lv_bankAccounts);
         ViewController.setTp_transaction(tp_transactions);

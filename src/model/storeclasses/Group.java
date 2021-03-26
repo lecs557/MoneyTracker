@@ -1,14 +1,17 @@
 package model.storeclasses;
 
 import view.panes.entry_panes.StringEntry;
+import view.simple_panes.SampleClass;
 
 import java.util.ArrayList;
 
 public class Group extends StoreClass {
 
+   private static int sampleId=1;
+
    private String groupName;
    private String colorHex;
-   private String bankAccountId;
+   private int bankAccountId;
    private int sum;
 
    public Group() {
@@ -46,11 +49,20 @@ public class Group extends StoreClass {
       this.colorHex = colorHex;
    }
 
-   public String getBankAccountId() {
+   public int getBankAccountId() {
       return bankAccountId;
    }
 
-   public void setBankAccountId(String bankAccountId) {
+   public void setBankAccountId(int bankAccountId) {
       this.bankAccountId = bankAccountId;
+   }
+
+   public static Group sampleGroup(){
+      Group sample = new Group();
+      sample.setId(sampleId);
+      sample.setGroupName("Test");
+      sample.setColorHex("#"+ SampleClass.random(0,9)+SampleClass.random(0,9)+SampleClass.random(0,9));
+      sampleId++;
+      return sample;
    }
 }

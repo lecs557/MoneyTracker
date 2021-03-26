@@ -1,24 +1,60 @@
 package view.simple_panes;
 
+import controller.ProfileAccountManager;
+import model.storeclasses.BankAccount;
+import model.storeclasses.Group;
 import model.storeclasses.Transaction;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Random;
 
 public class SampleClass {
 
+    private static ArrayList<Transaction> sampleTransactions;
+    private static ArrayList<BankAccount> sampleBankAccounts;
+    private static ArrayList<Group> sampleGroups;
+
     public static ArrayList<Transaction> getSampleTransactions(){
-        Transaction sample1 = new Transaction();
-        Transaction sample2 = new Transaction();
-        ArrayList<Transaction> sampleTransactions = new ArrayList<>();
-        sample1.setLocalDate(LocalDate.of(2020,01,01));
-        sample1.setPurpose("Test");
-        sample1.setAmount("50");
-        sample2.setLocalDate(LocalDate.now());
-        sample2.setAmount("-50");
-        sample2.setPurpose("Test1");
-        sampleTransactions.add(sample1);
-        sampleTransactions.add(sample2);
+        if (sampleTransactions != null) {
+            return sampleTransactions;
+        }
+        sampleTransactions = new ArrayList<>();
+        sampleTransactions.add(Transaction.sampleTransaction());
+        sampleTransactions.add(Transaction.sampleTransaction());
+        sampleTransactions.add(Transaction.sampleTransaction());
+        sampleTransactions.add(Transaction.sampleTransaction());
+        sampleTransactions.add(Transaction.sampleTransaction());
+        sampleTransactions.add(Transaction.sampleTransaction());
+        sampleTransactions.sort(Comparator.comparing(Transaction::getLocalDate));
+        ProfileAccountManager.computeBalance(sampleTransactions);
         return sampleTransactions;
+    }
+
+    public static ArrayList<BankAccount> getSampleBankAccounts() {
+        if (sampleBankAccounts != null) {
+            return sampleBankAccounts;
+        }
+        sampleBankAccounts = new ArrayList<>();
+        sampleBankAccounts.add(BankAccount.sampleBankAccount());
+        sampleBankAccounts.add(BankAccount.sampleBankAccount());
+        return sampleBankAccounts;
+    }
+
+    public static ArrayList<Group> getSampleGroups() {
+        if (sampleGroups != null) {
+            return sampleGroups;
+        }
+        sampleGroups = new ArrayList<>();
+        sampleGroups.add(Group.sampleGroup());
+        sampleGroups.add(Group.sampleGroup());
+        return sampleGroups;
+    }
+
+    public static int random(int min, int max) {
+        Random ran = new Random();
+        int x = ran.nextInt(max - min) + min;
+        return x;
     }
 }

@@ -17,12 +17,12 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
     public LocalDateAxis() {
     }
 
-    LocalDateAxis(double lowerBound, double upperBound) {
-        super(lowerBound, upperBound);
-        setLowerBound(start());
-        setUpperBound(end());
-        setMinorTickVisible(true);
-
+    public void setYears(int lowerYear, int upperYear){
+        start=lowerYear;
+        end=upperYear;
+        setLowerBound(new MyDate(LocalDate.of(lowerYear, 1, 1)).intValue());
+        setUpperBound(new MyDate(LocalDate.of(upperYear, 12, 31)).intValue());
+        calculateMinorTickMarks();
     }
 
     @Override
@@ -57,22 +57,5 @@ public class LocalDateAxis extends ValueAxis<MyDate> {
     @Override
     protected String getTickMarkLabel(MyDate myDate) {
         return myDate.getDate().format(DateTimeFormatter.ofPattern("LLL yyyy"));
-    }
-
-    private int start(){
-//        if(!Main.currentAccount.getYears_Transaction().isEmpty()){
-//            start=Main.currentAccount.getYears_Transaction().get(0).get(0).getDate().getYear();
-//            return new MyDate(LocalDate.of(start,1,1)).intValue();
-//        }
-        return 0;
-    }
-
-    private int end() {
-//        if (!Main.currentAccount.getYears_Transaction().isEmpty()) {
-//            int size = Main.currentAccount.getYears_Transaction().size();
-//            end = Main.currentAccount.getYears_Transaction().get(size - 1).get(0).getDate().getYear();
-//            return new MyDate(LocalDate.of(end, 12, 31)).intValue();
-//        }
-        return 365;
     }
 }

@@ -3,22 +3,26 @@ package model.storeclasses;
 import view.panes.entry_panes.AmountEntry;
 import view.panes.entry_panes.DateEntry;
 import view.panes.entry_panes.StringEntry;
+import view.simple_panes.SampleClass;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Transaction extends StoreClass {
+
+    private static int sampleId=1;
 
     private String date;
     private String purpose;
     private String amount;
-    private String bankAccountId;
-    private static String defaultBankAccountId;
+    private int bankAccountId;
+    private static int defaultBankAccountId;
     private final ArrayList<String> invoiceFileIds = new ArrayList<>();
-    private final ArrayList<String> groupIds = new ArrayList<>();
+    private int groupId;
     private int balance;
 
 
@@ -27,7 +31,7 @@ public class Transaction extends StoreClass {
         bankAccountId=defaultBankAccountId;
     }
 
-    public static void setDefaultBankAccountId(String id) {
+    public static void setDefaultBankAccountId(int id) {
         defaultBankAccountId=id;
     }
 
@@ -56,24 +60,24 @@ public class Transaction extends StoreClass {
         return temp;
     }
 
+    public Group findGroup(ArrayList<Group> allGroups){
+        if (getGroupId()==0) return null;
+        for (Group g:allGroups){
+            if (groupId==g.getId()) return g;
+        }
+        return null;
+    }
+
     public void setInvoiceFileIds(String temp) {
         this.invoiceFileIds.addAll(Arrays.asList(temp.split("; ")));
     }
 
-    public String getGroupIds() {
-        String temp = "";
-        Iterator<String> iterator = groupIds.iterator();
-        while (iterator.hasNext()){
-            temp+=iterator.next();
-            if (iterator.hasNext()){
-                temp+="; ";
-            }
-        }
-        return temp;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setGroupIds(String temp) {
-        this.groupIds.addAll(Arrays.asList(temp.split("; ")));
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     public int getIntAmount(){
@@ -116,11 +120,11 @@ public class Transaction extends StoreClass {
         this.amount = amount;
     }
 
-    public String getBankAccountId() {
+    public int getBankAccountId() {
         return bankAccountId;
     }
 
-    public void setBankAccountId(String bankAccountId) {
+    public void setBankAccountId(int bankAccountId) {
         this.bankAccountId = bankAccountId;
     }
 
@@ -132,4 +136,14 @@ public class Transaction extends StoreClass {
         this.balance = balance;
     }
 
+    public static Transaction sampleTransaction(){
+        Transaction sample = new Transaction();
+        sample.setId(sampleId);
+        sample.setLocalDate(LocalDate.of(SampleClass.random(2014,2020),SampleClass.random(1,12),SampleClass.random(1,27)));
+        sample.setPurpose("Test");
+        sample.setAmount(""+SampleClass.random(-50000,50000));
+        sample.setGroupId(SampleClass.random(0,2));
+        sampleId++;
+        return sample;
+    }
 }

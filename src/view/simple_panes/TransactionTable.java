@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import model.Main;
+import model.storeclasses.Group;
 import model.storeclasses.Transaction;
 
 import java.text.DecimalFormat;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class TransactionTable extends TableView<Transaction> {
 
 
-    public TransactionTable()  {
+    public TransactionTable(ArrayList<Group> groups)  {
         //SEE
         TableColumn<Transaction, LocalDate> options =new TableColumn<>("");
         options.setCellValueFactory(new PropertyValueFactory<>("localDate"));
@@ -64,6 +65,10 @@ public class TransactionTable extends TableView<Transaction> {
                             setText(null);
                             setGraphic(null);
                         } else {
+                            Transaction t = getTableRow().getItem();
+                            if (t.getGroupId()!=0){
+                                getTableRow().setStyle("-fx-background-color: "+t.findGroup(groups).getColorHex()+";" );
+                            }
                             Label l = new Label(item.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")));
                             setGraphic(l);
                         }

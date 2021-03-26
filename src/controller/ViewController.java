@@ -8,6 +8,7 @@ import view.simple_panes.StoreClassTable;
 import view.simple_panes.TransactionTabPane;
 import view.simple_panes.TransactionTable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ViewController {
@@ -26,7 +27,9 @@ public class ViewController {
             } else if (storeClass instanceof Group){
                 lv_group.getItems().setAll(DatabaseController.computeStoreClasses(new Group(),""));
             } else if (storeClass instanceof Transaction){
-                tp_transaction.setTransactions(DatabaseController.computeStoreClasses(new Transaction(),Transaction.Variables.date.getSqlName()));
+                ArrayList<Transaction> transactions =DatabaseController.computeStoreClasses(new Transaction(),Transaction.Variables.date.getSqlName());
+                ArrayList<Group> groups = new ArrayList<>(lv_group.getItems());
+                tp_transaction.setTransactions(transactions,groups);
             }
         });
     }

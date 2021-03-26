@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public abstract class StoreClass {
 
-    private String id = "NULL";
+    private int id = 0;
     protected String tableName;
     protected String choiceBoxMethodName;
     protected ArrayList<FieldName> fieldNames = new ArrayList<>();
@@ -19,11 +19,11 @@ public abstract class StoreClass {
         fieldNames.add(FieldName.storeId());
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

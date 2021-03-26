@@ -50,9 +50,18 @@ public class ProfileAccountManager {
         }
     }
 
-    public static <T extends StoreClass> void add(T storeClass){
-
+    public static void computeBalance(ArrayList<Transaction> transactions){
+        int sum=0;
+        for(Transaction transaction:transactions){
+            sum+=Integer.parseInt(transaction.getAmount());
+            transaction.setBalance(sum);
+            Group g = transaction.getGroup();
+            if (g != null) {
+                g.addSum(Integer.parseInt(transaction.getAmount()));
+            }
+        }
     }
+
 
     public static void add(BankAccount bankAccount){
         bankAccounts.add(bankAccount);

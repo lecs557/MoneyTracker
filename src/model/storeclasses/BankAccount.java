@@ -2,12 +2,15 @@ package model.storeclasses;
 
 import view.panes.entry_panes.StringEntry;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BankAccount extends StoreClass {
 
+    private static int sampleId=1;
+
     private String bankName;
-    private String profileId;
+    private int profileId;
 
     public BankAccount() {
         tableName="BankAccount";
@@ -31,11 +34,19 @@ public class BankAccount extends StoreClass {
         this.bankName = bankName;
     }
 
-    public String getProfileId() {
+    public int getProfileId() {
         return profileId;
     }
 
-    public void setProfileId(String profileId) {
+    public void setProfileId(int profileId) {
         this.profileId = profileId;
+    }
+
+    public static BankAccount sampleBankAccount(){
+        BankAccount sample = new BankAccount();
+        sample.setId(sampleId);
+        sample.setBankName("Test");
+        sampleId++;
+        return sample;
     }
 }
