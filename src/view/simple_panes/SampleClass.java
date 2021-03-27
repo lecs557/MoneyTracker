@@ -49,6 +49,7 @@ public class SampleClass {
         sampleGroups = new ArrayList<>();
         sampleGroups.add(Group.sampleGroup());
         sampleGroups.add(Group.sampleGroup());
+        ProfileAccountManager.computeSum(sampleGroups,getSampleTransactions());
         return sampleGroups;
     }
 

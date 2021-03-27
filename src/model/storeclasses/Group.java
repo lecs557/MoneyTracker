@@ -3,7 +3,7 @@ package model.storeclasses;
 import view.panes.entry_panes.StringEntry;
 import view.simple_panes.SampleClass;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Group extends StoreClass {
 
@@ -12,7 +12,7 @@ public class Group extends StoreClass {
    private String groupName;
    private String colorHex;
    private int bankAccountId;
-   private int sum;
+   private final SortedMap<Integer,Integer> yearSumMap=new TreeMap<>();
 
    public Group() {
       tableName = "Groups";
@@ -29,8 +29,20 @@ public class Group extends StoreClass {
       public static ForeignKey<BankAccount> bankAccount = new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount());
    }
 
-   public void addSum(int s){
-      sum +=s;
+   public void addSum(int year, int sum){
+      yearSumMap.merge(year,sum,Integer::sum);
+   }
+
+   public Map<Integer, Integer> getYearSumMap() {
+      return yearSumMap;
+   }
+
+   public int computeSum(){
+      int sum=0;
+      for(int inte:yearSumMap.values()){
+         sum+=inte;
+      }
+      return sum;
    }
 
    public String getGroupName() {
@@ -61,7 +73,7 @@ public class Group extends StoreClass {
       Group sample = new Group();
       sample.setId(sampleId);
       sample.setGroupName("Test");
-      sample.setColorHex("#"+ SampleClass.random(0,9)+SampleClass.random(0,9)+SampleClass.random(0,9));
+      sample.setColorHex("#"+ SampleClass.random(8,9)+SampleClass.random(7,9)+SampleClass.random(6,9));
       sampleId++;
       return sample;
    }

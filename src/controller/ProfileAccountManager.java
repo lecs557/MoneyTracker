@@ -38,16 +38,6 @@ public class ProfileAccountManager {
         sqlTransaction = new Transaction();
         Transaction.ForeignKeys.bankAccount.setForeignObjects(bankAccounts);
         transactions = DatabaseController.computeStoreClasses(sqlTransaction,"");
-
-
-        for(Transaction transaction:transactions){
-            sum+=Integer.parseInt(transaction.getAmount());
-            transaction.setBalance(sum);
-            Group g = transaction.getGroup();
-            if (g != null) {
-                g.addSum(Integer.parseInt(transaction.getAmount()));
-            }
-        }
     }
 
     public static void computeBalance(ArrayList<Transaction> transactions){
@@ -55,13 +45,23 @@ public class ProfileAccountManager {
         for(Transaction transaction:transactions){
             sum+=Integer.parseInt(transaction.getAmount());
             transaction.setBalance(sum);
-            Group g = transaction.getGroup();
-            if (g != null) {
-                g.addSum(Integer.parseInt(transaction.getAmount()));
-            }
         }
     }
 
+    public static void computeSum(ArrayList<Group> groups, ArrayList<Transaction> transactions){
+        int curYear=0;
+        for (Transaction tra:transactions){
+            int year=tra.getLocalDate().getYear();
+            if(year!=curYear){
+                for(Group g:groups){
+                    g.addSum(year,0);
+                }
+                curYear=year;
+            }
+            if (tra.getGroupId()==0) continue;;
+            tra.findGroup(groups).addSum(year,Integer.parseInt(tra.getAmount()));
+        }
+    }
 
     public static void add(BankAccount bankAccount){
         bankAccounts.add(bankAccount);
