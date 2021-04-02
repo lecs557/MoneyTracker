@@ -10,7 +10,7 @@ public class Group extends StoreClass {
    private static int sampleId=1;
 
    private String groupName;
-   private String colorHex;
+   private String color;
    private int bankAccountId;
    private final SortedMap<Integer,Integer> yearSumMap=new TreeMap<>();
 
@@ -22,7 +22,7 @@ public class Group extends StoreClass {
    public static class Variables {
       public static FieldName id =FieldName.storeId();
       public static FieldName group_name = new FieldName("GroupName", "group_name","TEXT", StringEntry.class);
-      public static FieldName color_hex= new FieldName("ColorHex", "color_hex","TEXT", StringEntry.class);
+      public static FieldName color= new FieldName("Color", "color","TEXT", StringEntry.class);
    }
 
    public static class ForeignKeys{
@@ -53,12 +53,12 @@ public class Group extends StoreClass {
       this.groupName = groupName;
    }
 
-   public String getColorHex() {
-      return colorHex;
+   public String getColor() {
+      return color;
    }
 
-   public void setColorHex(String colorHex) {
-      this.colorHex = colorHex;
+   public void setColor(String color) {
+      this.color = color;
    }
 
    public int getBankAccountId() {
@@ -73,7 +73,7 @@ public class Group extends StoreClass {
       Group sample = new Group();
       sample.setId(sampleId);
       sample.setGroupName("Test");
-      sample.setColorHex("#"+ SampleClass.random(8,9)+SampleClass.random(7,9)+SampleClass.random(6,9));
+      sample.setColor("#"+ SampleClass.random(8,9)+SampleClass.random(7,9)+SampleClass.random(6,9));
       sampleId++;
       return sample;
    }

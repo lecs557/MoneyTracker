@@ -57,11 +57,11 @@
             <VBox alignment="TOP_CENTER" layoutX="187.0" layoutY="37.0" />
             <Button layoutX="45.0" layoutY="326.0" mnemonicParsing="false" onAction="#newTransaction" text="Neue Transaction" />
             <Button layoutX="52.0" layoutY="387.0" mnemonicParsing="false" onAction="#importTransactionViaPDF" text="Importieren" />
-            <BankAccountList layoutX="29.0" layoutY="27.0" prefHeight="181.0" prefWidth="123.0" />
-            <GroupList layoutX="167.0" layoutY="27.0" prefHeight="181.0" prefWidth="123.0" />
-            <TransactionTabPane layoutX="314.0" layoutY="27.0" prefHeight="238.0" prefWidth="580.0" />
-            <TransactionChart layoutX="156.0" layoutY="409.0" prefHeight="317.0" prefWidth="790.0" />
-            <SumTable layoutX="548.0" layoutY="276.0" prefHeight="162.0" prefWidth="722.0" />
+            <BankAccountList fx:id="vb_bankAccounts" layoutX="29.0" layoutY="27.0" prefHeight="181.0" prefWidth="123.0" />
+            <GroupList fx:id="vb_groups" layoutX="167.0" layoutY="27.0" prefHeight="181.0" prefWidth="123.0" />
+            <TransactionTabPane fx:id="tp_transactions" layoutX="314.0" layoutY="27.0" prefHeight="238.0" prefWidth="580.0" />
+            <TransactionChart fx:id="ch_transaction" layoutX="156.0" layoutY="409.0" prefHeight="317.0" prefWidth="790.0" />
+            <SumTable fx:id="tl_groupSums" layoutX="548.0" layoutY="276.0" prefHeight="162.0" prefWidth="722.0" />
          </children>
       </AnchorPane>
    </children>

@@ -91,13 +91,18 @@ public class DatabaseController {
                 T tempStoreClass = (T) storeClass.getClass().getDeclaredConstructor().newInstance();
                 for(Field field: storeClass.getClass().getClasses()[1].getFields()){
                     FieldName fieldName = (FieldName) field.get(storeClass);
-                    Method method = storeClass.getClass().getMethod("set"+fieldName.getProgramName(),Class.forName("java.lang.String"));
-                    method.invoke(tempStoreClass,rs.getString(fieldName.getSqlName()));
+                    if (fieldName.getProgramName().equals("Id")) {
+                        Method method = storeClass.getClass().getMethod("set"+fieldName.getProgramName(),int.class);
+                        method.invoke(tempStoreClass,rs.getInt(fieldName.getSqlName()));
+                    } else {
+                        Method method = storeClass.getClass().getMethod("set" + fieldName.getProgramName(), String.class);
+                        method.invoke(tempStoreClass, rs.getString(fieldName.getSqlName()));
+                    }
                 }
                 for(Field field: storeClass.getClass().getClasses()[0].getFields()){
                     ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) field.get(storeClass);
-                    Method method = storeClass.getClass().getMethod("set"+key.getProgramName(),Class.forName("java.lang.String"));
-                    method.invoke(tempStoreClass,rs.getString(key.getSqlName()));
+                    Method method = storeClass.getClass().getMethod("set"+key.getProgramName(),Integer.class);
+                    method.invoke(tempStoreClass,rs.getInt(key.getSqlName()));
                 }
                 resultStoreClasses.add(tempStoreClass);
             }
@@ -160,7 +165,7 @@ public class DatabaseController {
                 ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(storeClass);
                 insertBuilder.append(key.getSqlName());
                 Method method = storeClass.getClass().getMethod("get" + key.getProgramName());
-                String content = (String) method.invoke(storeClass);
+                int content = (Integer) method.invoke(storeClass);
                 valuesBuilder.append("'").append(content).append("'");
                 if (foreignKeyFieldIterator.hasNext()) {
                     insertBuilder.append(", ");

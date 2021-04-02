@@ -8,9 +8,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-import model.Sum;
 import model.storeclasses.Group;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -63,7 +61,7 @@ public class SumTable extends TableView<Group> {
                                 setText(null);
                                 setGraphic(null);
                             } else {
-                                getTableRow().setStyle("-fx-background-color: "+getTableRow().getItem().getColorHex()+";" );
+                                getTableRow().setStyle("-fx-background-color: "+getTableRow().getItem().getColor()+";" );
                                 Label l = new Label(new DecimalFormat("#0.00").format((double)item/100)+" €");
                                 if (item > 0){
                                     l.setStyle("-fx-text-fill: green;");

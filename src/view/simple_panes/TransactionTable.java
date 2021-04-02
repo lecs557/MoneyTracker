@@ -1,14 +1,11 @@
 package view.simple_panes;
 
-import controller.ProfileAccountManager;
 import controller.WindowManager;
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
-import model.Main;
 import model.storeclasses.Group;
 import model.storeclasses.Transaction;
 
@@ -67,7 +64,7 @@ public class TransactionTable extends TableView<Transaction> {
                         } else {
                             Transaction t = getTableRow().getItem();
                             if (t.getGroupId()!=0){
-                                getTableRow().setStyle("-fx-background-color: "+t.findGroup(groups).getColorHex()+";" );
+                                getTableRow().setStyle("-fx-background-color: "+t.findGroup(groups).getColor()+";" );
                             }
                             Label l = new Label(item.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")));
                             setGraphic(l);

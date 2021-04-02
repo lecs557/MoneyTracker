@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class BankAccountList extends VBox {
 
     private Button btn_add;
-    private ListView<BankAccount> listView;
+    public ListView<BankAccount> listView;
 
     public BankAccountList() {
         btn_add = new Button("Add");

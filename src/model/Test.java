@@ -6,10 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import view.simple_panes.BankAccountList;
-import view.simple_panes.GroupList;
-import view.simple_panes.SumTable;
-import view.simple_panes.TransactionTabPane;
+import view.simple_panes.*;
 
 import java.io.IOException;
 
@@ -19,10 +16,10 @@ public class Test extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException{
 
-        Region node = new SumTable();
-        node.setPrefHeight(200);
-        node.setPrefWidth(100);
-        primaryStage.setScene(new Scene(node,500,500));
+        Region node = new PDFViewer();
+        node.setPrefHeight(800);
+        node.setPrefWidth(800);
+        primaryStage.setScene(new Scene(node));
         primaryStage.setTitle("Aurum Observa");
 
         primaryStage.show();

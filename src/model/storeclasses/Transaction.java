@@ -16,13 +16,16 @@ public class Transaction extends StoreClass {
 
     private static int sampleId=1;
 
+    private static int defaultBankAccountId;
+
     private String date;
     private String purpose;
     private String amount;
-    private int bankAccountId;
-    private static int defaultBankAccountId;
     private final ArrayList<String> invoiceFileIds = new ArrayList<>();
+
+    private int bankAccountId;
     private int groupId;
+
     private int balance;
 
 
@@ -41,11 +44,12 @@ public class Transaction extends StoreClass {
         public static FieldName purpose = new FieldName("Purpose", "purpose","TEXT", StringEntry.class);
         public static FieldName amount = new FieldName("Amount", "amount","int", StringEntry.class);
         public static FieldName invoiceFileIds = new FieldName("InvoiceFileIds", "invoiceFileIds","Text", StringEntry.class);
-        public static FieldName groupIds = new FieldName("GroupIds", "groupIds","Text", StringEntry.class);
+
     }
 
     public static class ForeignKeys{
         public static ForeignKey<BankAccount> bankAccount = new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount());
+        public static ForeignKey<Group> group = new ForeignKey("GroupId", "group_id",new Group());
     }
 
     public String getInvoiceFileIds() {
