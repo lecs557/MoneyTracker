@@ -63,7 +63,7 @@ public class TransactionTable extends TableView<Transaction> {
                             setGraphic(null);
                         } else {
                             Transaction t = getTableRow().getItem();
-                            if (t.getGroupId()!=0){
+                            if (t!=null && t.getGroupId()!=0){
                                 getTableRow().setStyle("-fx-background-color: "+t.findGroup(groups).getColor()+";" );
                             }
                             Label l = new Label(item.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")));

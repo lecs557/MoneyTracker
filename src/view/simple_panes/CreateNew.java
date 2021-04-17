@@ -1,30 +1,27 @@
 package view.simple_panes;
 
 import controller.DatabaseController;
-import controller.ProfileAccountManager;
 import controller.ViewController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.Main;
+import model.AppStart;
 import model.storeclasses.*;
 import view.panes.EntryPane;
 import view.panes.entry_panes.ChoiceBoxEntry;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 public class CreateNew<T extends StoreClass> extends VBox {
 
-    private VBox vb_fields;
-    private Button btn_save;
-    private Label lbl_header;
+    private final VBox vb_fields;
+    private final Button btn_save;
 
-    private T storeClass;
-    private boolean edit;
+    private final T storeClass;
+    private final boolean edit;
 
     public CreateNew(T storeCls, boolean edit){
         storeClass=storeCls;
@@ -36,6 +33,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
     }
 
     private void addStoreClassFields() {
+        Label lbl_header;
         if (edit) {
             lbl_header = new Label("Bearbeite: " + storeClass.getTableName());
         } else {
@@ -94,7 +92,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
                DatabaseController.storeObject(storeClass, false);
             }
             ViewController.refresh(storeClass);
-            Main.secStage.close();
+            AppStart.secStage.close();
         });
         vb_fields.getChildren().add(btn_save);
         getChildren().add(lbl_header);

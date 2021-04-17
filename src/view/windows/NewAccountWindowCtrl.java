@@ -1,12 +1,10 @@
 package view.windows;
 
-import controller.DatabaseController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import model.storeclasses.Profile;
-import model.Main;
+import model.AppStart;
 
 public class NewAccountWindowCtrl {
 
@@ -32,12 +30,12 @@ public class NewAccountWindowCtrl {
 
     @FXML
     void close(ActionEvent event) {
-        Main.secStage.close();
+        AppStart.secStage.close();
     }
 
     @FXML
     void ok(ActionEvent event) {
-        Main.secStage.close();
+        AppStart.secStage.close();
     }
 
 }

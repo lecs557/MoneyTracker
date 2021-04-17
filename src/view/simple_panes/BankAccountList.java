@@ -1,10 +1,12 @@
 package view.simple_panes;
 
+import controller.WindowManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import model.storeclasses.BankAccount;
+import model.storeclasses.Profile;
 
 import java.util.ArrayList;
 
@@ -31,11 +33,17 @@ public class BankAccountList extends VBox {
             return cell;
         });
         setBankAccounts(SampleClass.getSampleBankAccounts());
+
+        btn_add.setOnMouseClicked(mouseEvent -> WindowManager.openStageOf(new CreateNew<>(new BankAccount(), false)));
         getChildren().addAll(btn_add,listView);
 
     }
 
     private void setBankAccounts(ArrayList<BankAccount> bankAccounts) {
         listView.getItems().addAll(bankAccounts);
+    }
+
+    public ListView<BankAccount> getListView() {
+        return listView;
     }
 }

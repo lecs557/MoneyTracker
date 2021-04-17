@@ -6,9 +6,7 @@ import controller.DatabaseController;
 import controller.ViewController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import model.FontFilter;
-import model.Main;
-import model.storeclasses.BankAccount;
+import model.TransactionExtractor;
 import model.storeclasses.InvoiceFile;
 import model.storeclasses.Transaction;
 
@@ -19,10 +17,10 @@ import java.util.List;
 public class PDFImporter extends Thread {
 
     private List<File> files;
-    private SimpleDoubleProperty progress = new SimpleDoubleProperty();
-    private SimpleBooleanProperty running = new SimpleBooleanProperty();
-    private String bankAccountID="";
-    private String InvoiceFileID="";
+    private final SimpleDoubleProperty progress = new SimpleDoubleProperty();
+    private final SimpleBooleanProperty running = new SimpleBooleanProperty();
+    private final String bankAccountID="";
+    private final String InvoiceFileID="";
     private PdfReader pdfReader;
 
     public PDFImporter(List<File> files) {
@@ -42,7 +40,7 @@ public class PDFImporter extends Thread {
                     infile.setPath(path);
                     DatabaseController.storeObject(infile, true);
                     pdfReader = new PdfReader(path);
-                    RenderFilter info = new FontFilter();
+                    RenderFilter info = new TransactionExtractor();
                     TextExtractionStrategy strategy = new FilteredTextRenderListener(
                             new LocationTextExtractionStrategy(), info);
 

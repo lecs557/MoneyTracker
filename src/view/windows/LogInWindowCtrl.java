@@ -9,8 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import model.storeclasses.Profile;
-import model.Main;
+import model.AppStart;
 import view.simple_panes.CreateNew;
+import view.simple_panes.ViewUtils;
+
+import javax.swing.plaf.ViewportUI;
 
 
 public class LogInWindowCtrl extends BaseWindowCtrl {
@@ -33,6 +36,7 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
                 return null;
             }
         });
+        ViewUtils.selectFirst(chb_profiles);
         ViewController.setChb_profiles(chb_profiles);
     }
 
@@ -40,7 +44,7 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
         Profile selected = chb_profiles.getSelectionModel().getSelectedItem();
         if(selected!=null){
             ProfileAccountManager.setupProfile(selected);
-            WindowManager.changeSceneTo(Main.windows.Overview);
+            WindowManager.changeSceneTo(AppStart.windows.Overview);
         }
     }
 

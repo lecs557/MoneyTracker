@@ -18,26 +18,20 @@ public class ProfileAccountManager {
     private static Map<Integer, ArrayList<Transaction>> transactionMap;
     private static int sum=0 ;
 
-    //SQL-Objects
-    private static BankAccount sqlBankAccount;
-    private static Group sqlGroup;
-    private static Transaction sqlTransaction;
-
 
     public static void setupProfile(Profile currentAccount) {
         ProfileAccountManager.currentAccount = currentAccount;
 
         BankAccount.ForeignKeys.profile.set(currentAccount);
-        sqlBankAccount = new BankAccount();
-        bankAccounts = DatabaseController.computeStoreClasses(sqlBankAccount,"");
+        bankAccounts = DatabaseController.computeStoreClasses(new BankAccount(),"");
 
-        sqlGroup = new Group();
         Group.ForeignKeys.bankAccount.setForeignObjects(bankAccounts);
-        groups = DatabaseController.computeStoreClasses(sqlGroup,"");
+        groups = DatabaseController.computeStoreClasses(new Group(),"");
 
-        sqlTransaction = new Transaction();
         Transaction.ForeignKeys.bankAccount.setForeignObjects(bankAccounts);
-        transactions = DatabaseController.computeStoreClasses(sqlTransaction,"");
+        transactions = DatabaseController.computeStoreClasses(new Transaction(),"");
+        computeBalance(transactions);
+        computeSum(groups,transactions);
     }
 
     public static void computeBalance(ArrayList<Transaction> transactions){
@@ -75,16 +69,9 @@ public class ProfileAccountManager {
         return bankAccounts;
     }
 
-    public static BankAccount getSqlBankAccount() {
-        return sqlBankAccount;
-    }
 
     public static ArrayList<Group> getGroups() {
         return groups;
-    }
-
-    public static Group getSqlGroup() {
-        return sqlGroup;
     }
 
     public static ArrayList<Transaction> getTransactions() {
@@ -93,9 +80,5 @@ public class ProfileAccountManager {
 
     public static void setTransactions(ArrayList<Transaction> transactions) {
         ProfileAccountManager.transactions = transactions;
-    }
-
-    public static Transaction getSqlTransaction() {
-        return sqlTransaction;
     }
 }

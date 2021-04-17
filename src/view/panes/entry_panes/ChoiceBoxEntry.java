@@ -19,7 +19,7 @@ public class ChoiceBoxEntry extends EntryPane {
     private ChoiceBox<StoreClass> chb = new ChoiceBox<>();
 
     public ChoiceBoxEntry(String name, Button save, StoreClass storeClass, ArrayList<? extends StoreClass> storeClasses) {
-        super(name, save, storeClass, storeClasses);
+        super(name, save, storeClass);
         chb.getItems().addAll(storeClasses);
         chb.setConverter(new StringConverter<StoreClass>() {
             @Override

@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class AppStart extends Application {
 
     public enum windows {LogIn, Overview ,NewAccount,NewTransaction,RenameWindow,TransactionWindow};
     public static Stage primaryStage;
@@ -16,7 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException{
-        Main.primaryStage = primaryStage;
+        AppStart.primaryStage = primaryStage;
 
         WindowManager.changeSceneTo(windows.LogIn);
         primaryStage.setTitle("Aurum Observa");

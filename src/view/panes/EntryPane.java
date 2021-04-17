@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import model.storeclasses.StoreClass;
+import view.panes.entry_panes.ChoiceBoxEntry;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,14 +13,8 @@ import java.util.ArrayList;
 
 public abstract class EntryPane {
 
-    private String name;
-    private StoreClass storeClass;
-
-    public EntryPane(String name, Button save, StoreClass storeClass, ArrayList<? extends StoreClass> storeClasses) {
-        this.storeClass = storeClass;
-        this.name = name;
-        save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> save());
-    }
+    private final String name;
+    private final StoreClass storeClass;
 
     public EntryPane(String name, Button save, StoreClass storeClass) {
         this.storeClass = storeClass;
@@ -43,8 +38,14 @@ public abstract class EntryPane {
 
     public void save(){
         try {
-            Method setter = storeClass.getClass().getMethod("set"+name, Class.forName("java.lang.String"));
-            setter.invoke(storeClass, getContent());
+            Method setter;
+            if(this instanceof ChoiceBoxEntry){
+                setter = storeClass.getClass().getMethod("set" + name, int.class);
+                setter.invoke(storeClass, Integer.parseInt(getContent()));
+            } else {
+                setter = storeClass.getClass().getMethod("set" + name, Class.forName("java.lang.String"));
+                setter.invoke(storeClass, getContent());
+            }
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

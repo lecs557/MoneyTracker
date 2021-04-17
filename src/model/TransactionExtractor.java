@@ -8,7 +8,7 @@ import model.storeclasses.Transaction;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class FontFilter extends RenderFilter {
+public class TransactionExtractor extends RenderFilter {
 
 	private DateTimeFormatter form = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	private boolean relevant = false;

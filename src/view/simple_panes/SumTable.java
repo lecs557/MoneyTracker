@@ -28,12 +28,13 @@ public class SumTable extends TableView<Group> {
         });
         getColumns().add(name);
 
-        setGroups(SampleClass.getSampleGroups());
+        applyGroups(SampleClass.getSampleGroups());
 
     }
 
-    public void setGroups(ArrayList<Group> groups){
+    public void applyGroups(ArrayList<Group> groups){
         getItems().clear();
+        if(groups.isEmpty()) return;
         computeYears(groups);
         getItems().addAll(groups);
     }

@@ -1,5 +1,6 @@
 package view.windows;
 
+import controller.IOController;
 import controller.ProfileAccountManager;
 import controller.ViewController;
 import controller.WindowManager;
@@ -7,8 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import model.Main;
+import model.AppStart;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
 import model.storeclasses.Transaction;
@@ -18,10 +18,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
     public AnchorPane pane;
     public Label lbl_account;
-    public ProgressBar pb_pdf, pb_year, pb_transa,pb_year1, pb_transa1;
-    public Pane savePane;
-    public Pane chPane;
-    public Pane pdfPane;
+    public ProgressBar pb_pdf;
     public TransactionTabPane tp_transactions;
     public BankAccountList vb_bankAccounts;
     public GroupList  vb_groups;
@@ -29,23 +26,26 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public SumTable tl_groupSums;
 
     public void initialize() {
-        lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
-        vb_bankAccounts.listView.getItems().setAll(ProfileAccountManager.getBankAccounts());
-        vb_groups.listView.getItems().setAll(ProfileAccountManager.getGroups());
-        tp_transactions.setTransactions(ProfileAccountManager.getTransactions(),ProfileAccountManager.getGroups());
+        ViewController.setOverviewWindowCtrl(this);
 
-        ViewController.setLv_bankAccounts(vb_bankAccounts.listView);
-        ViewController.setTp_transaction(tp_transactions);
-        ViewController.setLv_group(vb_groups.listView);
+        pb_pdf.visibleProperty().bind(IOController.runningProperty());
+        pb_pdf.progressProperty().bind(IOController.progressProperty());
+
+        lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
+        vb_bankAccounts.getListView().getItems().setAll(ProfileAccountManager.getBankAccounts());
+        vb_groups.getListView().getItems().setAll(ProfileAccountManager.getGroups());
+        tp_transactions.applyTransactions(ProfileAccountManager.getTransactions(),ProfileAccountManager.getGroups());
+        tl_groupSums.applyGroups(ProfileAccountManager.getGroups());
+        ch_transaction.applyTransactions(ProfileAccountManager.getTransactions());
 
     }
 
     public void backToLogin(ActionEvent actionEvent) {
-        WindowManager.changeSceneTo(Main.windows.LogIn);
+        WindowManager.changeSceneTo(AppStart.windows.LogIn);
     }
 
     public void newBA(ActionEvent actionEvent) {
-        CreateNew<BankAccount> createNew = new CreateNew<>(ProfileAccountManager.getSqlBankAccount(), false);
+        CreateNew<BankAccount> createNew = new CreateNew<>(new BankAccount(), false);
         WindowManager.openStageOf(createNew);
     }
 
@@ -54,12 +54,12 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void newGroup(ActionEvent actionEvent) {
-        CreateNew<Group> createNew = new CreateNew<>(ProfileAccountManager.getSqlGroup(), false);
+        CreateNew<Group> createNew = new CreateNew<>(new Group(), false);
         WindowManager.openStageOf(createNew);
     }
 
     public void newTransaction(ActionEvent actionEvent) {
-        CreateNew<Transaction> createNew = new CreateNew<>(ProfileAccountManager.getSqlTransaction(), false);
+        CreateNew<Transaction> createNew = new CreateNew<>(new Transaction(), false);
         WindowManager.openStageOf(createNew);
     }
 

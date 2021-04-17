@@ -1,20 +1,21 @@
 package view.simple_panes;
 
+import controller.WindowManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
+import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
 
 import java.util.ArrayList;
 
 public class GroupList extends VBox {
 
-    private Button btn_add;
     public ListView<Group> listView;
 
     public GroupList() {
-        btn_add = new Button("Add");
+        Button btn_add = new Button("Add");
         listView = new ListView<>();
         listView.setCellFactory(groupListView -> {
             ListCell<Group> cell = new ListCell<>() {
@@ -31,6 +32,7 @@ public class GroupList extends VBox {
             };
             return cell;
         });
+        btn_add.setOnMouseClicked(mouseEvent -> WindowManager.openStageOf(new CreateNew<>(new Group(), false)));
         setGroups(SampleClass.getSampleGroups());
         getChildren().addAll(btn_add,listView);
 
@@ -38,5 +40,9 @@ public class GroupList extends VBox {
 
     private void setGroups(ArrayList<Group> groups) {
         listView.getItems().addAll(groups);
+    }
+
+    public ListView<Group> getListView() {
+        return listView;
     }
 }

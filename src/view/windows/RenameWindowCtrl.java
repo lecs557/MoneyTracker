@@ -2,7 +2,6 @@ package view.windows;
 
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import model.Main;
 import model.Renames;
 
 

@@ -79,6 +79,9 @@ public class DatabaseController {
                         selectBuilder.append(", ");
                     }
                 }
+                if(whereBuilder.toString().endsWith("WHERE ")){
+                    whereBuilder = new StringBuilder();
+                }
             }
             String sql = selectBuilder+" "+fromBuilder+" "+whereBuilder;
             if (!orderBy.isEmpty()){
@@ -101,7 +104,7 @@ public class DatabaseController {
                 }
                 for(Field field: storeClass.getClass().getClasses()[0].getFields()){
                     ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) field.get(storeClass);
-                    Method method = storeClass.getClass().getMethod("set"+key.getProgramName(),Integer.class);
+                    Method method = storeClass.getClass().getMethod("set"+key.getProgramName(),int.class);
                     method.invoke(tempStoreClass,rs.getInt(key.getSqlName()));
                 }
                 resultStoreClasses.add(tempStoreClass);

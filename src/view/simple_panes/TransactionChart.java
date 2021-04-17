@@ -17,11 +17,12 @@ public class TransactionChart extends LineChart<MyDate,Number> {
         series = new Series<>();
         getData().add(series);
         series.setName("Mein Konto");
-        setTransactions(SampleClass.getSampleTransactions());
+        applyTransactions(SampleClass.getSampleTransactions());
     }
 
-    public void setTransactions(ArrayList<Transaction> transactions){
+    public void applyTransactions(ArrayList<Transaction> transactions){
         series.getData().clear();
+        if(transactions.isEmpty()) return;
         int startYear = transactions.get(0).getLocalDate().getYear();
         int endYear = transactions.get(transactions.size()-1).getLocalDate().getYear();;
         for (Transaction t:transactions){

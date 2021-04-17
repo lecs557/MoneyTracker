@@ -1,7 +1,6 @@
 package view.simple_panes;
 
 import javafx.scene.chart.ValueAxis;
-import model.Main;
 import model.MyDate;
 
 import java.time.LocalDate;

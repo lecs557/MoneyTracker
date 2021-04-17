@@ -49,7 +49,11 @@ public class Transaction extends StoreClass {
 
     public static class ForeignKeys{
         public static ForeignKey<BankAccount> bankAccount = new ForeignKey<BankAccount>("BankAccountId","bankAccount_id", new BankAccount());
-        public static ForeignKey<Group> group = new ForeignKey("GroupId", "group_id",new Group());
+        public static ForeignKey<Group> group = new ForeignKey<>("GroupId", "group_id",new Group());
+    }
+
+    public void addInvoiceFieldId(String id){
+        invoiceFileIds.add(id);
     }
 
     public String getInvoiceFileIds() {

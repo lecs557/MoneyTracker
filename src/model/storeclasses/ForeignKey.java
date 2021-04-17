@@ -5,16 +5,15 @@ import java.util.ArrayList;
 
 public class ForeignKey<T extends StoreClass> {
 
-    private T dummyClazz;
-    private String programName;
-    private String sqlName;
+    private final T dummyClazz;
+    private final String programName;
+    private final String sqlName;
     private ArrayList<T> foreignObjects = new ArrayList<>();
 
     public ForeignKey(String programName, String sqlName, T dummyClazz) {
         this.programName = programName;
         this.sqlName = sqlName;
         this.dummyClazz = dummyClazz;
-        foreignObjects.add(dummyClazz);
     }
 
     public T getDummyClazz() {

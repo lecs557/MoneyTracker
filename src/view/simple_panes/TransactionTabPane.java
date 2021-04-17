@@ -5,16 +5,15 @@ import javafx.scene.control.TabPane;
 import model.storeclasses.Group;
 import model.storeclasses.Transaction;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TransactionTabPane extends TabPane {
 
     public TransactionTabPane() {
-        setTransactions(SampleClass.getSampleTransactions(), SampleClass.getSampleGroups());
+        applyTransactions(SampleClass.getSampleTransactions(), SampleClass.getSampleGroups());
     }
 
-    public void setTransactions(ArrayList<Transaction> transactions, ArrayList<Group> groups) {
+    public void applyTransactions(ArrayList<Transaction> transactions, ArrayList<Group> groups) {
         getTabs().clear();
         int currentYear=0;
         TransactionTable currentTable=null;

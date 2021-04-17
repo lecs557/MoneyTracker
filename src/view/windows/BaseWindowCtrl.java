@@ -1,15 +1,10 @@
 package view.windows;
 
-import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
-import model.storeclasses.Profile;
-import model.Main;
 
-import java.io.File;
 import java.io.IOException;
 
 public class BaseWindowCtrl {
