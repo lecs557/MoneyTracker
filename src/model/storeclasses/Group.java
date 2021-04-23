@@ -1,5 +1,6 @@
 package model.storeclasses;
 
+import view.panes.entry_panes.ColorEntry;
 import view.panes.entry_panes.StringEntry;
 import view.simple_panes.SampleClass;
 
@@ -22,7 +23,7 @@ public class Group extends StoreClass {
    public static class Variables {
       public static FieldName id =FieldName.storeId();
       public static FieldName group_name = new FieldName("GroupName", "group_name","TEXT", StringEntry.class);
-      public static FieldName color= new FieldName("Color", "color","TEXT", StringEntry.class);
+      public static FieldName color= new FieldName("Color", "color","TEXT", ColorEntry.class);
    }
 
    public static class ForeignKeys{
@@ -72,7 +73,7 @@ public class Group extends StoreClass {
    public static Group sampleGroup(){
       Group sample = new Group();
       sample.setId(sampleId);
-      sample.setGroupName("Test");
+      sample.setGroupName("Group"+sampleId);
       sample.setColor("#"+ SampleClass.random(8,9)+SampleClass.random(7,9)+SampleClass.random(6,9));
       sampleId++;
       return sample;

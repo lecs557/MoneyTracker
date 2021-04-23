@@ -20,7 +20,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public Label lbl_account;
     public ProgressBar pb_pdf;
     public TransactionTabPane tp_transactions;
-    public BankAccountList vb_bankAccounts;
+    public StoreClassList<BankAccount> vb_bankAccounts;
     public GroupList  vb_groups;
     public TransactionChart ch_transaction;
     public SumTable tl_groupSums;

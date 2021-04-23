@@ -34,12 +34,10 @@ public class ViewController {
         });
     }
 
+
+
     public static void setOverviewWindowCtrl(OverviewWindowCtrl overviewWindowCtrl) {
         ViewController.o = overviewWindowCtrl;
-    }
-
-    public static ChoiceBox<Profile> getChb_profiles() {
-        return chb_profiles;
     }
 
     public static void setChb_profiles(ChoiceBox<Profile> chb_profiles) {

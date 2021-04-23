@@ -45,7 +45,7 @@ public class BankAccount extends StoreClass {
     public static BankAccount sampleBankAccount(){
         BankAccount sample = new BankAccount();
         sample.setId(sampleId);
-        sample.setBankName("Test");
+        sample.setBankName("Bank"+sampleId);
         sampleId++;
         return sample;
     }
