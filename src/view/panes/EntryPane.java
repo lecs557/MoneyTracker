@@ -25,7 +25,9 @@ public abstract class EntryPane {
     public void showContent(){
         try {
             Method getter = storeClass.getClass().getMethod("get"+name);
-            String content = (String)getter.invoke(storeClass);
+            String content = getter.invoke(storeClass)+"";
+
+
             setContent(content);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

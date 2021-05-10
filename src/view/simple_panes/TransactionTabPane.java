@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class TransactionTabPane extends TabPane {
 
+    ArrayList<Transaction> transactions;
+
     public TransactionTabPane() {
         applyTransactions(SampleClass.getSampleTransactions(), SampleClass.getSampleGroups());
     }
@@ -17,6 +19,7 @@ public class TransactionTabPane extends TabPane {
         getTabs().clear();
         int currentYear=0;
         TransactionTable currentTable=null;
+        this.transactions=transactions;
         for (Transaction transaction : transactions){
             if (transaction.getLocalDate().getYear()!=currentYear){
                 currentYear = transaction.getLocalDate().getYear();
@@ -34,6 +37,7 @@ public class TransactionTabPane extends TabPane {
         }
     }
 
-
-
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
+    }
 }

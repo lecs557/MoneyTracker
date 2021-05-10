@@ -3,6 +3,7 @@ package view.simple_panes;
 import controller.ProfileAccountManager;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
+import model.storeclasses.StoreClass;
 import model.storeclasses.Transaction;
 
 import java.time.LocalDate;
@@ -15,6 +16,16 @@ public class SampleClass {
     private static ArrayList<Transaction> sampleTransactions;
     private static ArrayList<BankAccount> sampleBankAccounts;
     private static ArrayList<Group> sampleGroups;
+
+    public static <T extends StoreClass> ArrayList<T> getSampleData(T storeclass){
+        if (storeclass instanceof BankAccount){
+            return (ArrayList<T>) getSampleBankAccounts();
+        }
+        if(storeclass instanceof Group){
+            return (ArrayList<T>) getSampleGroups();
+        }
+        return null;
+    }
 
     public static ArrayList<Transaction> getSampleTransactions(){
         if (sampleTransactions != null) {

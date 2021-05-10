@@ -7,7 +7,6 @@ import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import model.AppStart;
 import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
@@ -32,11 +31,11 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         pb_pdf.progressProperty().bind(IOController.progressProperty());
 
         lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
-        vb_bankAccounts.getListView().getItems().setAll(ProfileAccountManager.getBankAccounts());
-        vb_groups.getListView().getItems().setAll(ProfileAccountManager.getGroups());
-        tp_transactions.applyTransactions(ProfileAccountManager.getTransactions(),ProfileAccountManager.getGroups());
-        tl_groupSums.applyGroups(ProfileAccountManager.getGroups());
-        ch_transaction.applyTransactions(ProfileAccountManager.getTransactions());
+        vb_bankAccounts.getListView().getItems().setAll(ProfileAccountManager.getProfilesBankAccounts());
+        vb_groups.getListView().getItems().setAll(ProfileAccountManager.getProfilesGroups());
+        tp_transactions.applyTransactions(ProfileAccountManager.getProfilesTransactions(),ProfileAccountManager.getProfilesGroups());
+        tl_groupSums.applyGroups(ProfileAccountManager.getProfilesGroups());
+        ch_transaction.applyTransactions(ProfileAccountManager.getProfilesTransactions());
 
     }
 
@@ -64,7 +63,7 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     }
 
     public void importTransactionViaPDF(ActionEvent actionEvent) {
-        BankAccountChooser ifb = new BankAccountChooser(ProfileAccountManager.getBankAccounts());
+        BankAccountChooser ifb = new BankAccountChooser(ProfileAccountManager.getProfilesBankAccounts());
         WindowManager.openStageOf(ifb);
 
     }

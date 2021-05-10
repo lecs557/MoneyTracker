@@ -65,6 +65,8 @@ public class TransactionTable extends TableView<Transaction> {
                             Transaction t = getTableRow().getItem();
                             if (t!=null && t.getGroupId()!=0){
                                 getTableRow().setStyle("-fx-background-color: "+t.findGroup(groups).getColor()+";" );
+                            } else {
+                                getTableRow().setStyle("");
                             }
                             Label l = new Label(item.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")));
                             setGraphic(l);

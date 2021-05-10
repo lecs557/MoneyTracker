@@ -41,17 +41,17 @@ public class SumTable extends TableView<Group> {
 
     private void computeYears(ArrayList<Group> groups){
         //Jahre
-        for(int year:groups.get(0).getYearSumMap().keySet()){
+        for(int yearInt:groups.get(0).getYearSumMap().keySet()){
 
-            TableColumn<Group, Integer> date =new TableColumn<>(""+year);
-            date.setMinWidth(120);
-            date.setCellValueFactory(new Callback<>() {
+            TableColumn<Group, Integer> yearCol =new TableColumn<>(""+yearInt);
+            yearCol.setMinWidth(120);
+            yearCol.setCellValueFactory(new Callback<>() {
                 @Override
                 public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Group, Integer> sumIntegerCellDataFeatures) {
-                    return new SimpleObjectProperty<Integer>(sumIntegerCellDataFeatures.getValue().getYearSumMap().get(year));
+                    return new SimpleObjectProperty<Integer>(sumIntegerCellDataFeatures.getValue().getYearSumMap().get(yearInt));
                 }
             });
-            date.setCellFactory(new Callback<>() {
+            yearCol.setCellFactory(new Callback<>() {
                 @Override
                 public TableCell<Group, Integer> call(TableColumn<Group, Integer> transactionStringTableColumn) {
                     TableCell<Group, Integer> cell = new TableCell<>() {
@@ -62,8 +62,13 @@ public class SumTable extends TableView<Group> {
                                 setText(null);
                                 setGraphic(null);
                             } else {
-                                getTableRow().setStyle("-fx-background-color: "+getTableRow().getItem().getColor()+";" );
-                                Label l = new Label(new DecimalFormat("#0.00").format((double)item/100)+" €");
+                                Group itm = getTableRow().getItem();
+                                if (itm == null) {
+                                    getTableRow().setStyle("");
+                                } else {
+                                    getTableRow().setStyle("-fx-background-color: " + getTableRow().getItem().getColor() + ";");
+                                }
+                                Label l = new Label(new DecimalFormat("#0.00").format((double) item / 100) + " €");
                                 if (item > 0){
                                     l.setStyle("-fx-text-fill: green;");
                                 } else if (item < 0) {
@@ -78,7 +83,7 @@ public class SumTable extends TableView<Group> {
                     return cell;
                 }
             });
-            getColumns().add(date);
+            getColumns().add(yearCol);
         }
 
         //Gesamt

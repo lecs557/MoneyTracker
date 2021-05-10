@@ -5,13 +5,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import model.storeclasses.BankAccount;
 import model.storeclasses.Group;
 import model.storeclasses.StoreClass;
 
 import java.util.ArrayList;
 
-public class StoreClassList<T extends StoreClass> extends VBox {
+public abstract class StoreClassList<T extends StoreClass> extends VBox {
 
     private final ListView<T> listView;
 
@@ -33,15 +32,13 @@ public class StoreClassList<T extends StoreClass> extends VBox {
             }
         });
 
-        T dummy = (T) new BankAccount();
-        setListView((ArrayList<T>) SampleClass.getSampleGroups());
+        setListView(SampleClass.getSampleData(getDummy()));
 
-
-
-        btn_add.setOnMouseClicked(mouseEvent -> WindowManager.openStageOf(new CreateNew<>(dummy, false)));
+        btn_add.setOnMouseClicked(mouseEvent -> WindowManager.openStageOf(new CreateNew<>(getDummy(), false)));
         getChildren().addAll(btn_add,listView);
-
     }
+
+    public abstract T getDummy();
 
     private void setListView(ArrayList<T> storClasses) {
         listView.getItems().addAll(storClasses);

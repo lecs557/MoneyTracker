@@ -3,16 +3,15 @@ package controller;
 import model.storeclasses.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 public class ProfileAccountManager {
 
     //From DataBase
     private static Profile currentAccount;
-    private static ArrayList<BankAccount> bankAccounts;
-    private static ArrayList<Group> groups;
-    private static ArrayList<Transaction> transactions;
+    private static ArrayList<BankAccount> profilesBankAccounts;
+    private static ArrayList<Group> profilesGroups;
+    private static ArrayList<Transaction> profilesTransactions;
 
     //From Software
     private static Map<Integer, ArrayList<Transaction>> transactionMap;
@@ -23,15 +22,19 @@ public class ProfileAccountManager {
         ProfileAccountManager.currentAccount = currentAccount;
 
         BankAccount.ForeignKeys.profile.set(currentAccount);
-        bankAccounts = DatabaseController.computeStoreClasses(new BankAccount(),"");
+        profilesBankAccounts = DatabaseController.computeStoreClasses(new BankAccount(),"");
 
-        Group.ForeignKeys.bankAccount.setForeignObjects(bankAccounts);
-        groups = DatabaseController.computeStoreClasses(new Group(),"");
+        Group.ForeignKeys.bankAccount.setForeignObjects(profilesBankAccounts);
+        profilesGroups = DatabaseController.computeStoreClasses(new Group(),"");
 
-        Transaction.ForeignKeys.bankAccount.setForeignObjects(bankAccounts);
-        transactions = DatabaseController.computeStoreClasses(new Transaction(),"");
-        computeBalance(transactions);
-        computeSum(groups,transactions);
+        Transaction.ForeignKeys.bankAccount.setForeignObjects(profilesBankAccounts);
+        Transaction.ForeignKeys.group.setForeignObjects(profilesGroups);
+        profilesTransactions = DatabaseController.computeStoreClasses(new Transaction(),"");
+
+        System.out.println(profilesTransactions.size());
+
+        computeBalance(profilesTransactions);
+        computeSum(profilesGroups, profilesTransactions);
     }
 
     public static void computeBalance(ArrayList<Transaction> transactions){
@@ -58,27 +61,27 @@ public class ProfileAccountManager {
     }
 
     public static void add(BankAccount bankAccount){
-        bankAccounts.add(bankAccount);
+        profilesBankAccounts.add(bankAccount);
     }
 
     public static Profile getCurrentAccount() {
         return currentAccount;
     }
 
-    public static ArrayList<BankAccount> getBankAccounts() {
-        return bankAccounts;
+    public static ArrayList<BankAccount> getProfilesBankAccounts() {
+        return profilesBankAccounts;
     }
 
 
-    public static ArrayList<Group> getGroups() {
-        return groups;
+    public static ArrayList<Group> getProfilesGroups() {
+        return profilesGroups;
     }
 
-    public static ArrayList<Transaction> getTransactions() {
-        return transactions;
+    public static ArrayList<Transaction> getProfilesTransactions() {
+        return profilesTransactions;
     }
 
-    public static void setTransactions(ArrayList<Transaction> transactions) {
-        ProfileAccountManager.transactions = transactions;
+    public static void setProfilesTransactions(ArrayList<Transaction> profilesTransactions) {
+        ProfileAccountManager.profilesTransactions = profilesTransactions;
     }
 }

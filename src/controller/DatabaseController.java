@@ -60,7 +60,7 @@ public class DatabaseController {
 
                     if (foreignObjectIterator.hasNext()){
                         if(whereBuilder.toString().contains(")")){
-                            whereBuilder.append(" AND ");
+                            whereBuilder.append(" OR ");
                         }
                         whereBuilder.append("(");
                     }
@@ -247,7 +247,12 @@ public class DatabaseController {
                 ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(storeClass);
                 setBuilder.append(key.getSqlName()).append("=");
                 Method method = storeClass.getClass().getMethod("get" + key.getProgramName());
-                setBuilder.append("'").append(method.invoke(storeClass)).append("'");
+                int temp=(int)method.invoke(storeClass);
+                if(temp==-1){
+                    setBuilder.append("'").append("null").append("'");
+                } else{
+                    setBuilder.append("'").append(temp).append("'");
+                }
                 if (foreignKeyFieldIterator.hasNext()) {
                     setBuilder.append(", ");
                 }
