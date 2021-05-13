@@ -11,7 +11,7 @@ import javafx.util.StringConverter;
 import model.storeclasses.Profile;
 import model.AppStart;
 import view.simple_panes.CreateNew;
-import view.simple_panes.PaneManager;
+import view.simple_panes.PaneUtils;
 
 
 public class LogInWindowCtrl extends BaseWindowCtrl {
@@ -34,7 +34,7 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
                 return null;
             }
         });
-        PaneManager.selectFirst(chb_profiles);
+        PaneUtils.selectFirst(chb_profiles);
         ViewController.setChb_profiles(chb_profiles);
     }
 

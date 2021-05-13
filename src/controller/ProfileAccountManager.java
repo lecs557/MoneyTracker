@@ -12,10 +12,11 @@ public class ProfileAccountManager {
     private static ArrayList<BankAccount> profilesBankAccounts;
     private static ArrayList<Group> profilesGroups;
     private static ArrayList<Transaction> profilesTransactions;
+    private static ArrayList<InvoiceFile> profilesInvoiceFiles;
+
 
     //From Software
-    private static Map<Integer, ArrayList<Transaction>> transactionMap;
-    private static int sum=0 ;
+
 
 
     public static void setupProfile(Profile currentAccount) {
@@ -31,7 +32,7 @@ public class ProfileAccountManager {
         Transaction.ForeignKeys.group.setForeignObjects(profilesGroups);
         profilesTransactions = DatabaseController.computeStoreClasses(new Transaction(),"");
 
-        System.out.println(profilesTransactions.size());
+        profilesInvoiceFiles = DatabaseController.computeStoreClasses(new InvoiceFile(),"");
 
         computeBalance(profilesTransactions);
         computeSum(profilesGroups, profilesTransactions);
@@ -51,11 +52,11 @@ public class ProfileAccountManager {
             int year=tra.getLocalDate().getYear();
             if(year!=curYear){
                 for(Group g:groups){
-                    g.addSum(year,0);
+                    g.reset(year);
                 }
                 curYear=year;
             }
-            if (tra.getGroupId()==0) continue;;
+            if (tra.getGroupId()==0) continue;
             tra.findGroup(groups).addSum(year,Integer.parseInt(tra.getAmount()));
         }
     }
@@ -81,7 +82,30 @@ public class ProfileAccountManager {
         return profilesTransactions;
     }
 
+    public static ArrayList<InvoiceFile> getProfilesInvoiceFiles() {
+        return profilesInvoiceFiles;
+    }
+
     public static void setProfilesTransactions(ArrayList<Transaction> profilesTransactions) {
         ProfileAccountManager.profilesTransactions = profilesTransactions;
+    }
+
+    public static <T extends StoreClass> StoreClass getById(T storeClazz, int id){
+        if(storeClazz instanceof InvoiceFile){
+            for(InvoiceFile invoiceFile: profilesInvoiceFiles){
+                if(invoiceFile.getId()==id){
+                    return invoiceFile;
+                }
+            }
+        }
+        if(storeClazz instanceof BankAccount){
+            for(BankAccount bankAccount: profilesBankAccounts){
+                if(bankAccount.getId()==id){
+                    return bankAccount;
+                }
+            }
+        }
+        return null;
+
     }
 }

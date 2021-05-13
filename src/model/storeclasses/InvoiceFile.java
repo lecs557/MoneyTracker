@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class InvoiceFile extends StoreClass{
 
     private String path;
+    private String name="FILE";
+
 
     public InvoiceFile() {
         tableName="InvoiceFiles";
-        choiceBoxMethodName="Invoice File";
+        choiceBoxMethodName="Name";
     }
 
     public static class Variables {
@@ -20,6 +22,10 @@ public class InvoiceFile extends StoreClass{
 
     public static class ForeignKeys{
 
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getPath() {

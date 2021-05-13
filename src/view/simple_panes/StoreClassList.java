@@ -20,15 +20,15 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
         listView.setCellFactory(storeClassListView -> new ListCell<T>() {
             @Override
             protected void updateItem(T storeClass, boolean b) {
-                super.updateItem(storeClass, b);
-                if (storeClass != null) {
-                    setGraphic(PaneManager.makeListAnchorPane(storeClass));
-                    if(storeClass instanceof Group){
-                        setStyle("-fx-background-color: "+((Group)storeClass).getColor()+";");
-                    }
-                } else {
-                    setText("");
+            super.updateItem(storeClass, b);
+            if (storeClass != null) {
+                setGraphic(PaneUtils.makeListAnchorPane(storeClass));
+                if(storeClass instanceof Group){
+                    setStyle("-fx-background-color: "+((Group)storeClass).getColor()+";");
                 }
+            } else {
+                setText("");
+            }
             }
         });
 

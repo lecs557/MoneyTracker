@@ -116,10 +116,14 @@ public class DatabaseController {
             e.printStackTrace();
             close();
         }
-        return  resultStoreClasses;
+        return resultStoreClasses;
     }
 
     public static <T extends StoreClass> void storeObject(T storeClass, boolean checkIfExists){
+        if (storeClass.getId()>0) {
+            System.out.println("ID existiert; wurde nicht in die DB aufgenommen");
+            return;
+        }
         try {
             open();
             ResultSet table = conn.getMetaData().getTables(null,null,storeClass.getTableName(),null);
@@ -248,11 +252,7 @@ public class DatabaseController {
                 setBuilder.append(key.getSqlName()).append("=");
                 Method method = storeClass.getClass().getMethod("get" + key.getProgramName());
                 int temp=(int)method.invoke(storeClass);
-                if(temp==-1){
-                    setBuilder.append("'").append("null").append("'");
-                } else{
-                    setBuilder.append("'").append(temp).append("'");
-                }
+                setBuilder.append("'").append(temp).append("'");
                 if (foreignKeyFieldIterator.hasNext()) {
                     setBuilder.append(", ");
                 }

@@ -1,6 +1,7 @@
 package view.simple_panes;
 
 import controller.DatabaseController;
+import controller.ProfileAccountManager;
 import controller.ViewController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,9 +12,11 @@ import model.AppStart;
 import model.storeclasses.*;
 import view.panes.EntryPane;
 import view.panes.entry_panes.ChoiceBoxEntry;
+import view.panes.entry_panes.MultipleChoiceBoxEntry;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class CreateNew<T extends StoreClass> extends VBox {
 
@@ -52,8 +55,9 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 Label label = new Label(name.getProgramName());
                 label.setPrefWidth(190);
                 try {
-                    Constructor<? extends EntryPane> constructor = name.getEntryClass().getDeclaredConstructor(String.class, Button.class, StoreClass.class);
-                    EntryPane entryPane = constructor.newInstance(name.getProgramName(), btn_save, storeClass);
+                    Class<? extends EntryPane> entry = name.getEntryClass();
+                    Constructor<? extends EntryPane> constructor= entry.getDeclaredConstructor(String.class, Button.class, StoreClass.class);;
+                    EntryPane entryPane = constructor.newInstance(name.getProgramName(), btn_save, storeClass);;
                     hbox.getChildren().addAll(label, entryPane.getPane());
                     if(edit){
                         entryPane.showContent();

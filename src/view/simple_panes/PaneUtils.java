@@ -16,13 +16,20 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class PaneManager {
+public class PaneUtils {
 
     public static List<File> browsePdfFiles(){
         FileChooser chooser = new FileChooser();
         chooser.setTitle("PDF auswählen");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
         return chooser.showOpenMultipleDialog(AppStart.primaryStage);
+    }
+
+    public static File browseOnePdfFile() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("PDF auswählen");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDFFiles", "*.pdf"));
+        return chooser.showOpenDialog(AppStart.primaryStage);
     }
 
     public static void selectFirst(ChoiceBox<?> choiceBox){
@@ -33,7 +40,6 @@ public class PaneManager {
 
     public static <T extends StoreClass> AnchorPane makeListAnchorPane(T storeClass){
         try {
-
             AnchorPane ap_cell = new AnchorPane();
             String labelText = (String) storeClass.getClass().getMethod("get"+storeClass.getChoiceBoxMethodName()).invoke(storeClass);
             Label lbl_itemText = new Label(labelText);

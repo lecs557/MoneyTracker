@@ -32,14 +32,14 @@ public class BankAccountChooser extends VBox {
             }
         });
 
-        PaneManager.selectFirst(chb);
+        PaneUtils.selectFirst(chb);
         getChildren().add(chb);
 
         Button button = new Button("Import");
 
         button.setOnMouseClicked(mouseEvent -> {
             Transaction.setDefaultBankAccountId(chb.getSelectionModel().getSelectedItem().getId());
-            IOController.startPDFImport(PaneManager.browsePdfFiles());
+            IOController.startPDFImport(PaneUtils.browsePdfFiles());
         });
 
         getChildren().add(button);

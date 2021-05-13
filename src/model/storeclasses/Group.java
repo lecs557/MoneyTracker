@@ -34,11 +34,15 @@ public class Group extends StoreClass {
       yearSumMap.merge(year,sum,Integer::sum);
    }
 
+   public void reset(int year){
+      yearSumMap.put(year,0);
+   }
+
    public Map<Integer, Integer> getYearSumMap() {
       return yearSumMap;
    }
 
-   public int computeSum(){
+   public int computeGroupTotal(){
       int sum=0;
       for(int inte:yearSumMap.values()){
          sum+=inte;

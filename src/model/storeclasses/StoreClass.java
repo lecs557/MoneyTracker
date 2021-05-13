@@ -16,6 +16,7 @@ public abstract class StoreClass {
     protected ArrayList<ForeignKey<? extends StoreClass>> foreignKeys = new ArrayList<>();
 
     public StoreClass() {
+        choiceBoxMethodName="Name";
         fieldNames.add(FieldName.storeId());
     }
 

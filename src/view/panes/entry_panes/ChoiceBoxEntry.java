@@ -20,6 +20,13 @@ public class ChoiceBoxEntry extends EntryPane {
 
     public ChoiceBoxEntry(String name, Button save, StoreClass storeClass, ArrayList<? extends StoreClass> storeClasses) {
         super(name, save, storeClass);
+
+        if(name.contains("Group")){
+            Group groupNull = new Group();
+            groupNull.setGroupName("Keine Gruppe");
+            groupNull.setId(0);
+            chb.getItems().add(groupNull);
+        }
         chb.getItems().addAll(storeClasses);
         chb.setConverter(new StringConverter<StoreClass>() {
             @Override
@@ -45,11 +52,7 @@ public class ChoiceBoxEntry extends EntryPane {
         } else{
             chb.getSelectionModel().select(0);
         }
-        if(name.contains("Group")){
-            Group groupNull = new Group();
-            groupNull.setGroupName("Keine Gruppe");
-            chb.getItems().add(groupNull);
-        }
+
     }
 
     @Override
@@ -61,14 +64,12 @@ public class ChoiceBoxEntry extends EntryPane {
     public String getContent() {
         StoreClass item = chb.getSelectionModel().getSelectedItem();
         if (item == null) {
-            return -1+"";
+            return 0+"";
         }
         if(item instanceof Group){
-            if(((Group) item).getGroupName().contains("Keine Gruppe")){
-                return -1+"";
-            }
+            return chb.getSelectionModel().getSelectedItem().getId()+"";
         }
-        return (chb.getSelectionModel().getSelectedIndex()+1)+"";
+        return chb.getSelectionModel().getSelectedItem().getId()+"";
     }
 
     @Override

@@ -34,6 +34,7 @@ public class SumTable extends TableView<Group> {
 
     public void applyGroups(ArrayList<Group> groups){
         getItems().clear();
+        getColumns().removeIf(groupTableColumn -> !groupTableColumn.getText().equals("Group"));
         if(groups.isEmpty()) return;
         computeYears(groups);
         getItems().addAll(groups);
@@ -42,7 +43,6 @@ public class SumTable extends TableView<Group> {
     private void computeYears(ArrayList<Group> groups){
         //Jahre
         for(int yearInt:groups.get(0).getYearSumMap().keySet()){
-
             TableColumn<Group, Integer> yearCol =new TableColumn<>(""+yearInt);
             yearCol.setMinWidth(120);
             yearCol.setCellValueFactory(new Callback<>() {
@@ -92,7 +92,7 @@ public class SumTable extends TableView<Group> {
         gesamt.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Group, Integer>, ObservableValue<Integer>>() {
             @Override
             public ObservableValue<Integer> call(TableColumn.CellDataFeatures<Group, Integer> sumIntegerCellDataFeatures) {
-                return new SimpleObjectProperty<Integer>(sumIntegerCellDataFeatures.getValue().computeSum());
+                return new SimpleObjectProperty<Integer>(sumIntegerCellDataFeatures.getValue().computeGroupTotal());
             }
         });
         gesamt.setCellFactory(new Callback<>() {

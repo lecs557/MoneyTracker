@@ -23,17 +23,15 @@ public class ViewController {
             } else if (storeClass instanceof Group){
                 o.vb_groups.getListView().getItems().setAll(DatabaseController.computeStoreClasses(new Group(),""));
                 ArrayList<Group> groups = new ArrayList<>(o.vb_groups.getListView().getItems());
-                ArrayList<Transaction> transactions = o.tp_transactions.getTransactions();
-                o.tp_transactions.applyTransactions(transactions,groups);
                 o.tl_groupSums.applyGroups(groups);
             } else if (storeClass instanceof Transaction){
                 ArrayList<Transaction> transactions =DatabaseController.computeStoreClasses(new Transaction(),Transaction.Variables.date.getSqlName());
                 ArrayList<Group> groups = new ArrayList<>(o.vb_groups.getListView().getItems());
+                ProfileAccountManager.computeBalance(transactions);
+                ProfileAccountManager.computeSum(groups,transactions);
                 o.tp_transactions.applyTransactions(transactions,groups);
                 o.tl_groupSums.applyGroups(groups);
                 o.ch_transaction.applyTransactions(transactions);
-                ProfileAccountManager.computeBalance(transactions);
-                ProfileAccountManager.computeSum(groups,transactions);
             }
         });
     }

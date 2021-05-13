@@ -2,6 +2,7 @@ package model.storeclasses;
 
 import view.panes.entry_panes.AmountEntry;
 import view.panes.entry_panes.DateEntry;
+import view.panes.entry_panes.MultipleChoiceBoxEntry;
 import view.panes.entry_panes.StringEntry;
 import view.simple_panes.SampleClass;
 
@@ -43,7 +44,7 @@ public class Transaction extends StoreClass {
         public static FieldName date = new FieldName("Date", "date","DATE", DateEntry.class);
         public static FieldName purpose = new FieldName("Purpose", "purpose","TEXT", StringEntry.class);
         public static FieldName amount = new FieldName("Amount", "amount","int", StringEntry.class);
-        public static FieldName invoiceFileIds = new FieldName("InvoiceFileIds", "invoiceFileIds","Text", StringEntry.class);
+        public static FieldName invoiceFileIds = new FieldName("InvoiceFileIds", "invoiceFileIds","Text", MultipleChoiceBoxEntry.class);
 
     }
 
@@ -77,7 +78,8 @@ public class Transaction extends StoreClass {
     }
 
     public void setInvoiceFileIds(String temp) {
-        this.invoiceFileIds.addAll(Arrays.asList(temp.split("; ")));
+        invoiceFileIds.clear();
+        invoiceFileIds.addAll(Arrays.asList(temp.split("; ")));
     }
 
     public int getGroupId() {
