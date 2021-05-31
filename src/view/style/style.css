@@ -2,29 +2,3 @@
     -fx-background-color: skyblue;
 }
 
-Button {
-    -fx-border-radius: 15px;
-    -fx-background-color: lightgreen;
-    -fx-background-radius:15px;
-    -fx-border-color:black;
-}
-.axis-tick-mark {
-    -fx-stroke: black;
-    -fx-stroke-width: 2;
-}
-.axis-minor-tick-mark {
-    -fx-stroke: black;
-}
-.chart-vertical-grid-lines {
-    -fx-stroke: lightgreen;
-}
-.chart-horizontal-grid-lines {
-    -fx-stroke: lightgreen;
-}
-.axis {
-    -fx-font-size: 1.4em;
-    -fx-tick-label-fill: black;
-    -fx-font-family: Tahoma;
-    -fx-tick-length: 15;
-    -fx-minor-tick-length: 10;
-}

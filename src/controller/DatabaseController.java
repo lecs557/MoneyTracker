@@ -119,11 +119,12 @@ public class DatabaseController {
         return resultStoreClasses;
     }
 
-    public static <T extends StoreClass> void storeObject(T storeClass, boolean checkIfExists){
+    public static <T extends StoreClass> boolean storeObject(T storeClass, boolean checkIfExists){
         if (storeClass.getId()>0) {
             System.out.println("ID existiert; wurde nicht in die DB aufgenommen");
-            return;
+            return false;
         }
+        boolean added =false;
         try {
             open();
             ResultSet table = conn.getMetaData().getTables(null,null,storeClass.getTableName(),null);
@@ -200,6 +201,7 @@ public class DatabaseController {
                 String sql = insertBuilder + " " + valuesBuilder;
                 System.out.println(sql);
                 stmt.executeUpdate(sql);
+                added=true;
                 String sql1 = "SELECT id FROM " + storeClass.getTableName() + " ORDER BY id DESC LIMIT 1";
                 ResultSet rs = stmt.executeQuery(sql1);
                 while (rs.next()) {
@@ -217,6 +219,7 @@ public class DatabaseController {
             e.printStackTrace();
             close();
         }
+        return added;
     }
 
     public static <T extends StoreClass> void updateObject(T storeClass){

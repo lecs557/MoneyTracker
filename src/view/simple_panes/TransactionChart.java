@@ -2,6 +2,7 @@ package view.simple_panes;
 
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Tooltip;
 import model.MyDate;
 import model.storeclasses.Transaction;
 
@@ -13,6 +14,7 @@ public class TransactionChart extends LineChart<MyDate,Number> {
 
     public TransactionChart() {
         super(new LocalDateAxis(), new NumberAxis());
+        getStylesheets().add("view/style/tachart.css");
         getXAxis().setAutoRanging(false);
         series = new Series<>();
         getData().add(series);
@@ -28,6 +30,8 @@ public class TransactionChart extends LineChart<MyDate,Number> {
         for (Transaction t:transactions){
             Data<MyDate,Number> data = new Data<>(new MyDate(t.getLocalDate()),(double)t.getBalance()/100);
             series.getData().add(data);
+            data.getNode().setStyle("-fx-background-color:green");
+            Tooltip.install(data.getNode(),new Tooltip(t.getPurpose()));
         }
         ((LocalDateAxis)getXAxis()).setYears(startYear,endYear);
     }

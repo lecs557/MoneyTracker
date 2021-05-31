@@ -3,7 +3,6 @@ package controller;
 import model.storeclasses.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class ProfileAccountManager {
 
@@ -16,6 +15,7 @@ public class ProfileAccountManager {
 
 
     //From Software
+    private static final ArrayList<Transaction> importedTransactions = new ArrayList<>();
 
 
 
@@ -86,8 +86,12 @@ public class ProfileAccountManager {
         return profilesInvoiceFiles;
     }
 
-    public static void setProfilesTransactions(ArrayList<Transaction> profilesTransactions) {
-        ProfileAccountManager.profilesTransactions = profilesTransactions;
+    public static void addNewAddedTransaction(Transaction transaction) {
+        importedTransactions.add(transaction);
+    }
+
+    public static ArrayList<Transaction> getImportedTransactions() {
+        return importedTransactions;
     }
 
     public static <T extends StoreClass> StoreClass getById(T storeClazz, int id){

@@ -3,6 +3,7 @@ package model;
 import com.itextpdf.text.pdf.parser.RenderFilter;
 import com.itextpdf.text.pdf.parser.TextRenderInfo;
 import controller.DatabaseController;
+import controller.ProfileAccountManager;
 import model.storeclasses.Transaction;
 
 import java.time.LocalDate;
@@ -15,10 +16,16 @@ public class TransactionExtractor extends RenderFilter {
 	private float transacY=0;
 	private String purpose ="";
 	private String amount = "0";
+	private String fileID = "0";
 	private LocalDate date;
+
 	private boolean ignoreNext = false;
-	
-	@Override
+
+    public TransactionExtractor(String fileID) {
+        this.fileID = fileID;
+    }
+
+    @Override
 	public boolean allowText(TextRenderInfo tri) {
 		addTransactions(tri);
 		return true;
@@ -39,7 +46,10 @@ public class TransactionExtractor extends RenderFilter {
                 tran.setAmount(amount);
                 System.out.println(purpose);
                 tran.setPurpose(purpose);
-                DatabaseController.storeObject(tran,true);
+                tran.addInvoiceFieldId(fileID);
+                if(DatabaseController.storeObject(tran,true)){
+                    ProfileAccountManager.addNewAddedTransaction(tran);
+                }
                 System.out.println("----------------");
                 ignoreNext=false;
                 purpose ="";

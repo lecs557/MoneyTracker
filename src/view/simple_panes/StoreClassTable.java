@@ -1,5 +1,6 @@
 package view.simple_panes;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,7 +28,12 @@ public class StoreClassTable extends TableView {
                 e.printStackTrace();
             }
             TableColumn<StoreClass, String> temp = new TableColumn<>(name.getProgramName());
-            temp.setCellValueFactory(new PropertyValueFactory<>(name.getProgramName()));
+
+            if(name.getProgramName().equals("Id")){
+                temp.setCellValueFactory(cdf -> new SimpleStringProperty(cdf.getValue().getId()+""));
+            } else{
+                temp.setCellValueFactory(new PropertyValueFactory<>(name.getProgramName()));
+            }
             temp.setCellFactory(new Callback<TableColumn<StoreClass, String>, TableCell<StoreClass, String>>() {
                 public TableCell<StoreClass, String> call(TableColumn<StoreClass, String> tStringTableColumn) {
                     TableCell<StoreClass, String> cell = new TableCell<>() {
@@ -54,19 +60,19 @@ public class StoreClassTable extends TableView {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            TableColumn<StoreClass, String> temp = new TableColumn<>(foreignKey.getProgramName());
+            TableColumn<StoreClass, Integer> temp = new TableColumn<>(foreignKey.getProgramName());
             temp.setCellValueFactory(new PropertyValueFactory<>(foreignKey.getProgramName()));
-            temp.setCellFactory(new Callback<TableColumn<StoreClass, String>, TableCell<StoreClass, String>>() {
-                public TableCell<StoreClass, String> call(TableColumn<StoreClass, String> tStringTableColumn) {
-                    TableCell<StoreClass, String> cell = new TableCell<>() {
+            temp.setCellFactory(new Callback<TableColumn<StoreClass, Integer>, TableCell<StoreClass, Integer>>() {
+                public TableCell<StoreClass, Integer> call(TableColumn<StoreClass, Integer> tStringTableColumn) {
+                    TableCell<StoreClass, Integer> cell = new TableCell<>() {
                         @Override
-                        protected void updateItem(String item, boolean empty) {
+                        protected void updateItem(Integer item, boolean empty) {
                             super.updateItem(item, empty);
                             if (empty || item == null) {
                                 setText(null);
                                 setGraphic(null);
                             } else {
-                                setText(item);
+                                setText(item.toString());
                             }
                         }
                     };

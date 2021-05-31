@@ -61,6 +61,7 @@ public class SumTable extends TableView<Group> {
                             if (empty || item == null) {
                                 setText(null);
                                 setGraphic(null);
+                                getTableRow().setStyle("");
                             } else {
                                 Group itm = getTableRow().getItem();
                                 if (itm == null) {

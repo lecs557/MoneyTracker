@@ -42,8 +42,7 @@ public class WindowManager {
     public static void openStageOf(Region createNew){
             AppStart.secStage =new Stage();
             loadWindow.set(true);
-            Parent root = createNew;
-            AppStart.secStage.setScene(new Scene(root));
+            AppStart.secStage.setScene(new Scene(createNew));
             AppStart.secStage.centerOnScreen();
             loadWindow.set(false);
             AppStart.secStage.show();

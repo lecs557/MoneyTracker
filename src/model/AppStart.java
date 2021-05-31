@@ -3,26 +3,25 @@ package model;
 import controller.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import view.simple_panes.TransactionChart;
 
 import java.io.IOException;
 
 public class AppStart extends Application {
 
-    public enum windows {LogIn, Overview ,NewAccount,NewTransaction,RenameWindow,TransactionWindow};
+    public enum windows {StartLoading,LogIn, Overview};
     public static Stage primaryStage;
     public static Stage secStage;
 
-    public enum types {Lastschrift, Gutschrift, Gehalt, Überweisung}
-
     @Override
-    public void start(Stage primaryStage) throws IOException{
+    public void start(Stage primaryStage){
         AppStart.primaryStage = primaryStage;
-
-        WindowManager.changeSceneTo(windows.LogIn);
         primaryStage.setTitle("Aurum Observa");
-
+        WindowManager.changeSceneTo(windows.StartLoading);
         primaryStage.show();
-        primaryStage.centerOnScreen();
+
+        //WindowManager.changeSceneTo(windows.LogIn);
+
     }
 
     public static void main(String[] args) {

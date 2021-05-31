@@ -3,12 +3,16 @@ package model.threads;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.*;
 import controller.DatabaseController;
+import controller.ProfileAccountManager;
 import controller.ViewController;
+import controller.WindowManager;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import model.TransactionExtractor;
 import model.storeclasses.InvoiceFile;
 import model.storeclasses.Transaction;
+import view.simple_panes.StoreClassTable;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +23,6 @@ public class PDFImporter extends Thread {
     private List<File> files;
     private final SimpleDoubleProperty progress = new SimpleDoubleProperty();
     private final SimpleBooleanProperty running = new SimpleBooleanProperty();
-    private final String bankAccountID="";
-    private final String InvoiceFileID="";
     private PdfReader pdfReader;
 
     public PDFImporter(List<File> files) {
@@ -40,7 +42,7 @@ public class PDFImporter extends Thread {
                     infile.setPath(path);
                     DatabaseController.storeObject(infile, true);
                     pdfReader = new PdfReader(path);
-                    RenderFilter info = new TransactionExtractor();
+                    RenderFilter info = new TransactionExtractor(infile.getId()+"");
                     TextExtractionStrategy strategy = new FilteredTextRenderListener(
                             new LocationTextExtractionStrategy(), info);
 
@@ -60,6 +62,7 @@ public class PDFImporter extends Thread {
         }
         running.set(false);
         ViewController.refresh(new Transaction());
+        Platform.runLater(() -> WindowManager.openStageOf(new StoreClassTable(ProfileAccountManager.getImportedTransactions(),new Transaction())));
     }
 
     public SimpleDoubleProperty progressProperty() {

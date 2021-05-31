@@ -19,8 +19,8 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public Label lbl_account;
     public ProgressBar pb_pdf;
     public TransactionTabPane tp_transactions;
-    public StoreClassList<BankAccount> vb_bankAccounts;
-    public GroupList  vb_groups;
+    public BankAccountList vb_bankAccounts;
+    public GroupList vb_groups;
     public TransactionChart ch_transaction;
     public SumTable tl_groupSums;
 
@@ -41,20 +41,6 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
 
     public void backToLogin(ActionEvent actionEvent) {
         WindowManager.changeSceneTo(AppStart.windows.LogIn);
-    }
-
-    public void newBA(ActionEvent actionEvent) {
-        CreateNew<BankAccount> createNew = new CreateNew<>(new BankAccount(), false);
-        WindowManager.openStageOf(createNew);
-    }
-
-    public void refresh(){
-
-    }
-
-    public void newGroup(ActionEvent actionEvent) {
-        CreateNew<Group> createNew = new CreateNew<>(new Group(), false);
-        WindowManager.openStageOf(createNew);
     }
 
     public void newTransaction(ActionEvent actionEvent) {
