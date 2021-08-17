@@ -1,4 +1,10 @@
 .main {
-    -fx-background-color: skyblue;
+    -fx-background-color: #011;
 }
+
+Button{
+     -fx-background-color: #011;
+     -fx-text-fill : #FFF;
+}
+
 

@@ -16,11 +16,11 @@ public class AppStart extends Application {
     @Override
     public void start(Stage primaryStage){
         AppStart.primaryStage = primaryStage;
-        primaryStage.setTitle("Aurum Observa");
+        primaryStage.setTitle("Money Tracker");
         WindowManager.changeSceneTo(windows.StartLoading);
         primaryStage.show();
 
-        //WindowManager.changeSceneTo(windows.LogIn);
+        WindowManager.changeSceneTo(windows.LogIn);
 
     }
 
