@@ -5,40 +5,57 @@ import model.storeclasses.*;
 import java.util.ArrayList;
 
 public class ProfileAccountManager {
+    
+    private static ProfileAccountManager singleton;
+    
+    private ProfileAccountManager(){}
+    
+    public static void initialize(){
+        singleton = new ProfileAccountManager();
+    }
+    
+    public static ProfileAccountManager getInstance(){
+        if (singleton == null) {
+            initialize();
+        }
+        return singleton;
+    }
+        
 
     //From DataBase
-    private static Profile currentAccount;
-    private static ArrayList<BankAccount> profilesBankAccounts;
-    private static ArrayList<Group> profilesGroups;
-    private static ArrayList<Transaction> profilesTransactions;
-    private static ArrayList<InvoiceFile> profilesInvoiceFiles;
+    private Profile currentAccount;
+    private ArrayList<BankAccount> profilesBankAccounts;
+    private ArrayList<Group> profilesGroups;
+    private ArrayList<Transaction> profilesTransactions;
+    private ArrayList<InvoiceFile> profilesInvoiceFiles;
 
 
     //From Software
-    private static final ArrayList<Transaction> importedTransactions = new ArrayList<>();
+    private final ArrayList<Transaction> importedTransactions = new ArrayList<>();
 
 
 
-    public static void setupProfile(Profile currentAccount) {
-        ProfileAccountManager.currentAccount = currentAccount;
+    public void setupProfile(Profile currentAccount) {
+        DatabaseController db = DatabaseController.getInstance();
+        ProfileAccountManager.getInstance().currentAccount = currentAccount;
 
         BankAccount.ForeignKeys.profile.set(currentAccount);
-        profilesBankAccounts = DatabaseController.computeStoreClasses(new BankAccount(),"");
+        profilesBankAccounts = db.computeStoreClasses(new BankAccount(),"");
 
         Group.ForeignKeys.bankAccount.setForeignObjects(profilesBankAccounts);
-        profilesGroups = DatabaseController.computeStoreClasses(new Group(),"");
+        profilesGroups = db.computeStoreClasses(new Group(),"");
 
         Transaction.ForeignKeys.bankAccount.setForeignObjects(profilesBankAccounts);
         Transaction.ForeignKeys.group.setForeignObjects(profilesGroups);
-        profilesTransactions = DatabaseController.computeStoreClasses(new Transaction(),"");
+        profilesTransactions = db.computeStoreClasses(new Transaction(),"");
 
-        profilesInvoiceFiles = DatabaseController.computeStoreClasses(new InvoiceFile(),"");
+        profilesInvoiceFiles = db.computeStoreClasses(new InvoiceFile(),"");
 
         computeBalance(profilesTransactions);
         computeSum(profilesGroups, profilesTransactions);
     }
 
-    public static void computeBalance(ArrayList<Transaction> transactions){
+    public void computeBalance(ArrayList<Transaction> transactions){
         int sum=0;
         for(Transaction transaction:transactions){
             sum+=Integer.parseInt(transaction.getAmount());
@@ -46,7 +63,7 @@ public class ProfileAccountManager {
         }
     }
 
-    public static void computeSum(ArrayList<Group> groups, ArrayList<Transaction> transactions){
+    public void computeSum(ArrayList<Group> groups, ArrayList<Transaction> transactions){
         int curYear=0;
         for (Transaction tra:transactions){
             int year=tra.getLocalDate().getYear();
@@ -61,40 +78,40 @@ public class ProfileAccountManager {
         }
     }
 
-    public static void add(BankAccount bankAccount){
+    public void add(BankAccount bankAccount){
         profilesBankAccounts.add(bankAccount);
     }
 
-    public static Profile getCurrentAccount() {
+    public Profile getCurrentAccount() {
         return currentAccount;
     }
 
-    public static ArrayList<BankAccount> getProfilesBankAccounts() {
+    public ArrayList<BankAccount> getProfilesBankAccounts() {
         return profilesBankAccounts;
     }
 
 
-    public static ArrayList<Group> getProfilesGroups() {
+    public ArrayList<Group> getProfilesGroups() {
         return profilesGroups;
     }
 
-    public static ArrayList<Transaction> getProfilesTransactions() {
+    public ArrayList<Transaction> getProfilesTransactions() {
         return profilesTransactions;
     }
 
-    public static ArrayList<InvoiceFile> getProfilesInvoiceFiles() {
+    public ArrayList<InvoiceFile> getProfilesInvoiceFiles() {
         return profilesInvoiceFiles;
     }
 
-    public static void addNewAddedTransaction(Transaction transaction) {
+    public void addNewAddedTransaction(Transaction transaction) {
         importedTransactions.add(transaction);
     }
 
-    public static ArrayList<Transaction> getImportedTransactions() {
+    public ArrayList<Transaction> getImportedTransactions() {
         return importedTransactions;
     }
 
-    public static <T extends StoreClass> StoreClass getById(T storeClazz, int id){
+    public <T extends StoreClass> StoreClass getById(T storeClazz, int id){
         if(storeClazz instanceof InvoiceFile){
             for(InvoiceFile invoiceFile: profilesInvoiceFiles){
                 if(invoiceFile.getId()==id){

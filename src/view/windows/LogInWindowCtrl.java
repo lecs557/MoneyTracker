@@ -19,7 +19,7 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
     public ChoiceBox<Profile> chb_profiles;
 
     public void initialize() {
-        chb_profiles.getItems().addAll(DatabaseController.computeStoreClasses(new Profile(),""));
+        chb_profiles.getItems().addAll(DatabaseController.getInstance().computeStoreClasses(new Profile(),""));
         chb_profiles.setConverter(new StringConverter<Profile>() {
             @Override
             public String toString(Profile profile) {
@@ -35,19 +35,19 @@ public class LogInWindowCtrl extends BaseWindowCtrl {
             }
         });
         PaneUtils.selectFirst(chb_profiles);
-        ViewController.setChb_profiles(chb_profiles);
+        ViewController.getInstance().setChb_profiles(chb_profiles);
     }
 
     public void login(ActionEvent actionEvent) {
         Profile selected = chb_profiles.getSelectionModel().getSelectedItem();
         if(selected!=null){
-            ProfileAccountManager.setupProfile(selected);
-            WindowManager.changeSceneTo(AppStart.windows.Overview);
+            ProfileAccountManager.getInstance().setupProfile(selected);
+            WindowManager.getInstance().changeSceneTo(AppStart.windows.Overview);
         }
     }
 
     public void addProfile(ActionEvent actionEvent) {
         CreateNew<Profile> createNew = new CreateNew<>(new Profile(), false);
-        WindowManager.openStageOf(createNew);
+        WindowManager.getInstance().openStageOf(createNew);
     }
 }

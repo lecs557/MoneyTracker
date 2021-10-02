@@ -32,7 +32,7 @@ public class MultipleChoiceBoxEntry extends EntryPane {
         add.setOnMouseClicked(mouseEvent -> {
             ChoiceBox<StoreClass> chb = new ChoiceBox<>();
             if(name.contains("Invoice")) {
-                chb.getItems().addAll(ProfileAccountManager.getProfilesInvoiceFiles());
+                chb.getItems().addAll(ProfileAccountManager.getInstance().getProfilesInvoiceFiles());
             }
             chb.setConverter(new StringConverter<StoreClass>() {
                 @Override
@@ -87,7 +87,7 @@ public class MultipleChoiceBoxEntry extends EntryPane {
         for(String id: temp){
             try {
                 ChoiceBox<StoreClass> chb = new ChoiceBox<>();
-                chb.getSelectionModel().select(ProfileAccountManager.getById(storeclass, Integer.parseInt(id)));
+                chb.getSelectionModel().select(ProfileAccountManager.getInstance().getById(storeclass, Integer.parseInt(id)));
             }catch (Exception e){
                 System.out.println("PARSEERROR");
             }

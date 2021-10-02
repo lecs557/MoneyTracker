@@ -11,40 +11,48 @@ import java.io.File;
 import java.util.List;
 
 public class IOController {
-    
-    private static PDFImporter pdfLoader;
 
-    private static final SimpleDoubleProperty progress = new SimpleDoubleProperty();
-    private static final SimpleBooleanProperty running = new SimpleBooleanProperty();
+    private static IOController singleton;
 
-    public static void startPDFImport(List<File> files) {
+    private IOController(){}
+
+    public static void initialize(){
+        singleton = new IOController();
+    }
+
+    public static IOController getInstance(){
+        if (singleton == null) {
+            initialize();
+        }
+        return singleton;
+    }
+
+
+    private PDFImporter pdfLoader;
+
+    private final SimpleDoubleProperty pdfProgress = new SimpleDoubleProperty();
+    private final SimpleBooleanProperty pdfRunning = new SimpleBooleanProperty();
+
+    public void startPDFImport(List<File> files) {
         if (files == null) return;
         pdfLoader = new PDFImporter(files);
         pdfLoader.start();
-        running.unbind();
-        progress.unbind();
-        running.bind(pdfLoader.runningProperty());
-        progress.bind(pdfLoader.progressProperty());
+        pdfRunning.unbind();
+        pdfProgress.unbind();
+        pdfRunning.bind(pdfLoader.runningProperty());
+        pdfProgress.bind(pdfLoader.progressProperty());
     }
 
-    public static PDFImporter getPdfLoader() {
+    public PDFImporter getPdfLoader() {
         return pdfLoader;
     }
 
-    public static double getProgress() {
-        return progress.get();
+    public SimpleDoubleProperty pdfPogressProperty() {
+        return pdfProgress;
     }
 
-    public static SimpleDoubleProperty progressProperty() {
-        return progress;
-    }
-
-    public static boolean isRunning() {
-        return running.get();
-    }
-
-    public static SimpleBooleanProperty runningProperty() {
-        return running;
+    public SimpleBooleanProperty pdfRunningProperty() {
+        return pdfRunning;
     }
 }
 

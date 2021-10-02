@@ -39,7 +39,7 @@ public class BankAccountChooser extends VBox {
 
         button.setOnMouseClicked(mouseEvent -> {
             Transaction.setDefaultBankAccountId(chb.getSelectionModel().getSelectedItem().getId());
-            IOController.startPDFImport(PaneUtils.browsePdfFiles());
+            IOController.getInstance().startPDFImport(PaneUtils.browsePdfFiles());
         });
 
         getChildren().add(button);

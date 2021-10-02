@@ -39,7 +39,7 @@ public class SampleClass {
         sampleTransactions.add(Transaction.sampleTransaction());
         sampleTransactions.add(Transaction.sampleTransaction());
         sampleTransactions.sort(Comparator.comparing(Transaction::getLocalDate));
-        ProfileAccountManager.computeBalance(sampleTransactions);
+        ProfileAccountManager.getInstance().computeBalance(sampleTransactions);
         return sampleTransactions;
     }
 
@@ -60,7 +60,7 @@ public class SampleClass {
         sampleGroups = new ArrayList<>();
         sampleGroups.add(Group.sampleGroup());
         sampleGroups.add(Group.sampleGroup());
-        ProfileAccountManager.computeSum(sampleGroups,getSampleTransactions());
+        ProfileAccountManager.getInstance().computeSum(sampleGroups,getSampleTransactions());
         return sampleGroups;
     }
 

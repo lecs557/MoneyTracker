@@ -42,7 +42,7 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
 
         setListView(SampleClass.getSampleData(getDummy()));
 
-        btn_add.setOnMouseClicked(mouseEvent -> WindowManager.openStageOf(new CreateNew<>(getDummy(), false)));
+        btn_add.setOnMouseClicked(mouseEvent -> WindowManager.getInstance().openStageOf(new CreateNew<>(getDummy(), false)));
         getChildren().addAll(btn_add,listView);
     }
 
@@ -65,18 +65,22 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
             lbl_itemText.getStyleClass().add("lbl-itemText");
             HBox  hb_iconContainer= new HBox();
             hb_iconContainer.getStyleClass().add("hb-iconContainer");
-            ImageView iv_edit = new ImageView(new Image("/ressources/icons/pencil.png"));
+            ImageView iv_edit = new ImageView(new Image(getClass().getResource("/ressources/icons/pencil.png").toString()));
             iv_edit.getStyleClass().add("iv-edit");
+            iv_edit.setFitHeight(10);
+            iv_edit.setPreserveRatio(true);
             Button btn_edit = new Button();
             btn_edit.getStyleClass().add("btn-edit");
             btn_edit.setGraphic(iv_edit);
-            ImageView iv_garbage = new ImageView(new Image("/ressources/icons/garbage.png"));
+            ImageView iv_garbage = new ImageView(new Image(getClass().getResource("/ressources/icons/garbage.png").toString()));
             iv_garbage.getStyleClass().add("iv-garbage");
+            iv_garbage.setFitHeight(10);
+            iv_garbage.setPreserveRatio(true);
             Button btn_garbage = new Button();
             btn_garbage.getStyleClass().add("btn-garbage");
             btn_garbage.setGraphic(iv_garbage);
 
-            hb_iconContainer.getChildren().addAll(iv_edit,iv_garbage);
+            hb_iconContainer.getChildren().addAll(btn_edit,btn_garbage);
             ap_cell.getChildren().addAll(lbl_itemText,hb_iconContainer);
             hb_iconContainer.setVisible(false);
             AnchorPane.setLeftAnchor(lbl_itemText,0d);
@@ -84,8 +88,8 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
 
             ap_cell.setOnMouseEntered(mouseEvent -> hb_iconContainer.setVisible(true));
             ap_cell.setOnMouseExited(mouseEvent -> hb_iconContainer.setVisible(false));
-            iv_edit.setOnMouseClicked(mouseEvent -> WindowManager.openStageOf(new CreateNew<T>(storeClass,true)));
-            iv_garbage.setOnMouseClicked(mouseEvent -> WindowManager.openStageOf(new CreateNew<T>(storeClass,true)));
+            btn_edit.setOnMouseClicked(mouseEvent -> WindowManager.getInstance().openStageOf(new CreateNew<T>(storeClass,true)));
+            btn_garbage.setOnMouseClicked(mouseEvent -> WindowManager.getInstance().openStageOf(new CreateNew<T>(storeClass,true)));
 
             return ap_cell;
 

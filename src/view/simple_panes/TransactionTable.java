@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class TransactionTable extends TableView<Transaction> {
 
+    public ArrayList<TableRow<Transaction>> rows = new ArrayList<>();
+
 
     public TransactionTable(ArrayList<Group> groups)  {
         //SEE
@@ -37,7 +39,7 @@ public class TransactionTable extends TableView<Transaction> {
                             b.setOnMouseClicked(mouseEvent ->{
                                 Transaction edit = getTableRow().getItem();
                                 CreateNew<Transaction> createNew = new CreateNew<>(edit, true);
-                                WindowManager.openStageOf(createNew);
+                                WindowManager.getInstance().openStageOf(createNew);
                             });
                         }
                     }
@@ -172,4 +174,33 @@ public class TransactionTable extends TableView<Transaction> {
     public void addTransacion(Transaction transaction){
         getItems().add(transaction);
     }
+
+    public void connect(TransactionChart chart){
+        setRowFactory(transactionTableView -> {
+            final TableRow<Transaction> row = new TableRow<>();
+            row.hoverProperty().addListener((observableValue, aBoolean, t1) -> {
+                if(t1){
+                    row.setStyle("-fx-background-color:green;");
+                    chart.getData().get(0).getData().forEach(data -> {
+                        if(data.getXValue().getDate().equals(row.getItem().getLocalDate()) &&
+                                data.getYValue().doubleValue() == (double) row.getItem().getBalance()/100){
+                            data.getNode().setStyle("-fx-background-color:yellow;");
+                        } else {
+                            data.getNode().setStyle("-fx-background-color:green;");
+                        }
+                    });
+                } else {
+                    row.setStyle("-fx-background-color:white;");
+                }
+            });
+            rows.add(row);
+            return row;
+        });
+    }
+
+    public ArrayList<TableRow<Transaction>> getRows() {
+        return rows;
+    }
 }
+
+

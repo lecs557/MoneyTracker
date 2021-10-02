@@ -1,27 +1,50 @@
 package model.threads;
 
+import controller.*;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import model.AppStart;
 
 public class Loader extends Thread {
 
-    private String name;
-    private String path;
-    private SimpleBooleanProperty running = new SimpleBooleanProperty();
+    private int currentThingToLoad;
+    private int thingsToLoad = 5;
+    private final SimpleDoubleProperty progress = new SimpleDoubleProperty();
 
-    public Loader(String name, String path) {
-        this.name = name;
-        this.path = path;
+    public Loader() {
     }
 
     @Override
     public void run() {
-        running.set(true);
+        progress.set(0);
 
-        running.set(false);
+        initializeController();
 
+        progress.set(1);
+
+        Platform.runLater(() -> WindowManager.getInstance().changeSceneTo(AppStart.windows.LogIn));
     }
 
-    public SimpleBooleanProperty isRunningProperty() {
-        return running;
+    private void initializeController() {
+        ContentController.initialize();
+        advanceProgress();
+        DatabaseController.initialize("Aurum_Observa");
+        advanceProgress();
+        IOController.initialize();
+        advanceProgress();
+        ProfileAccountManager.initialize();
+        advanceProgress();
+        ViewController.initialize();
     }
+
+    private void advanceProgress(){
+        currentThingToLoad++;
+        progress.set(currentThingToLoad / (double)thingsToLoad);
+    }
+
+    public SimpleDoubleProperty progressProperty() {
+        return progress;
+    }
+
 }

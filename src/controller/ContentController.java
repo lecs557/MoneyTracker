@@ -4,13 +4,29 @@ import model.storeclasses.BankAccount;
 
 public class ContentController {
 
-    private static BankAccount bankAccount;
+    private static ContentController singleton;
 
-    public static BankAccount getBankAccount() {
+    private ContentController(){}
+
+    public static void initialize(){
+        singleton = new ContentController();
+    }
+
+    public static ContentController getInstance(){
+        if (singleton == null) {
+            initialize();
+        }
+        return singleton;
+    }
+
+
+    private BankAccount bankAccount;
+
+    public BankAccount getBankAccount() {
         return bankAccount;
     }
 
-    public static void setBankAccount(BankAccount bankAccount) {
-        ContentController.bankAccount = bankAccount;
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 }

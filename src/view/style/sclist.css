@@ -11,7 +11,7 @@
 }
 
 .hb-iconContainer{
-
+    -fx-spacing: 5;
 }
 
 .iv-edit{
@@ -19,7 +19,7 @@
 }
 
 .btn-edit{
-
+  -fx-background-color:transparent;
 }
 
 .iv-garbage{
@@ -27,5 +27,5 @@
 }
 
 .btn-garbage{
-
+    -fx-background-color:transparent;
 }

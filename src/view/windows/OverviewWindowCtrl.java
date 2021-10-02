@@ -8,8 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import model.AppStart;
-import model.storeclasses.BankAccount;
-import model.storeclasses.Group;
 import model.storeclasses.Transaction;
 import view.simple_panes.*;
 
@@ -25,32 +23,38 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public SumTable tl_groupSums;
 
     public void initialize() {
-        ViewController.setOverviewWindowCtrl(this);
+        ViewController.getInstance().setOverviewWindowCtrl(this);
 
-        pb_pdf.visibleProperty().bind(IOController.runningProperty());
-        pb_pdf.progressProperty().bind(IOController.progressProperty());
+        IOController io = IOController.getInstance();
+        pb_pdf.visibleProperty().bind(io.pdfRunningProperty());
+        pb_pdf.progressProperty().bind(io.pdfPogressProperty());
 
-        lbl_account.setText(ProfileAccountManager.getCurrentAccount().getName());
-        vb_bankAccounts.getListView().getItems().setAll(ProfileAccountManager.getProfilesBankAccounts());
-        vb_groups.getListView().getItems().setAll(ProfileAccountManager.getProfilesGroups());
-        tp_transactions.applyTransactions(ProfileAccountManager.getProfilesTransactions(),ProfileAccountManager.getProfilesGroups());
-        tl_groupSums.applyGroups(ProfileAccountManager.getProfilesGroups());
-        ch_transaction.applyTransactions(ProfileAccountManager.getProfilesTransactions());
+        ProfileAccountManager pf = ProfileAccountManager.getInstance();
+        lbl_account.setText(pf.getCurrentAccount().getName());
+        vb_bankAccounts.getListView().getItems().setAll(pf.getProfilesBankAccounts());
+        vb_groups.getListView().getItems().setAll(pf.getProfilesGroups());
+        tp_transactions.applyTransactions(pf.getProfilesTransactions(),pf.getProfilesGroups());
+        tl_groupSums.applyGroups(pf.getProfilesGroups());
+        ch_transaction.applyTransactions(pf.getProfilesTransactions());
 
+        for(TransactionTable t: tp_transactions.getTransactionTables()){
+            t.connect(ch_transaction);
+        }
+        ch_transaction.connect(tp_transactions);
     }
 
     public void backToLogin(ActionEvent actionEvent) {
-        WindowManager.changeSceneTo(AppStart.windows.LogIn);
+        WindowManager.getInstance().changeSceneTo(AppStart.windows.LogIn);
     }
 
     public void newTransaction(ActionEvent actionEvent) {
         CreateNew<Transaction> createNew = new CreateNew<>(new Transaction(), false);
-        WindowManager.openStageOf(createNew);
+        WindowManager.getInstance().openStageOf(createNew);
     }
 
     public void importTransactionViaPDF(ActionEvent actionEvent) {
-        BankAccountChooser ifb = new BankAccountChooser(ProfileAccountManager.getProfilesBankAccounts());
-        WindowManager.openStageOf(ifb);
+        BankAccountChooser ifb = new BankAccountChooser(ProfileAccountManager.getInstance().getProfilesBankAccounts());
+        WindowManager.getInstance().openStageOf(ifb);
 
     }
 }

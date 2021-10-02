@@ -48,7 +48,7 @@ public class ChoiceBoxEntry extends EntryPane {
             }
         });
         if (name.contains("profile")){
-            chb.getSelectionModel().select(ProfileAccountManager.getCurrentAccount().getId()-1);
+            chb.getSelectionModel().select(ProfileAccountManager.getInstance().getCurrentAccount().getId()-1);
         } else{
             chb.getSelectionModel().select(0);
         }

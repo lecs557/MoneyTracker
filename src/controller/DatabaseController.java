@@ -15,13 +15,34 @@ import java.util.Iterator;
  *
  */
 public class DatabaseController {
-    static String DB_NAME = "Aurum_Observa";
-    static String DB_PATH = "JDBC:sqlite:"+DB_NAME+".db";
 
-    private static Connection conn = null;
-    private static Statement stmt = null;
+    private static DatabaseController singleton;
 
-    public static <T extends StoreClass> ArrayList<T> computeStoreClasses(T storeClass, String orderBy) {
+    private DatabaseController(String dbName){
+        this.dbName =dbName;
+    }
+
+    public static void initialize(String dbName){
+        if (singleton == null) {
+            singleton = new DatabaseController(dbName);
+            singleton.dbPath = "JDBC:sqlite:"+ dbName +".db";
+        }
+    }
+
+    public static DatabaseController getInstance(){
+        if (singleton == null) {
+            initialize("Datenbank");
+        }
+        return singleton;
+    }
+
+    private String dbName = "";
+    private String dbPath = "";
+
+    private Connection conn = null;
+    private Statement stmt = null;
+
+    public <T extends StoreClass> ArrayList<T> computeStoreClasses(T storeClass, String orderBy) {
         ArrayList<T> resultStoreClasses = new ArrayList<>();
         try{
             open();
@@ -119,7 +140,7 @@ public class DatabaseController {
         return resultStoreClasses;
     }
 
-    public static <T extends StoreClass> boolean storeObject(T storeClass, boolean checkIfExists){
+    public <T extends StoreClass> boolean storeObject(T storeClass, boolean checkIfExists){
         if (storeClass.getId()>0) {
             System.out.println("ID existiert; wurde nicht in die DB aufgenommen");
             return false;
@@ -222,7 +243,7 @@ public class DatabaseController {
         return added;
     }
 
-    public static <T extends StoreClass> void updateObject(T storeClass){
+    public <T extends StoreClass> void updateObject(T storeClass){
         try {
             open();
             StringBuilder updateBuilder = new StringBuilder("UPDATE ");
@@ -273,7 +294,7 @@ public class DatabaseController {
         }
     }
 
-    public static <T extends StoreClass> void createTable(Class<T> storeClass) {
+    public <T extends StoreClass> void createTable(Class<T> storeClass) {
         try{
             T dummyClass = storeClass.getDeclaredConstructor().newInstance();
             open();
@@ -326,10 +347,10 @@ public class DatabaseController {
         }
     }
 
-    public static void createDataBase() {
+    public void createDataBase() {
         try{
             open();
-            String sql = "CREATE DATABASE "+DB_NAME;
+            String sql = "CREATE DATABASE "+ dbName;
             System.out.println(sql);
             System.out.println("Creating database...");
             stmt.executeUpdate(sql);
@@ -340,13 +361,13 @@ public class DatabaseController {
         }
     }
 
-    public static void setDbName(String dbName) {
-        DB_NAME = dbName;
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
     }
 
-    private static void open() throws ClassNotFoundException, SQLException {
+    private void open() throws ClassNotFoundException, SQLException {
         if( (conn == null || conn.isClosed()) ){
-            conn = DriverManager.getConnection(DB_PATH);
+            conn = DriverManager.getConnection(dbPath);
         }
         if( (stmt == null || stmt.isClosed()) ){
             stmt = conn.createStatement();
@@ -354,7 +375,7 @@ public class DatabaseController {
         }
     }
 
-    private static void close(){
+    private void close(){
         try{
             if(stmt!=null) {
                 stmt.close();

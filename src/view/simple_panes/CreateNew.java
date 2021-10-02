@@ -91,11 +91,11 @@ public class CreateNew<T extends StoreClass> extends VBox {
 
         btn_save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent ->{
             if(edit){
-                DatabaseController.updateObject(storeClass);
+                DatabaseController.getInstance().updateObject(storeClass);
             } else {
-               DatabaseController.storeObject(storeClass, false);
+               DatabaseController.getInstance().storeObject(storeClass, false);
             }
-            ViewController.refresh(storeClass);
+            ViewController.getInstance().refresh(storeClass);
             AppStart.secStage.close();
         });
         vb_fields.getChildren().add(btn_save);

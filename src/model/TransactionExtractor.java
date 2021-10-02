@@ -47,8 +47,8 @@ public class TransactionExtractor extends RenderFilter {
                 System.out.println(purpose);
                 tran.setPurpose(purpose);
                 tran.addInvoiceFieldId(fileID);
-                if(DatabaseController.storeObject(tran,true)){
-                    ProfileAccountManager.addNewAddedTransaction(tran);
+                if(DatabaseController.getInstance().storeObject(tran,true)){
+                    ProfileAccountManager.getInstance().addNewAddedTransaction(tran);
                 }
                 System.out.println("----------------");
                 ignoreNext=false;
@@ -69,7 +69,7 @@ public class TransactionExtractor extends RenderFilter {
                         tran.setAmount(amount);
                         System.out.println(purpose);
                         tran.setPurpose(purpose);
-                        DatabaseController.storeObject(tran,true);
+                        DatabaseController.getInstance().storeObject(tran,true);
                         System.out.println("----------------");
                         ignoreNext=false;
                         purpose ="";

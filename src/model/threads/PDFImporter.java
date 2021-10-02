@@ -40,7 +40,7 @@ public class PDFImporter extends Thread {
                 try {
                     InvoiceFile infile = new InvoiceFile();
                     infile.setPath(path);
-                    DatabaseController.storeObject(infile, true);
+                    DatabaseController.getInstance().storeObject(infile, true);
                     pdfReader = new PdfReader(path);
                     RenderFilter info = new TransactionExtractor(infile.getId()+"");
                     TextExtractionStrategy strategy = new FilteredTextRenderListener(
@@ -61,8 +61,8 @@ public class PDFImporter extends Thread {
             progress.set((double)p/size);
         }
         running.set(false);
-        ViewController.refresh(new Transaction());
-        Platform.runLater(() -> WindowManager.openStageOf(new StoreClassTable(ProfileAccountManager.getImportedTransactions(),new Transaction())));
+        ViewController.getInstance().refresh(new Transaction());
+        Platform.runLater(() -> WindowManager.getInstance().openStageOf(new StoreClassTable(ProfileAccountManager.getInstance().getImportedTransactions(),new Transaction())));
     }
 
     public SimpleDoubleProperty progressProperty() {

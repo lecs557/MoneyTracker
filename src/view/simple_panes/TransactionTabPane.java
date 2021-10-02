@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class TransactionTabPane extends TabPane {
 
     ArrayList<Transaction> transactions;
+    ArrayList<TransactionTable> transactionTables = new ArrayList<>();
 
     public TransactionTabPane() {
         applyTransactions(SampleClass.getSampleTransactions(), SampleClass.getSampleGroups());
@@ -17,6 +18,7 @@ public class TransactionTabPane extends TabPane {
 
     public void applyTransactions(ArrayList<Transaction> transactions, ArrayList<Group> groups) {
         getTabs().clear();
+        transactionTables.clear();
         int currentYear=0;
         TransactionTable currentTable=null;
         this.transactions=transactions;
@@ -27,6 +29,7 @@ public class TransactionTabPane extends TabPane {
                 Tab tab = new Tab(""+currentYear);
                 tab.setContent(currentTable);
                 getTabs().add(tab);
+                transactionTables.add(currentTable);
             }
             if (currentTable != null) {
                 currentTable.addTransacion(transaction);
@@ -40,4 +43,10 @@ public class TransactionTabPane extends TabPane {
     public ArrayList<Transaction> getTransactions() {
         return transactions;
     }
+
+    public ArrayList<TransactionTable> getTransactionTables() {
+        return transactionTables;
+    }
 }
+
+
