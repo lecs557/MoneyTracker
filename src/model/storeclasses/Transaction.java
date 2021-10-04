@@ -94,10 +94,6 @@ public class Transaction extends StoreClass {
         return Integer.parseInt(amount);
     }
 
-    public Group getGroup(){
-        return null;
-    }
-
     public LocalDate getLocalDate(){
         return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
     }

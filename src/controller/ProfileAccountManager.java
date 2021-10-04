@@ -34,10 +34,9 @@ public class ProfileAccountManager {
     private final ArrayList<Transaction> importedTransactions = new ArrayList<>();
 
 
-
     public void setupProfile(Profile currentAccount) {
         DatabaseController db = DatabaseController.getInstance();
-        ProfileAccountManager.getInstance().currentAccount = currentAccount;
+        this.currentAccount = currentAccount;
 
         BankAccount.ForeignKeys.profile.set(currentAccount);
         profilesBankAccounts = db.computeStoreClasses(new BankAccount(),"");
@@ -78,18 +77,29 @@ public class ProfileAccountManager {
         }
     }
 
-    public void add(BankAccount bankAccount){
-        profilesBankAccounts.add(bankAccount);
-    }
-
     public Profile getCurrentAccount() {
         return currentAccount;
+    }
+
+    public void setProfilesBankAccounts(ArrayList<BankAccount> profilesBankAccounts) {
+        this.profilesBankAccounts = profilesBankAccounts;
+    }
+
+    public void setProfilesGroups(ArrayList<Group> profilesGroups) {
+        this.profilesGroups = profilesGroups;
+    }
+
+    public void setProfilesTransactions(ArrayList<Transaction> profilesTransactions) {
+        this.profilesTransactions = profilesTransactions;
+    }
+
+    public void setProfilesInvoiceFiles(ArrayList<InvoiceFile> profilesInvoiceFiles) {
+        this.profilesInvoiceFiles = profilesInvoiceFiles;
     }
 
     public ArrayList<BankAccount> getProfilesBankAccounts() {
         return profilesBankAccounts;
     }
-
 
     public ArrayList<Group> getProfilesGroups() {
         return profilesGroups;
@@ -103,11 +113,11 @@ public class ProfileAccountManager {
         return profilesInvoiceFiles;
     }
 
-    public void addNewAddedTransaction(Transaction transaction) {
+    public void addNewTransactionToImport(Transaction transaction) {
         importedTransactions.add(transaction);
     }
 
-    public ArrayList<Transaction> getImportedTransactions() {
+    public ArrayList<Transaction> getToImportedTransactions() {
         return importedTransactions;
     }
 
@@ -126,7 +136,13 @@ public class ProfileAccountManager {
                 }
             }
         }
+        if(storeClazz instanceof Group) {
+            for (Group group : profilesGroups) {
+                if (group.getId() == id) {
+                    return group;
+                }
+            }
+        }
         return null;
-
     }
 }

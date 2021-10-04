@@ -62,7 +62,7 @@ public class PDFImporter extends Thread {
         }
         running.set(false);
         ViewController.getInstance().refresh(new Transaction());
-        Platform.runLater(() -> WindowManager.getInstance().openStageOf(new StoreClassTable(ProfileAccountManager.getInstance().getImportedTransactions(),new Transaction())));
+        Platform.runLater(() -> WindowManager.getInstance().openStageOf(new StoreClassTable(ProfileAccountManager.getInstance().getToImportedTransactions(),new Transaction())));
     }
 
     public SimpleDoubleProperty progressProperty() {

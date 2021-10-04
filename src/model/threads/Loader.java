@@ -27,8 +27,6 @@ public class Loader extends Thread {
     }
 
     private void initializeController() {
-        ContentController.initialize();
-        advanceProgress();
         DatabaseController.initialize("Aurum_Observa");
         advanceProgress();
         IOController.initialize();

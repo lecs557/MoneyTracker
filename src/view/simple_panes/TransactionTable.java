@@ -1,5 +1,6 @@
 package view.simple_panes;
 
+import controller.ProfileAccountManager;
 import controller.WindowManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -190,7 +191,13 @@ public class TransactionTable extends TableView<Transaction> {
                         }
                     });
                 } else {
-                    row.setStyle("-fx-background-color:white;");
+                    Group rowsGroup = (Group)ProfileAccountManager.getInstance().getById(new Group(), row.getItem().getGroupId());
+                    if (rowsGroup != null) {
+                        row.setStyle("-fx-background-color:"+ rowsGroup.getColor() +";");
+                    }else {
+                        row.setStyle("-fx-background-color:white;");
+                    }
+                    chart.getData().get(0).getData().forEach(data -> data.getNode().setStyle("-fx-background-color:green;"));
                 }
             });
             rows.add(row);
