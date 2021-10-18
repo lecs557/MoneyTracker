@@ -21,24 +21,25 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
     private final ListView<T> listView;
 
     public StoreClassList() {
-        getStylesheets().add("view/style/sclist.css");
+        getStylesheets().add(getClass().getResource("/view/style/sclist.css").toString());
         Button btn_add = new Button("Add");
         btn_add.getStyleClass().add("btn-add");
         listView = new ListView<>();
         listView.setCellFactory(storeClassListView -> new ListCell<T>() {
-            @Override
-            protected void updateItem(T storeClass, boolean b) {
-            super.updateItem(storeClass, b);
-            if (storeClass != null) {
-                setGraphic(makeListAnchorPane(storeClass));
-                if(storeClass instanceof Group){
-                    setStyle("-fx-background-color: "+((Group)storeClass).getColor()+";");
+                @Override
+                protected void updateItem(T storeClass, boolean b) {
+                super.updateItem(storeClass, b);
+                if (storeClass != null) {
+                    setGraphic(makeListAnchorPane(storeClass));
+                    if(storeClass instanceof Group){
+                        setStyle("-fx-background-color: "+((Group)storeClass).getColor()+";");
+                    }
+                } else {
+                    setText("");
                 }
-            } else {
-                setText("");
-            }
             }
         });
+        this.getStyleClass().add("store-class-list");
 
         setListView(SampleClass.getSampleData(getDummy()));
 
@@ -59,7 +60,7 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
     private <T extends StoreClass> AnchorPane makeListAnchorPane(T storeClass){
         try {
             AnchorPane ap_cell = new AnchorPane();
-            ap_cell.getStyleClass().add("ap-cell");
+            ap_cell.getStyleClass().add("ap-content");
             String labelText = (String) storeClass.getClass().getMethod("get"+storeClass.getChoiceBoxMethodName()).invoke(storeClass);
             Label lbl_itemText = new Label(labelText);
             lbl_itemText.getStyleClass().add("lbl-itemText");

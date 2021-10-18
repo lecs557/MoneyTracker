@@ -11,6 +11,7 @@ import model.storeclasses.BankAccount;
 import view.simple_panes.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Test extends Application {
 
@@ -18,12 +19,8 @@ public class Test extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException{
 
-        Region node = new StoreClassList<BankAccount>() {
-            @Override
-            public BankAccount getDummy() {
-                return new BankAccount();
-            }
-        };
+        Region node = new TransactionTable(new ArrayList<>());
+        node.getStylesheets().add(getClass().getResource("/view/style/tatabpane.css").toString());
         node.setPrefHeight(800);
         node.setPrefWidth(800);
         primaryStage.setScene(new Scene(node));

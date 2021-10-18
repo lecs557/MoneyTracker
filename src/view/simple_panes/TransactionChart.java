@@ -16,7 +16,7 @@ public class TransactionChart extends LineChart<MyDate,Number> {
 
     public TransactionChart() {
         super(new LocalDateAxis(), new NumberAxis());
-        getStylesheets().add("view/style/tachart.css");
+        getStylesheets().add(getClass().getResource("/view/style/tachart.css").toString());
         getXAxis().setAutoRanging(false);
         series = new Series<>();
         getData().add(series);
@@ -32,7 +32,6 @@ public class TransactionChart extends LineChart<MyDate,Number> {
         for (Transaction t:transactions){
             Data<MyDate,Number> data = new Data<>(new MyDate(t.getLocalDate()),(double)t.getBalance()/100);
             series.getData().add(data);
-            data.getNode().setStyle("-fx-background-color:green");
             Tooltip.install(data.getNode(),new Tooltip(t.getPurpose()));
         }
         ((LocalDateAxis)getXAxis()).setYears(startYear,endYear);
@@ -42,9 +41,9 @@ public class TransactionChart extends LineChart<MyDate,Number> {
         series.getData().forEach(data -> {
             data.getNode().hoverProperty().addListener((observableValue, aBoolean, t1) -> {
                if(t1){
-                   data.getNode().setStyle("-fx-background-color:yellow;");
+                   data.getNode().getStyleClass().add("marked");
                } else{
-                   data.getNode().setStyle("-fx-background-color:green;");
+                   data.getNode().getStyleClass().remove("marked");
                }
 
                 tabPane.getTabs().forEach(tab -> {
@@ -56,9 +55,9 @@ public class TransactionChart extends LineChart<MyDate,Number> {
                                 if (t1 && data.getXValue().getDate().equals(row.getItem().getLocalDate()) &&
                                         data.getYValue().doubleValue() == (double) row.getItem().getBalance() / 100) {
                                     table.scrollTo(row.getItem());
-                                    row.setStyle("-fx-background-color:green;");
+                                    row.getStyleClass().add("marked");
                                 } else if(!t1) {
-                                    row.setStyle("-fx-background-color:white;");
+                                    row.getStyleClass().remove("marked");
                                     table.scrollTo(0);
                                 }
                             }

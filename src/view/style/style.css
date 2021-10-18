@@ -1,9 +1,9 @@
 .main {
-    -fx-background-color: #011;
+    -fx-background-color: #010311;
 }
 
 Button{
-     -fx-background-color: #011;
+     -fx-background-color: #010311;
      -fx-text-fill : #FFF;
 }
 

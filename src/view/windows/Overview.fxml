@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import view.simple_panes.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="766.0" prefWidth="1259.0" styleClass="main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windows.OverviewWindowCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="766.0" prefWidth="1259.0" styleClass="main" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windows.OverviewWindowCtrl">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="1182.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <menus>
@@ -30,29 +30,37 @@
             </Menu>
          </menus>
       </MenuBar>
-      <AnchorPane fx:id="pane" layoutX="14.0" layoutY="25.0" prefHeight="580.0" prefWidth="983.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="25.0">
+      <AnchorPane fx:id="pane" layoutY="25.0" prefHeight="580.0" prefWidth="983.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="54.0" prefWidth="200.0" AnchorPane.rightAnchor="10.0">
+            <HBox alignment="TOP_RIGHT" layoutX="100.0" layoutY="599.0" prefHeight="30.0" prefWidth="308.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="3.0">
                <children>
-                  <HBox prefHeight="30.0" prefWidth="200.0">
-                     <children>
-                        <Label prefHeight="17.0" prefWidth="111.0" text="Eingeloggt als:" />
-                        <Label fx:id="lbl_account" prefHeight="17.0" prefWidth="68.0" text="lbl_account" />
-                     </children>
-                  </HBox>
+                  <Label prefHeight="17.0" prefWidth="111.0" text="Eingeloggt als:" />
+                  <Label fx:id="lbl_account" prefHeight="17.0" prefWidth="113.0" text="lbl_account" />
                   <Button fx:id="btn_back" mnemonicParsing="false" onAction="#backToLogin" text="Abmelden" />
                </children>
-            </VBox>
+            </HBox>
             <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="37.0" />
             <VBox alignment="TOP_CENTER" layoutX="187.0" layoutY="37.0" />
-            <Button layoutX="45.0" layoutY="326.0" mnemonicParsing="false" onAction="#newTransaction" text="Neue Transaction" />
-            <Button layoutX="52.0" layoutY="387.0" mnemonicParsing="false" onAction="#importTransactionViaPDF" text="Importieren" />
-            <BankAccountList fx:id="vb_bankAccounts" layoutX="29.0" layoutY="27.0" prefHeight="181.0" prefWidth="123.0" />
-            <GroupList fx:id="vb_groups" layoutX="167.0" layoutY="27.0" prefHeight="181.0" prefWidth="123.0" />
-            <TransactionTabPane fx:id="tp_transactions" layoutX="314.0" layoutY="27.0" prefHeight="197.0" prefWidth="732.0" />
-            <TransactionChart fx:id="ch_transaction" layoutX="314.0" layoutY="407.0" prefHeight="317.0" prefWidth="790.0" />
-            <SumTable fx:id="tl_groupSums" layoutX="314.0" layoutY="245.0" prefHeight="162.0" prefWidth="722.0" />
-            <ProgressBar fx:id="pb_pdf" layoutX="67.0" layoutY="484.0" prefWidth="200.0" progress="0.0" />
+            <HBox layoutX="39.0" layoutY="362.0" prefHeight="287.0" prefWidth="414.0" spacing="10.0">
+               <children>
+                  <BankAccountList fx:id="vb_bankAccounts" prefHeight="181.0" prefWidth="123.0" />
+                  <GroupList fx:id="vb_groups" prefHeight="181.0" prefWidth="123.0" />
+                  <VBox alignment="TOP_CENTER" prefHeight="287.0" prefWidth="144.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#importTransactionViaPDF" text="Importieren" />
+                        <Button mnemonicParsing="false" onAction="#newTransaction" text="Neue Transaction" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox layoutX="392.0" layoutY="333.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <TransactionTabPane fx:id="tp_transactions" prefHeight="197.0" prefWidth="732.0" />
+                  <SumTable fx:id="tl_groupSums" prefHeight="162.0" prefWidth="722.0" />
+               </children>
+            </VBox>
+            <ProgressBar fx:id="pb_pdf" layoutX="154.0" layoutY="685.0" prefWidth="200.0" progress="0.0" />
+            <TransactionChart fx:id="ch_transaction" legendVisible="false" prefHeight="317.0" prefWidth="790.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
          </children>
       </AnchorPane>
    </children>

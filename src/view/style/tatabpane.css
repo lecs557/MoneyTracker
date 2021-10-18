@@ -1,0 +1,122 @@
+.tab-pane {
+
+}
+
+.tab-header-area{ /* stackpane */
+
+}
+
+.headers-region{
+
+}
+
+.tab-header-background{
+
+}
+
+.tab-content-area{ /* stackpane */
+
+}
+
+.tab-label{
+
+}
+
+.tab-close-button{
+
+}
+
+.focus-indicator{
+
+}
+
+.control-buttons-tab{
+
+}
+
+.tab-down-button{
+
+}
+
+.arrow{
+
+}
+
+.tab-container{
+
+}
+
+
+/* tableview */
+.table-view {
+
+}
+
+.column-resize-line{
+
+}
+
+.column-overlay {
+
+}
+
+.table-row-cell {
+
+}
+
+.table-column {
+
+}
+
+.column-resize-line {
+
+}
+
+.column-overlay {
+-fx-background-color:yellow;
+  visibility: visible;
+}
+
+.placeholder{
+
+}
+
+
+.column-drag-header{
+-fx-border-color:green;
+-fx-border-width:4;
+}
+.filler{
+-fx-background-color: red;
+}
+.show-hide-column-image{
+
+}
+.show-hide-columns-button{
+  -fx-background-size:21;
+  visibility: visible;
+}
+.column-header{
+-fx-background-color: green;
+
+}
+.column-header-background {
+-fx-border-width:4;
+-fx-border-color:blue;
+}
+.sort-order-dot{
+
+}
+
+.sort-order-dots-container{
+
+}
+
+.sort-order{
+
+}
+
+.arrow{
+
+}
+

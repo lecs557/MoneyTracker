@@ -13,6 +13,7 @@ public class TransactionTabPane extends TabPane {
     ArrayList<TransactionTable> transactionTables = new ArrayList<>();
 
     public TransactionTabPane() {
+        getStylesheets().add(getClass().getResource("/view/style/tatabpane.css").toString());
         applyTransactions(SampleClass.getSampleTransactions(), SampleClass.getSampleGroups());
     }
 

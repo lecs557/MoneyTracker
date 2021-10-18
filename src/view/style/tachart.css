@@ -1,17 +1,78 @@
-.axis-tick-mark {
-    -fx-stroke: black;
-    -fx-stroke-width: 2;
+/* CHART */
+.chart{ /* region */
+   -fx-background-color: white;
 }
-.axis-minor-tick-mark {
-    -fx-stroke: black;
+
+.chart-title{ /* label */
+
 }
-.chart-vertical-grid-lines {
+
+/* XYCHART */
+.chart-content{ /* pane */
+
+}
+
+.plot-content{ /* group */
+
+}
+
+.chart-plot-background{ /* region */
+
+}
+
+.chart-alternative-column-fill{ /* path */
+
+}
+
+.chart-alternative-row-fill{ /* path */
+
+}
+
+.chart-vertical-grid-lines { /* path */
+     -fx-stroke-width:1;
     -fx-stroke: lightgreen;
 }
-.chart-horizontal-grid-lines {
+
+.chart-horizontal-grid-lines { /* path */
+     -fx-stroke-width:1;
     -fx-stroke: lightgreen;
 }
-.axis {
+
+.chart-vertical-zero-line{ /* region */
+     -fx-stroke-width:0;
+      -fx-stroke: lightgreen;
+}
+
+.chart-horizontal-zero-line{ /* region */
+        -fx-stroke-width:4;
+        -fx-stroke: lightgreen;
+}
+
+/* LINECHART */
+.chart-series-line.series0 { /* path */
+
+}
+
+.chart-line-symbol.series0{ /* stackpane */
+   -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* LEGEND */
+.chart-legend{ /*tilepane */
+
+}
+
+.chart-legend-item-symbol{ /* region */
+
+}
+
+.chart-legend-item{ /* label */
+
+}
+
+/* AXIS */
+.axis { /* region */
     -fx-font-size: 1.4em;
     -fx-tick-label-fill: black;
     -fx-font-family: Tahoma;
@@ -19,7 +80,22 @@
     -fx-minor-tick-length: 10;
 }
 
-.chart-line-symbol{
-    -fx-background-radius: 5px;
+.axis-label{ /* label */
+
+}
+
+.axis-tick-mark { /* path */
+    -fx-stroke: black;
+    -fx-stroke-width: 2;
+}
+
+/* VALUEAXIS */
+.axis-minor-tick-mark { /* path */
+    -fx-stroke: black;
+}
+
+/* MY CSS */
+.chart-line-symbol.series0.marked{ /* stackpane */
+   -fx-background-radius: 5px;
     -fx-padding: 5px;
- }
+}
