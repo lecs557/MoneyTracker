@@ -1,15 +1,18 @@
 package model;
 
-import com.itextpdf.text.pdf.parser.RenderFilter;
-import com.itextpdf.text.pdf.parser.TextRenderInfo;
+import com.itextpdf.kernel.pdf.canvas.parser.EventType;
+import com.itextpdf.kernel.pdf.canvas.parser.data.IEventData;
+import com.itextpdf.kernel.pdf.canvas.parser.data.TextRenderInfo;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.IEventListener;
 import controller.DatabaseController;
 import controller.ProfileAccountManager;
 import model.storeclasses.Transaction;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
-public class TransactionExtractor extends RenderFilter {
+public class TransactionExtractor implements IEventListener {
 
 	private DateTimeFormatter form = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	private boolean relevant = false;
@@ -26,12 +29,17 @@ public class TransactionExtractor extends RenderFilter {
     }
 
     @Override
-	public boolean allowText(TextRenderInfo tri) {
-		addTransactions(tri);
-		return true;
+	public void eventOccurred(IEventData tri, EventType type) {
+		if(type==EventType.RENDER_TEXT)
+            addTransactions((TextRenderInfo) tri);
 	}
 
-	private void addTransactions(TextRenderInfo tri) {
+    @Override
+    public Set<EventType> getSupportedEvents() {
+        return null;
+    }
+
+    private void addTransactions(TextRenderInfo tri) {
 		float y = tri.getBaseline().getStartPoint().get(1);
 		float x = tri.getBaseline().getStartPoint().get(0);
 

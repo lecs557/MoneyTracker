@@ -3,15 +3,15 @@
     <properties maven-id="org.openjfx:javafx-web:16-ea+4" />
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-web-16-ea+4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-web-16-ea+4-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-web-16-ea+4-linux.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-controls-16-ea+4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-controls-16-ea+4-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-controls-16-ea+4-linux.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-graphics-16-ea+4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-graphics-16-ea+4-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-graphics-16-ea+4-linux.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-base-16-ea+4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-base-16-ea+4-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-base-16-ea+4-linux.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-media-16-ea+4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-media-16-ea+4-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java_fx/javafx-media-16-ea+4-linux.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -1,7 +1,9 @@
 package model.threads;
 
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.*;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.canvas.parser.PdfDocumentContentParser;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.IEventListener;
 import controller.DatabaseController;
 import controller.ProfileAccountManager;
 import controller.ViewController;
@@ -23,7 +25,7 @@ public class PDFImporter extends Thread {
     private List<File> files;
     private final SimpleDoubleProperty progress = new SimpleDoubleProperty();
     private final SimpleBooleanProperty running = new SimpleBooleanProperty();
-    private PdfReader pdfReader;
+    private PdfDocument pdfDocument;
 
     public PDFImporter(List<File> files) {
         this.files = files;
@@ -41,18 +43,18 @@ public class PDFImporter extends Thread {
                     InvoiceFile infile = new InvoiceFile();
                     infile.setPath(path);
                     DatabaseController.getInstance().storeObject(infile, true);
-                    pdfReader = new PdfReader(path);
-                    RenderFilter info = new TransactionExtractor(infile.getId()+"");
-                    TextExtractionStrategy strategy = new FilteredTextRenderListener(
-                            new LocationTextExtractionStrategy(), info);
+                    pdfDocument = new PdfDocument(new PdfReader(path));
 
-                    for (int i=1;i<pdfReader.getNumberOfPages();i++){
-                        String content = PdfTextExtractor.getTextFromPage(pdfReader, i,	strategy);
+                    IEventListener info = new TransactionExtractor(infile.getId()+"");
+                    PdfDocumentContentParser parser = new PdfDocumentContentParser(pdfDocument);
+
+                    for (int i = 1; i< pdfDocument.getNumberOfPages(); i++){
+                        parser.processContent(i, info);
                     }
-                    pdfReader.close();
+                    pdfDocument.close();
 
                 } catch (IOException e) {
-                    pdfReader.close();
+                    pdfDocument.close();
                     System.out.println("Problem bei: "+path);
                     e.printStackTrace();
                 }

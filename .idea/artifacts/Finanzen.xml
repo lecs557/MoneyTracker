@@ -2,7 +2,7 @@
   <artifact type="jar" name="Finanzen">
     <output-path>$PROJECT_DIR$/out/artifacts/Bilanz</output-path>
     <root id="archive" name="Finanzen.jar">
-      <element id="module-output" name="Bilanz" />
+      <element id="module-output" name="MoneyTracker" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/13-ea+2/javafx-fxml-13-ea+2.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/13-ea+2/javafx-fxml-13-ea+2-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/13-ea+2/javafx-controls-13-ea+2.jar" path-in-jar="/" />
