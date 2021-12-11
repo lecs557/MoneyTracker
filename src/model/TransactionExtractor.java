@@ -19,7 +19,7 @@ public class TransactionExtractor implements IEventListener {
 	private float transacY=0;
 	private String purpose ="";
 	private String amount = "0";
-	private String fileID = "0";
+	private final String fileID;
 	private LocalDate date;
 
 	private boolean ignoreNext = false;

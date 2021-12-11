@@ -9,24 +9,10 @@ import view.panes.MyNode;
 
 public class AmountEntry extends EntryPane {
 
-    private MyNode myNode = new MyNode(PathStore.ENTRYPANE+"AmountEntry");
-
     public AmountEntry(String name, Button save, StoreClass storeClass) {
         super(name, save, storeClass);
+        myNode = new MyNode(PathStore.ENTRYPANE+"AmountEntry");
     }
 
-    @Override
-    public Region getPane() {
-        return myNode;
-    }
 
-    @Override
-    public String getContent() {
-        return myNode.getContent();
-    }
-
-    @Override
-    public void setContent(String content) {
-        myNode.setContent(content);
-    }
 }

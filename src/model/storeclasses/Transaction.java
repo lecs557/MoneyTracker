@@ -43,7 +43,7 @@ public class Transaction extends StoreClass {
         public static FieldName id = FieldName.storeId();
         public static FieldName date = new FieldName("Date", "date","DATE", DateEntry.class);
         public static FieldName purpose = new FieldName("Purpose", "purpose","TEXT", StringEntry.class);
-        public static FieldName amount = new FieldName("Amount", "amount","int", StringEntry.class);
+        public static FieldName amount = new FieldName("Amount", "amount","int", AmountEntry.class);
         public static FieldName invoiceFileIds = new FieldName("InvoiceFileIds", "invoiceFileIds","Text", MultipleChoiceBoxEntry.class);
 
     }

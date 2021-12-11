@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public abstract class EntryPane {
 
+    protected MyNode myNode;
     private final String name;
     private final StoreClass storeClass;
 
@@ -58,10 +59,16 @@ public abstract class EntryPane {
             e.printStackTrace();
         }
     }
+    public Region getPane() {
+        System.out.println(myNode);
+        return myNode;
+    }
 
-    public abstract Region getPane();
+    public String getContent() {
+        return myNode.getContent();
+    }
 
-    public abstract String getContent();
-
-    public abstract void setContent(String content);
+    public void setContent(String content) {
+        myNode.setContent(content);
+    }
 }
