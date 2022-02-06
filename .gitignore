@@ -1,6 +1,8 @@
-# Project exclude paths
+# Project excludgit rm -r --cached .e paths
 /out/
 /TEST/
 *.jar
 *.db
 
+/MoneyTracker_JRE/*
+/MoneyTracker_JRE/*/*

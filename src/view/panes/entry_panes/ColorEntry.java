@@ -6,18 +6,15 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import model.storeclasses.StoreClass;
 import view.panes.EntryPane;
+import view.panes.MyNode;
 
 public class ColorEntry extends EntryPane {
 
     private ColorPicker colorPicker = new ColorPicker();
 
-    public ColorEntry(String name, Button save, StoreClass storeClass) {
-        super(name, save, storeClass);
-    }
-
-    @Override
-    public Region getPane() {
-        return colorPicker;
+    public ColorEntry(String name, StoreClass storeClass) {
+        super(name, storeClass);
+        getChildren().add(colorPicker);
     }
 
     @Override

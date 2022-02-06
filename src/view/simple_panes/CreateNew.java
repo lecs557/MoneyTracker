@@ -3,10 +3,15 @@ package view.simple_panes;
 import controller.DatabaseController;
 import controller.ProfileAccountManager;
 import controller.ViewController;
+import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import model.AppStart;
 import model.storeclasses.*;
@@ -17,6 +22,7 @@ import view.panes.entry_panes.MultipleChoiceBoxEntry;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class CreateNew<T extends StoreClass> extends VBox {
 
@@ -56,9 +62,9 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 label.setPrefWidth(190);
                 try {
                     Class<? extends EntryPane> entry = name.getEntryClass();
-                    Constructor<? extends EntryPane> constructor= entry.getDeclaredConstructor(String.class, Button.class, StoreClass.class);;
-                    EntryPane entryPane = constructor.newInstance(name.getProgramName(), btn_save, storeClass);;
-                    hbox.getChildren().addAll(label, entryPane.getPane());
+                    Constructor<? extends EntryPane> constructor= entry.getDeclaredConstructor(String.class, StoreClass.class);;
+                    EntryPane entryPane = constructor.newInstance(name.getProgramName(), storeClass);;
+                    hbox.getChildren().addAll(label, entryPane);
                     if(edit){
                         entryPane.showContent();
                     }
@@ -79,27 +85,43 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 HBox hbox = new HBox();
                 Label label = new Label(key.getDummyClazz().getClass().getSimpleName());
                 label.setPrefWidth(190);
-                EntryPane entryPane = new ChoiceBoxEntry(key.getProgramName(), btn_save, storeClass, key.getForeignObjects());
-                hbox.getChildren().addAll(label, entryPane.getPane());
+                EntryPane entryPane = new ChoiceBoxEntry(key.getProgramName(), storeClass, key.getForeignObjects());
+                hbox.getChildren().addAll(label, entryPane);
                 if (edit) {
                     entryPane.showContent();
                 }
                 vb_fields.getChildren().add(hbox);
             }
         }
-
-
-        btn_save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent ->{
-            if(edit){
-                DatabaseController.getInstance().updateObject(storeClass);
-            } else {
-               DatabaseController.getInstance().storeObject(storeClass, false);
+        addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                submit();
             }
-            ViewController.getInstance().refresh(storeClass);
-            AppStart.secStage.close();
         });
+        btn_save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> submit());
         vb_fields.getChildren().add(btn_save);
         getChildren().add(lbl_header);
         getChildren().add(vb_fields);
+    }
+
+    private void submit() {
+        for (Node node: vb_fields.getChildren()){
+            if (node instanceof HBox){
+                Node entry = ((HBox) node).getChildren().get(1);
+                if(entry instanceof EntryPane) {
+                    if (!((EntryPane) entry).save()) {
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println(storeClass);
+        if(edit){
+            DatabaseController.getInstance().updateObject(storeClass);
+        } else {
+            DatabaseController.getInstance().storeObject(storeClass, false);
+        }
+        ViewController.getInstance().refresh(storeClass);
+        AppStart.secStage.close();
     }
 }

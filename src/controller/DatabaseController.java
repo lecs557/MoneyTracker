@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.concurrent.Task;
 import model.storeclasses.FieldName;
 import model.storeclasses.ForeignKey;
 import model.storeclasses.StoreClass;
@@ -10,6 +11,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 /**
  *
@@ -43,101 +46,101 @@ public class DatabaseController {
     private Statement stmt = null;
 
     public <T extends StoreClass> ArrayList<T> computeStoreClasses(T storeClass, String orderBy) {
-        ArrayList<T> resultStoreClasses = new ArrayList<>();
-        try{
-            open();
-            ResultSet table = conn.getMetaData().getTables(null,null,storeClass.getTableName(),null);
-            if (!table.next()){
-                System.out.println("Tabelle "+storeClass.getTableName()+" existiert nicht und wird erstellt");
-                createTable(storeClass.getClass());
-                return resultStoreClasses;
-            }
-
-            StringBuilder selectBuilder = new StringBuilder("SELECT ");
-            StringBuilder fromBuilder = new StringBuilder("FROM ");
-            StringBuilder whereBuilder = new StringBuilder("WHERE ");
-            fromBuilder.append(storeClass.getTableName());
-
-            Iterator<Field> fieldNameFieldIterator = Arrays.asList(storeClass.getClass().getClasses()[1].getFields()).iterator();
-            while(fieldNameFieldIterator.hasNext()){
-                FieldName fieldName =(FieldName) fieldNameFieldIterator.next().get(storeClass);
-                selectBuilder.append(fieldName.getSqlName());
-                if(fieldNameFieldIterator.hasNext()){
-                    selectBuilder.append(", ");
+            ArrayList<T> resultStoreClasses = new ArrayList<>();
+            try {
+                open();
+                ResultSet table = conn.getMetaData().getTables(null, null, storeClass.getTableName(), null);
+                if (!table.next()) {
+                    System.out.println("Tabelle " + storeClass.getTableName() + " existiert nicht und wird erstellt");
+                    createTable(storeClass.getClass());
+                    return resultStoreClasses;
                 }
-            }
 
-            Iterator<Field> foreignKeyFieldIterator = Arrays.asList(storeClass.getClass().getClasses()[0].getFields()).iterator();
-            if(!foreignKeyFieldIterator.hasNext()) {
-                whereBuilder = new StringBuilder();
+                StringBuilder selectBuilder = new StringBuilder("SELECT ");
+                StringBuilder fromBuilder = new StringBuilder("FROM ");
+                StringBuilder whereBuilder = new StringBuilder("WHERE ");
+                fromBuilder.append(storeClass.getTableName());
 
-            } else {
-                if (!selectBuilder.toString().endsWith("SELECT ")) {
-                    selectBuilder.append(", ");
-                }
-                while (foreignKeyFieldIterator.hasNext()) {
-                    ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(storeClass);
-                    Iterator<? extends StoreClass> foreignObjectIterator = key.getForeignObjects().iterator();
-
-                    if (foreignObjectIterator.hasNext()){
-                        if(whereBuilder.toString().contains(")")){
-                            whereBuilder.append(" OR ");
-                        }
-                        whereBuilder.append("(");
-                    }
-                    selectBuilder.append(key.getSqlName());
-
-                    while (foreignObjectIterator.hasNext()) {
-                        StoreClass object = foreignObjectIterator.next();
-                        whereBuilder.append(key.getSqlName()).append("=").append(object.getId());
-                        if (foreignObjectIterator.hasNext()) {
-                            whereBuilder.append(" OR ");
-                        } else{
-                            whereBuilder.append(")");
-                        }
-                    }
-                    if (foreignKeyFieldIterator.hasNext()) {
+                Iterator<Field> fieldNameFieldIterator = Arrays.asList(storeClass.getClass().getClasses()[1].getFields()).iterator();
+                while (fieldNameFieldIterator.hasNext()) {
+                    FieldName fieldName = (FieldName) fieldNameFieldIterator.next().get(storeClass);
+                    selectBuilder.append(fieldName.getSqlName());
+                    if (fieldNameFieldIterator.hasNext()) {
                         selectBuilder.append(", ");
                     }
                 }
-                if(whereBuilder.toString().endsWith("WHERE ")){
-                    whereBuilder = new StringBuilder();
-                }
-            }
-            String sql = selectBuilder+" "+fromBuilder+" "+whereBuilder;
-            if (!orderBy.isEmpty()){
-                sql+=" ORDER BY "+orderBy;
-            }
-            System.out.println(sql);
-            ResultSet rs = stmt.executeQuery(sql);
 
-            while(rs.next()){
-                T tempStoreClass = (T) storeClass.getClass().getDeclaredConstructor().newInstance();
-                for(Field field: storeClass.getClass().getClasses()[1].getFields()){
-                    FieldName fieldName = (FieldName) field.get(storeClass);
-                    if (fieldName.getProgramName().equals("Id")) {
-                        Method method = storeClass.getClass().getMethod("set"+fieldName.getProgramName(),int.class);
-                        method.invoke(tempStoreClass,rs.getInt(fieldName.getSqlName()));
-                    } else {
-                        Method method = storeClass.getClass().getMethod("set" + fieldName.getProgramName(), String.class);
-                        method.invoke(tempStoreClass, rs.getString(fieldName.getSqlName()));
+                Iterator<Field> foreignKeyFieldIterator = Arrays.asList(storeClass.getClass().getClasses()[0].getFields()).iterator();
+                if (!foreignKeyFieldIterator.hasNext()) {
+                    whereBuilder = new StringBuilder();
+
+                } else {
+                    if (!selectBuilder.toString().endsWith("SELECT ")) {
+                        selectBuilder.append(", ");
+                    }
+                    while (foreignKeyFieldIterator.hasNext()) {
+                        ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) foreignKeyFieldIterator.next().get(storeClass);
+                        Iterator<? extends StoreClass> foreignObjectIterator = key.getForeignObjects().iterator();
+
+                        if (foreignObjectIterator.hasNext()) {
+                            if (whereBuilder.toString().contains(")")) {
+                                whereBuilder.append(" OR ");
+                            }
+                            whereBuilder.append("(");
+                        }
+                        selectBuilder.append(key.getSqlName());
+
+                        while (foreignObjectIterator.hasNext()) {
+                            StoreClass object = foreignObjectIterator.next();
+                            whereBuilder.append(key.getSqlName()).append("=").append(object.getId());
+                            if (foreignObjectIterator.hasNext()) {
+                                whereBuilder.append(" OR ");
+                            } else {
+                                whereBuilder.append(")");
+                            }
+                        }
+                        if (foreignKeyFieldIterator.hasNext()) {
+                            selectBuilder.append(", ");
+                        }
+                    }
+                    if (whereBuilder.toString().endsWith("WHERE ")) {
+                        whereBuilder = new StringBuilder();
                     }
                 }
-                for(Field field: storeClass.getClass().getClasses()[0].getFields()){
-                    ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) field.get(storeClass);
-                    Method method = storeClass.getClass().getMethod("set"+key.getProgramName(),int.class);
-                    method.invoke(tempStoreClass,rs.getInt(key.getSqlName()));
+                String sql = selectBuilder + " " + fromBuilder + " " + whereBuilder;
+                if (!orderBy.isEmpty()) {
+                    sql += " ORDER BY " + orderBy;
                 }
-                resultStoreClasses.add(tempStoreClass);
+                System.out.println(sql);
+                ResultSet rs = stmt.executeQuery(sql);
+
+                while (rs.next()) {
+                    T tempStoreClass = (T) storeClass.getClass().getDeclaredConstructor().newInstance();
+                    for (Field field : storeClass.getClass().getClasses()[1].getFields()) {
+                        FieldName fieldName = (FieldName) field.get(storeClass);
+                        if (fieldName.getProgramName().equals("Id")) {
+                            Method method = storeClass.getClass().getMethod("set" + fieldName.getProgramName(), int.class);
+                            method.invoke(tempStoreClass, rs.getInt(fieldName.getSqlName()));
+                        } else {
+                            Method method = storeClass.getClass().getMethod("set" + fieldName.getProgramName(), String.class);
+                            method.invoke(tempStoreClass, rs.getString(fieldName.getSqlName()));
+                        }
+                    }
+                    for (Field field : storeClass.getClass().getClasses()[0].getFields()) {
+                        ForeignKey<? extends StoreClass> key = (ForeignKey<? extends StoreClass>) field.get(storeClass);
+                        Method method = storeClass.getClass().getMethod("set" + key.getProgramName(), int.class);
+                        method.invoke(tempStoreClass, rs.getInt(key.getSqlName()));
+                    }
+                    resultStoreClasses.add(tempStoreClass);
+                }
+                close();
+            } catch (SQLException se) {
+                close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                close();
             }
-            close();
-        } catch(SQLException se){
-            close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            close();
-        }
-        return resultStoreClasses;
+            return resultStoreClasses;
     }
 
     public <T extends StoreClass> boolean storeObject(T storeClass, boolean checkIfExists){

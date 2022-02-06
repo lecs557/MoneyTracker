@@ -1,6 +1,5 @@
 package model.storeclasses;
 
-import view.panes.ItemRegion;
 import view.panes.entry_panes.StringEntry;
 
 import java.util.ArrayList;

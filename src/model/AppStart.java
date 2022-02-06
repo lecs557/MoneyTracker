@@ -13,7 +13,7 @@ public class AppStart extends Application {
     public enum windows {StartLoading,LogIn, Overview};
     public static Stage primaryStage;
     public static Stage secStage;
-    public static Loader loader = new Loader(false);
+    public static Loader loader = new Loader("MoneyTracker");
 
     @Override
     public void start(Stage primaryStage){

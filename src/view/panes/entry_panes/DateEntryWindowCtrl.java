@@ -1,12 +1,11 @@
 package view.panes.entry_panes;
 
 import javafx.scene.control.TextField;
-import view.panes.contentable;
+import view.panes.ContentRegion;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-public class DateEntryWindowCtrl implements contentable {
+public class DateEntryWindowCtrl extends ContentRegion {
 
     public TextField tf_day;
     public TextField tf_month;

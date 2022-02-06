@@ -1,9 +1,9 @@
 package view.panes.entry_panes;
 
 import javafx.scene.control.TextField;
-import view.panes.contentable;
+import view.panes.ContentRegion;
 
-public class AmountEntryWindowCtrl implements contentable {
+public class AmountEntryWindowCtrl extends ContentRegion {
 
     public TextField tf_money;
     public TextField tf_cents;

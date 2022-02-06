@@ -11,13 +11,9 @@ public class StringEntry extends EntryPane {
 
     private TextField textField = new TextField();
 
-    public StringEntry(String name, Button save, StoreClass storeClass) {
-        super(name, save, storeClass);
-    }
-
-    @Override
-    public Region getPane() {
-        return textField;
+    public StringEntry(String name, StoreClass storeClass) {
+        super(name, storeClass);
+        getChildren().add(textField);
     }
 
     @Override

@@ -9,15 +9,10 @@ import view.panes.MyNode;
 
 public class DateEntry extends EntryPane {
 
-    private MyNode myNode = new MyNode(PathStore.ENTRYPANE+"DateEntry");
+    private final MyNode myNode = new MyNode(PathStore.ENTRYPANE+"DateEntry");
 
-    public DateEntry(String name, Button save, StoreClass storeClass) {
-        super(name, save, storeClass);
-    }
-
-    @Override
-    public Region getPane() {
-        return myNode;
+    public DateEntry(String name, StoreClass storeClass) {
+        super(name, storeClass);
     }
 
     @Override

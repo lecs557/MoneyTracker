@@ -33,10 +33,10 @@ public class WindowManager {
     private final SimpleBooleanProperty loadWindow = new SimpleBooleanProperty(false);
 
     public void changeSceneTo(AppStart.windows window) {
+        loadWindow.set(true);
         try {
             URL url = getClass().getResource("/view/windows/" + window.name() + ".fxml");
             if (url != null) {
-                loadWindow.set(true);
                 Parent parent = FXMLLoader.load(url);
                 AppStart.primaryStage.setScene(new Scene(parent));
                 AppStart.primaryStage.centerOnScreen();

@@ -19,15 +19,14 @@ import java.util.ArrayList;
 
 public class MultipleChoiceBoxEntry extends EntryPane {
 
-    private StoreClass storeclass;
-    private VBox pane = new VBox();
+    private final StoreClass storeclass;
     private String fileIds;
 
-    public MultipleChoiceBoxEntry(String name, Button save, StoreClass storeClass) {
-        super(name, save, storeClass);
+    public MultipleChoiceBoxEntry(String name, StoreClass storeClass) {
+        super(name, storeClass);
         this.storeclass=storeClass;
         Button add = new Button("ADD");
-        pane.getChildren().addAll(add);
+        getChildren().addAll(add);
 
         add.setOnMouseClicked(mouseEvent -> {
             ChoiceBox<StoreClass> chb = new ChoiceBox<>();
@@ -53,21 +52,14 @@ public class MultipleChoiceBoxEntry extends EntryPane {
                     return null;
                 }
             });
-            pane.getChildren().add(0, chb);
+            getChildren().add(0, chb);
         });
-    }
-
-
-
-    @Override
-    public Region getPane() {
-        return pane;
     }
 
     @Override
     public String getContent() {
         String result="";
-        for (Node chb:pane.getChildren()) {
+        for (Node chb:getChildren()) {
             if(chb instanceof ChoiceBox) {
                 StoreClass storeClazz = ((ChoiceBox<StoreClass>) chb).getSelectionModel().getSelectedItem();
                 if (storeClazz != null) {

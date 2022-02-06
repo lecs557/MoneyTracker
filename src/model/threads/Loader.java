@@ -11,10 +11,10 @@ public class Loader extends Thread {
     private int currentThingToLoad;
     private int thingsToLoad = 5;
     private final SimpleDoubleProperty progress = new SimpleDoubleProperty();
-    private final boolean test;
+    private final String databaseName;
 
-    public Loader(boolean test) {
-        this.test = test;
+    public Loader(String databaseName) {
+        this.databaseName = databaseName;
     }
 
     @Override
@@ -26,10 +26,7 @@ public class Loader extends Thread {
     }
 
     private void initializeController() {
-        if(test)
-            DatabaseController.initialize("Test_db");
-        else
-            DatabaseController.initialize("MoneyTracker");
+        DatabaseController.initialize(databaseName);
         advanceProgress();
         IOController.initialize();
         advanceProgress();

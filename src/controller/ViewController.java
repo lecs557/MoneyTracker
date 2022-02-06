@@ -40,6 +40,7 @@ public class ViewController {
             } else if (storeClass instanceof Profile){
                 ArrayList<Profile> all = db.computeStoreClasses(new Profile(),"");
                 chb_profiles.getItems().setAll(all);
+                chb_profiles.getSelectionModel().selectFirst();
             } else if (storeClass instanceof Group){
                 ArrayList<Group> all = db.computeStoreClasses(new Group(),"");
                 o.vb_groups.getListView().getItems().setAll(all);

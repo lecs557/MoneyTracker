@@ -3,11 +3,8 @@ package view.panes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXMLLoader;
 
-import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import model.PathStore;
-
-import java.io.IOException;
 
 public class MyNode extends Region {
 
@@ -35,14 +32,14 @@ public class MyNode extends Region {
     }
 
     public void setContent(String content) {
-        if (loader.getController() instanceof contentable) {
-            ((contentable) loader.getController()).setContent(content);
+        if (loader.getController() instanceof ContentRegion) {
+            ((ContentRegion) loader.getController()).setContent(content);
         }
     }
 
     public String getContent(){
-        if(loader.getController() instanceof contentable){
-            return ((contentable) loader.getController()).getContent();
+        if(loader.getController() instanceof ContentRegion){
+            return ((ContentRegion) loader.getController()).getContent();
         }
         return "";
     }

@@ -16,7 +16,7 @@ import model.storeclasses.StoreClass;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-public abstract class StoreClassList<T extends StoreClass> extends VBox {
+public abstract class  StoreClassList<T extends StoreClass> extends VBox {
 
     private final ListView<T> listView;
 
@@ -25,6 +25,7 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
         Button btn_add = new Button("Add");
         btn_add.getStyleClass().add("btn-add");
         listView = new ListView<>();
+        listView.getStyleClass().add("list-view");
         listView.setCellFactory(storeClassListView -> new ListCell<T>() {
                 @Override
                 protected void updateItem(T storeClass, boolean b) {
@@ -66,14 +67,14 @@ public abstract class StoreClassList<T extends StoreClass> extends VBox {
             lbl_itemText.getStyleClass().add("lbl-itemText");
             HBox  hb_iconContainer= new HBox();
             hb_iconContainer.getStyleClass().add("hb-iconContainer");
-            ImageView iv_edit = new ImageView(new Image(getClass().getResource("/ressources/icons/pencil.png").toString()));
+            ImageView iv_edit = new ImageView();//new Image(getClass().getResource("/resources/icons/pencil.png").toString()));
             iv_edit.getStyleClass().add("iv-edit");
             iv_edit.setFitHeight(10);
             iv_edit.setPreserveRatio(true);
             Button btn_edit = new Button();
             btn_edit.getStyleClass().add("btn-edit");
             btn_edit.setGraphic(iv_edit);
-            ImageView iv_garbage = new ImageView(new Image(getClass().getResource("/ressources/icons/garbage.png").toString()));
+            ImageView iv_garbage = new ImageView();//new Image(getClass().getResource("/resources/icons/garbage.png").toString()));
             iv_garbage.getStyleClass().add("iv-garbage");
             iv_garbage.setFitHeight(10);
             iv_garbage.setPreserveRatio(true);

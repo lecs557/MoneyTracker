@@ -9,6 +9,7 @@ import javafx.util.StringConverter;
 import model.storeclasses.Group;
 import model.storeclasses.StoreClass;
 import view.panes.EntryPane;
+import view.panes.MyNode;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,9 +19,8 @@ public class ChoiceBoxEntry extends EntryPane {
 
     private ChoiceBox<StoreClass> chb = new ChoiceBox<>();
 
-    public ChoiceBoxEntry(String name, Button save, StoreClass storeClass, ArrayList<? extends StoreClass> storeClasses) {
-        super(name, save, storeClass);
-
+    public ChoiceBoxEntry(String name, StoreClass storeClass, ArrayList<? extends StoreClass> storeClasses) {
+        super(name, storeClass);
         if(name.contains("Group")){
             Group groupNull = new Group();
             groupNull.setGroupName("Keine Gruppe");
@@ -52,12 +52,7 @@ public class ChoiceBoxEntry extends EntryPane {
         } else{
             chb.getSelectionModel().select(0);
         }
-
-    }
-
-    @Override
-    public Region getPane() {
-        return chb;
+        getChildren().add(chb);
     }
 
     @Override
