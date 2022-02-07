@@ -3,6 +3,7 @@ package guitests;
 import controller.ProfileAccountManager;
 import controller.WindowManager;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
@@ -40,8 +41,8 @@ class OverViewTest extends ApplicationTest {
     public void addBankAccountTest(){
         clickOn(".btn-add");
         write("TestBank").push(KeyCode.ENTER);
-        BankAccountList bal = lookup(".list-view").query();
-        Assertions.assertThat(bal).hasChild("TestProfile");
+        ListView<BankAccount> bal = lookup(".list-view").query();
+        Assertions.assertThat(bal).hasChild("TestBank");
     }
 
     @Test

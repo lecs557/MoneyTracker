@@ -23,7 +23,7 @@
 }
 
 .hb-iconContainer{
-    -fx-spacing: 5;
+    -fx-spacing: 0;
 }
 
 .iv-edit{
@@ -34,6 +34,12 @@
   -fx-background-color:transparent;
 }
 
+.btn-edit:hover{
+   -fx-border-width:1px;
+   -fx-border-color:blue;
+   -fx-cursor:pointer
+ }
+
 .iv-garbage{
 
 }
@@ -41,3 +47,9 @@
 .btn-garbage{
     -fx-background-color:transparent;
 }
+
+.btn-garbage:hover{
+   -fx-border-width:1px;
+   -fx-border-color:blue;
+   -fx-cursor:pointer
+ }

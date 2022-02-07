@@ -30,7 +30,7 @@ public abstract class  StoreClassList<T extends StoreClass> extends VBox {
                 @Override
                 protected void updateItem(T storeClass, boolean b) {
                 super.updateItem(storeClass, b);
-                if (storeClass != null) {
+                if (storeClass != null && b) {
                     setGraphic(makeListAnchorPane(storeClass));
                     if(storeClass instanceof Group){
                         setStyle("-fx-background-color: "+((Group)storeClass).getColor()+";");
@@ -65,24 +65,17 @@ public abstract class  StoreClassList<T extends StoreClass> extends VBox {
             String labelText = (String) storeClass.getClass().getMethod("get"+storeClass.getChoiceBoxMethodName()).invoke(storeClass);
             Label lbl_itemText = new Label(labelText);
             lbl_itemText.getStyleClass().add("lbl-itemText");
-            HBox  hb_iconContainer= new HBox();
+            HBox hb_iconContainer= new HBox();
             hb_iconContainer.getStyleClass().add("hb-iconContainer");
-            ImageView iv_edit = new ImageView();//new Image(getClass().getResource("/resources/icons/pencil.png").toString()));
+            ImageView iv_edit = new ImageView(new Image(getClass().getResource("/resources/icons/pencil.png").toString()));
             iv_edit.getStyleClass().add("iv-edit");
             iv_edit.setFitHeight(10);
             iv_edit.setPreserveRatio(true);
             Button btn_edit = new Button();
             btn_edit.getStyleClass().add("btn-edit");
             btn_edit.setGraphic(iv_edit);
-            ImageView iv_garbage = new ImageView();//new Image(getClass().getResource("/resources/icons/garbage.png").toString()));
-            iv_garbage.getStyleClass().add("iv-garbage");
-            iv_garbage.setFitHeight(10);
-            iv_garbage.setPreserveRatio(true);
-            Button btn_garbage = new Button();
-            btn_garbage.getStyleClass().add("btn-garbage");
-            btn_garbage.setGraphic(iv_garbage);
 
-            hb_iconContainer.getChildren().addAll(btn_edit,btn_garbage);
+            hb_iconContainer.getChildren().add(btn_edit);
             ap_cell.getChildren().addAll(lbl_itemText,hb_iconContainer);
             hb_iconContainer.setVisible(false);
             AnchorPane.setLeftAnchor(lbl_itemText,0d);
@@ -91,7 +84,6 @@ public abstract class  StoreClassList<T extends StoreClass> extends VBox {
             ap_cell.setOnMouseEntered(mouseEvent -> hb_iconContainer.setVisible(true));
             ap_cell.setOnMouseExited(mouseEvent -> hb_iconContainer.setVisible(false));
             btn_edit.setOnMouseClicked(mouseEvent -> WindowManager.getInstance().openStageOf(new CreateNew<T>(storeClass,true)));
-            btn_garbage.setOnMouseClicked(mouseEvent -> WindowManager.getInstance().openStageOf(new CreateNew<T>(storeClass,true)));
 
             return ap_cell;
 

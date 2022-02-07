@@ -28,6 +28,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
 
     private final VBox vb_fields;
     private final Button btn_save;
+    private final Button btn_delete;
 
     private final T storeClass;
     private final boolean edit;
@@ -38,6 +39,7 @@ public class CreateNew<T extends StoreClass> extends VBox {
         vb_fields = new VBox();
         vb_fields.setSpacing(15);
         btn_save = new Button("SAVE");
+        btn_delete = new Button("DELETE");
         addStoreClassFields();
     }
 
@@ -99,18 +101,26 @@ public class CreateNew<T extends StoreClass> extends VBox {
             }
         });
         btn_save.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> submit());
-        vb_fields.getChildren().add(btn_save);
+        btn_delete.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> delete());
+        HBox hb_buttons = new HBox();
+        hb_buttons.getChildren().add(btn_save);
+        if(edit){
+            hb_buttons.getChildren().add(btn_delete);
+        }
+        vb_fields.getChildren().add(hb_buttons);
         getChildren().add(lbl_header);
         getChildren().add(vb_fields);
     }
 
     private void submit() {
         for (Node node: vb_fields.getChildren()){
-            if (node instanceof HBox){
-                Node entry = ((HBox) node).getChildren().get(1);
-                if(entry instanceof EntryPane) {
-                    if (!((EntryPane) entry).save()) {
-                        return;
+            if (node instanceof HBox) {
+                if (((HBox) node).getChildren().size() > 1) {
+                    Node entry = ((HBox) node).getChildren().get(1);
+                    if (entry instanceof EntryPane) {
+                        if (!((EntryPane) entry).save()) {
+                            return;
+                        }
                     }
                 }
             }
@@ -121,6 +131,12 @@ public class CreateNew<T extends StoreClass> extends VBox {
         } else {
             DatabaseController.getInstance().storeObject(storeClass, false);
         }
+        ViewController.getInstance().refresh(storeClass);
+        AppStart.secStage.close();
+    }
+
+    private void delete(){
+        DatabaseController.getInstance().deleteObject(storeClass);
         ViewController.getInstance().refresh(storeClass);
         AppStart.secStage.close();
     }

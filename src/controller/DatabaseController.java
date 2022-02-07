@@ -297,6 +297,20 @@ public class DatabaseController {
         }
     }
 
+    public <T extends StoreClass> void deleteObject(T storeClass) {
+        try {
+            open();
+            stmt.executeUpdate("DELETE FROM "+ storeClass.getTableName()+" WHERE id="+storeClass.getId());
+            close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            close();
+        }
+    }
+
     public <T extends StoreClass> void createTable(Class<T> storeClass) {
         try{
             T dummyClass = storeClass.getDeclaredConstructor().newInstance();
