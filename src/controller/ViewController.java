@@ -2,9 +2,9 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ComboBox;
 import model.storeclasses.*;
-import view.simple_panes.TransactionTabPane;
+import view.simple_panes.TransactionTable;
 import view.windows.OverviewWindowCtrl;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class ViewController {
         
 
     private OverviewWindowCtrl o;
-    private ChoiceBox<Profile> chb_profiles;
+    private ComboBox<Profile> cb_profiles;
 
     public <T extends StoreClass> void refresh(T storeClass) {
         DatabaseController db = DatabaseController.getInstance();
@@ -39,8 +39,8 @@ public class ViewController {
                 ProfileAccountManager.getInstance().setProfilesBankAccounts(all);
             } else if (storeClass instanceof Profile){
                 ArrayList<Profile> all = db.computeStoreClasses(new Profile(),"");
-                chb_profiles.getItems().setAll(all);
-                chb_profiles.getSelectionModel().selectFirst();
+                cb_profiles.getItems().setAll(all);
+                cb_profiles.getSelectionModel().selectFirst();
             } else if (storeClass instanceof Group){
                 ArrayList<Group> all = db.computeStoreClasses(new Group(),"");
                 o.vb_groups.getListView().getItems().setAll(all);
@@ -55,6 +55,10 @@ public class ViewController {
                 o.tl_groupSums.applyGroups(allGroups);
                 o.ch_transaction.applyTransactions(allTransactions);
                 ProfileAccountManager.getInstance().setProfilesTransactions(allTransactions);
+                for(TransactionTable t: o.tp_transactions.getTransactionTables()){
+                    t.connect(o.ch_transaction);
+                }
+                o.ch_transaction.connect(o.tp_transactions);
             }
         });
     }
@@ -65,7 +69,7 @@ public class ViewController {
         this.o = overviewWindowCtrl;
     }
 
-    public void setChb_profiles(ChoiceBox<Profile> chb_profiles) {
-        this.chb_profiles = chb_profiles;
+    public void setCb_profiles(ComboBox<Profile> cb_profiles) {
+        this.cb_profiles = cb_profiles;
     }
 }

@@ -2,6 +2,7 @@ package view.simple_panes;
 
 import controller.WindowManager;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,9 +33,9 @@ public class PaneUtils {
         return chooser.showOpenDialog(AppStart.primaryStage);
     }
 
-    public static void selectFirst(ChoiceBox<?> choiceBox){
-        if(!choiceBox.getItems().isEmpty()){
-            choiceBox.getSelectionModel().selectFirst();
+    public static void selectFirst(ComboBox<?> comboBox){
+        if(!comboBox.getItems().isEmpty()){
+            comboBox.getSelectionModel().selectFirst();
         }
     }
 

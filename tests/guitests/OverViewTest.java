@@ -3,6 +3,7 @@ package guitests;
 import controller.ProfileAccountManager;
 import controller.WindowManager;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -52,7 +53,6 @@ class OverViewTest extends ApplicationTest {
                 stop = true;
             }
         });
-
         while (!stop){
             sleep(2000);
         }

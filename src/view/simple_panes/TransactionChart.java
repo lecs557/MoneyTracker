@@ -38,6 +38,7 @@ public class TransactionChart extends LineChart<MyDate,Number> {
     }
 
     public void connect(TransactionTabPane tabPane){
+        // every data point of chart has a hover listener
         series.getData().forEach(data -> {
             data.getNode().hoverProperty().addListener((observableValue, aBoolean, t1) -> {
                if(t1){
@@ -46,22 +47,35 @@ public class TransactionChart extends LineChart<MyDate,Number> {
                    data.getNode().getStyleClass().remove("marked");
                }
 
+               // the hovered data selects the tab
                 tabPane.getTabs().forEach(tab -> {
                     if(tab.getText().equals(""+data.getXValue().getDate().getYear())) {
                         tabPane.getSelectionModel().select(tab);
                         TransactionTable table = ((TransactionTable)tab.getContent());
-                        table.getRows().forEach(row -> {
+                        boolean found = false;
+                        for(TableRow<Transaction> row:table.getRows()){
                             if (row.getItem() != null) {
                                 if (t1 && data.getXValue().getDate().equals(row.getItem().getLocalDate()) &&
                                         data.getYValue().doubleValue() == (double) row.getItem().getBalance() / 100) {
-                                    table.scrollTo(row.getItem());
+                                    found = true;
                                     row.getStyleClass().add("marked");
                                 } else if(!t1) {
                                     row.getStyleClass().remove("marked");
-                                    table.scrollTo(0);
                                 }
                             }
-                        });
+                        }
+                        if(!found){
+                            Transaction target=null;
+                            for (Transaction t:table.getItems()){
+                                if (t1 && data.getXValue().getDate().equals(t.getLocalDate()) &&
+                                        data.getYValue().doubleValue() == (double) t.getBalance() / 100) {
+                                    target = t;
+                                    break;
+                                }
+                            }
+                            table.scrollTo(target);
+                            table.getRows().get(0).getStyleClass().add("marked");
+                        }
                     }
                 });
             });

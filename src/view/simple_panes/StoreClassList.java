@@ -30,7 +30,7 @@ public abstract class  StoreClassList<T extends StoreClass> extends VBox {
                 @Override
                 protected void updateItem(T storeClass, boolean b) {
                 super.updateItem(storeClass, b);
-                if (storeClass != null && b) {
+                if (storeClass != null && !b) {
                     setGraphic(makeListAnchorPane(storeClass));
                     if(storeClass instanceof Group){
                         setStyle("-fx-background-color: "+((Group)storeClass).getColor()+";");

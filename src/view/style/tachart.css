@@ -97,5 +97,6 @@
 /* MY CSS */
 .chart-line-symbol.series0.marked{ /* stackpane */
    -fx-background-radius: 5px;
-    -fx-padding: 5px;
+    fx-padding: 5px;
+   -fx-background-color: green;
 }

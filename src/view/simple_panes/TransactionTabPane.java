@@ -33,7 +33,7 @@ public class TransactionTabPane extends TabPane {
                 transactionTables.add(currentTable);
             }
             if (currentTable != null) {
-                currentTable.addTransacion(transaction);
+                currentTable.addTransaction(transaction);
             }
         }
         if(getTabs().isEmpty()){

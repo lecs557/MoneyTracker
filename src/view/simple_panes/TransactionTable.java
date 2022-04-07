@@ -19,7 +19,6 @@ public class TransactionTable extends TableView<Transaction> {
 
     public ArrayList<TableRow<Transaction>> rows = new ArrayList<>();
 
-
     public TransactionTable(ArrayList<Group> groups)  {
         //SEE
         TableColumn<Transaction, LocalDate> options =new TableColumn<>("");
@@ -172,7 +171,7 @@ public class TransactionTable extends TableView<Transaction> {
         getColumns().addAll(options, date, purpose, amount, balance);
     }
 
-    public void addTransacion(Transaction transaction){
+    public void addTransaction(Transaction transaction){
         getItems().add(transaction);
     }
 
@@ -181,23 +180,21 @@ public class TransactionTable extends TableView<Transaction> {
             final TableRow<Transaction> row = new TableRow<>();
             row.hoverProperty().addListener((observableValue, aBoolean, t1) -> {
                 if(t1){
-                    row.setStyle("-fx-background-color:green;");
+                    row.getStyleClass().add("marked");
                     chart.getData().get(0).getData().forEach(data -> {
                         if(data.getXValue().getDate().equals(row.getItem().getLocalDate()) &&
-                                data.getYValue().doubleValue() == (double) row.getItem().getBalance()/100){
-                            data.getNode().setStyle("-fx-background-color:yellow;");
-                        } else {
-                            data.getNode().setStyle("-fx-background-color:green;");
+                                data.getYValue().doubleValue() == (double) row.getItem().getBalance()/100) {
+                            data.getNode().getStyleClass().add("marked");
                         }
                     });
                 } else {
-                    Group rowsGroup = (Group)ProfileAccountManager.getInstance().getById(new Group(), row.getItem().getGroupId());
-                    if (rowsGroup != null) {
-                        row.setStyle("-fx-background-color:"+ rowsGroup.getColor() +";");
-                    }else {
-                        row.setStyle("-fx-background-color:white;");
-                    }
-                    chart.getData().get(0).getData().forEach(data -> data.getNode().setStyle("-fx-background-color:green;"));
+                    row.getStyleClass().remove("marked");
+                    chart.getData().get(0).getData().forEach(data -> {
+                        if(data.getXValue().getDate().equals(row.getItem().getLocalDate()) &&
+                                data.getYValue().doubleValue() == (double) row.getItem().getBalance()/100){
+                            data.getNode().getStyleClass().remove("marked");
+                        }
+                    });
                 }
             });
             rows.add(row);
