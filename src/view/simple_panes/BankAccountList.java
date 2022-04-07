@@ -6,6 +6,7 @@ public class BankAccountList extends StoreClassList<BankAccount> {
 
     public BankAccountList() {
         super();
+        this.getStyleClass().add("bank");
     }
 
     @Override

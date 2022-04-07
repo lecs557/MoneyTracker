@@ -6,6 +6,7 @@ public class GroupList extends StoreClassList<Group> {
 
     public GroupList() {
         super();
+        this.getStyleClass().add("group");
     }
 
     @Override

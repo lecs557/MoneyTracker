@@ -1,23 +1,17 @@
 package guitests;
 
-import controller.ProfileAccountManager;
 import controller.WindowManager;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.AppStart;
 import model.storeclasses.BankAccount;
-import model.storeclasses.Profile;
 import model.threads.Loader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationTest;
-import view.simple_panes.BankAccountList;
 
 class OverViewTest extends ApplicationTest {
 
@@ -40,10 +34,20 @@ class OverViewTest extends ApplicationTest {
 
     @Test
     public void addBankAccountTest(){
-        clickOn(".btn-add");
+        clickOn(".bank .btn-add");
         write("TestBank").push(KeyCode.ENTER);
-        ListView<BankAccount> bal = lookup(".list-view").query();
+        ListView<BankAccount> bal = lookup(".bank .list-view").query();
         Assertions.assertThat(bal).hasChild("TestBank");
+    }
+
+    @Test
+    public void addGroupTest(){
+        clickOn(".group .btn-add");
+        write("TestGroup");
+        clickOn(".color").push(KeyCode.DOWN).push(KeyCode.DOWN).push(KeyCode.SPACE);
+        push(KeyCode.ENTER);
+        ListView<BankAccount> bal = lookup(".group .list-view").query();
+        Assertions.assertThat(bal).hasChild("TestGroup");
     }
 
     @Test

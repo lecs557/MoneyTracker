@@ -14,6 +14,7 @@ public class ColorEntry extends EntryPane {
 
     public ColorEntry(String name, StoreClass storeClass) {
         super(name, storeClass);
+        colorPicker.getStyleClass().add("color");
         getChildren().add(colorPicker);
     }
 

@@ -125,7 +125,6 @@ public class CreateNew<T extends StoreClass> extends VBox {
                 }
             }
         }
-        System.out.println(storeClass);
         if(edit){
             DatabaseController.getInstance().updateObject(storeClass);
         } else {
