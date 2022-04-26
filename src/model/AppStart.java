@@ -4,9 +4,6 @@ import controller.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.threads.Loader;
-import view.simple_panes.TransactionChart;
-
-import java.io.IOException;
 
 public class AppStart extends Application {
 

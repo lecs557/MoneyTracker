@@ -1,9 +1,10 @@
-package view.simple_panes;
+package view.panes.elements;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import model.storeclasses.Group;
 import model.storeclasses.Transaction;
+import view.simple_panes.SampleClass;
 
 import java.util.ArrayList;
 

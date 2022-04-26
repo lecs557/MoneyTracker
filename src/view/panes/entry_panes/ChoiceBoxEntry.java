@@ -1,17 +1,11 @@
 package view.panes.entry_panes;
 
-import controller.DatabaseController;
 import controller.ProfileAccountManager;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.Region;
 import javafx.util.StringConverter;
 import model.storeclasses.Group;
 import model.storeclasses.StoreClass;
-import view.panes.EntryPane;
-import view.panes.MyNode;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 

@@ -14,7 +14,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import model.TransactionExtractor;
 import model.storeclasses.InvoiceFile;
 import model.storeclasses.Transaction;
-import view.simple_panes.StoreClassTable;
+import view.panes.elements.StoreClassTable;
 
 import java.io.File;
 import java.io.IOException;

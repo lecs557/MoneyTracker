@@ -1,4 +1,4 @@
-package view.simple_panes;
+package view.panes.elements;
 
 import controller.WindowManager;
 import javafx.scene.control.Button;
@@ -12,6 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.storeclasses.Group;
 import model.storeclasses.StoreClass;
+import view.simple_panes.CreateNew;
+import view.simple_panes.SampleClass;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

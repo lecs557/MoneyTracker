@@ -1,12 +1,8 @@
 package view.panes.entry_panes;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import model.storeclasses.StoreClass;
-import view.panes.EntryPane;
-import view.panes.MyNode;
 
 public class ColorEntry extends EntryPane {
 

@@ -1,4 +1,4 @@
-package view.simple_panes;
+package view.panes.elements;
 
 import model.storeclasses.BankAccount;
 

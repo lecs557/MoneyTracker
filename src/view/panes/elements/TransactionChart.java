@@ -1,12 +1,13 @@
-package view.simple_panes;
+package view.panes.elements;
 
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.Tooltip;
 import model.MyDate;
 import model.storeclasses.Transaction;
+import view.simple_panes.LocalDateAxis;
+import view.simple_panes.SampleClass;
 
 import java.util.ArrayList;
 

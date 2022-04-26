@@ -1,10 +1,9 @@
 package controller;
 
 import javafx.application.Platform;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import model.storeclasses.*;
-import view.simple_panes.TransactionTable;
+import view.panes.elements.TransactionTable;
 import view.windows.OverviewWindowCtrl;
 
 import java.util.ArrayList;

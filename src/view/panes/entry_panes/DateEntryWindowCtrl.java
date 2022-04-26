@@ -1,7 +1,6 @@
 package view.panes.entry_panes;
 
 import javafx.scene.control.TextField;
-import view.panes.ContentRegion;
 
 import java.time.LocalDate;
 

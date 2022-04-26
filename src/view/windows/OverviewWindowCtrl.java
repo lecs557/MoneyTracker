@@ -6,14 +6,12 @@ import controller.ViewController;
 import controller.WindowManager;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import model.AppStart;
 import model.storeclasses.Transaction;
+import view.panes.elements.*;
 import view.simple_panes.*;
 
 public class OverviewWindowCtrl extends BaseWindowCtrl{
-
-    public AnchorPane pane;
     public Label lbl_account;
     public ProgressBar pb_pdf;
     public TransactionTabPane tp_transactions;
@@ -21,7 +19,6 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
     public GroupList vb_groups;
     public TransactionChart ch_transaction;
     public SumTable tl_groupSums;
-
     public void initialize() {
         ViewController.getInstance().setOverviewWindowCtrl(this);
 
@@ -42,19 +39,19 @@ public class OverviewWindowCtrl extends BaseWindowCtrl{
         }
         ch_transaction.connect(tp_transactions);
     }
-
     public void backToLogin(ActionEvent actionEvent) {
         WindowManager.getInstance().changeSceneTo(AppStart.windows.LogIn);
     }
-
     public void newTransaction(ActionEvent actionEvent) {
         CreateNew<Transaction> createNew = new CreateNew<>(new Transaction(), false);
         WindowManager.getInstance().openStageOf(createNew);
     }
-
     public void importTransactionViaPDF(ActionEvent actionEvent) {
         BankAccountChooser ifb = new BankAccountChooser(ProfileAccountManager.getInstance().getProfilesBankAccounts());
         WindowManager.getInstance().openStageOf(ifb);
-
+    }
+    public void setGroupByPattern(){
+        PatternGroup pg = new PatternGroup();
+        WindowManager.getInstance().openStageOf(pg);
     }
 }

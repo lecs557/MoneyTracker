@@ -1,4 +1,4 @@
-package view.panes;
+package view.panes.entry_panes;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXMLLoader;

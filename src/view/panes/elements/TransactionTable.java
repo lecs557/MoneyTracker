@@ -1,6 +1,5 @@
-package view.simple_panes;
+package view.panes.elements;
 
-import controller.ProfileAccountManager;
 import controller.WindowManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -9,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.util.Callback;
 import model.storeclasses.Group;
 import model.storeclasses.Transaction;
+import view.simple_panes.CreateNew;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;

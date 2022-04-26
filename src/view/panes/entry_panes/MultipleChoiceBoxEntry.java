@@ -4,18 +4,10 @@ import controller.ProfileAccountManager;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-import model.storeclasses.InvoiceFile;
 import model.storeclasses.StoreClass;
-import view.panes.EntryPane;
-import view.simple_panes.PaneUtils;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 
 public class MultipleChoiceBoxEntry extends EntryPane {
 

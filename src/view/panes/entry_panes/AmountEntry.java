@@ -2,8 +2,6 @@ package view.panes.entry_panes;
 
 import model.PathStore;
 import model.storeclasses.StoreClass;
-import view.panes.EntryPane;
-import view.panes.MyNode;
 
 public class AmountEntry extends EntryPane {
 

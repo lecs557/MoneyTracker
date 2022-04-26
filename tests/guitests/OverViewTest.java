@@ -17,7 +17,6 @@ class OverViewTest extends ApplicationTest {
 
     private boolean stop = false;
     private final Loader loader = new Loader("Test_db");
-
     @Override
     public void start(Stage stage) throws Exception {
         AppStart.primaryStage = stage;
@@ -31,7 +30,6 @@ class OverViewTest extends ApplicationTest {
     public void openWindow() {
         clickOn("#btn_login");
     }
-
     @Test
     public void addBankAccountTest(){
         clickOn(".bank .btn-add");
@@ -39,7 +37,6 @@ class OverViewTest extends ApplicationTest {
         ListView<BankAccount> bal = lookup(".bank .list-view").query();
         Assertions.assertThat(bal).hasChild("TestBank");
     }
-
     @Test
     public void addGroupTest(){
         clickOn(".group .btn-add");
@@ -49,7 +46,6 @@ class OverViewTest extends ApplicationTest {
         ListView<BankAccount> bal = lookup(".group .list-view").query();
         Assertions.assertThat(bal).hasChild("TestGroup");
     }
-
     @Test
     public void free(){
         AppStart.primaryStage.addEventHandler(KeyEvent.KEY_PRESSED,keyEvent -> {

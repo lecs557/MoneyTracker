@@ -1,4 +1,4 @@
-package view.simple_panes;
+package view.panes.elements;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -9,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import model.storeclasses.Group;
+import view.simple_panes.SampleClass;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -74,9 +76,8 @@ public class SumTable extends TableView<Group> {
                                     l.setStyle("-fx-text-fill: green;");
                                 } else if (item < 0) {
                                     l.setStyle("-fx-text-fill: red;");
-                                } else {
                                 }
-                                setGraphic(l);// TODO mit Scenebuilder
+                                setGraphic(l);
                             }
                         }
                     };

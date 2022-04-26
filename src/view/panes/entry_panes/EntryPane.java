@@ -1,8 +1,6 @@
-package view.panes;
+package view.panes.entry_panes;
 
-import javafx.scene.layout.Region;
 import model.storeclasses.StoreClass;
-import view.panes.entry_panes.ChoiceBoxEntry;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -1,4 +1,4 @@
-package view.simple_panes;
+package view.panes.elements;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableCell;

@@ -3,9 +3,7 @@ package view.panes.entry_panes;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import model.storeclasses.StoreClass;
-import view.panes.EntryPane;
 import view.simple_panes.PaneUtils;
 
 public class PathEntryPane extends EntryPane {

@@ -1,4 +1,4 @@
-package view.panes;
+package view.panes.entry_panes;
 
 import javafx.scene.layout.Region;
 

@@ -7,9 +7,7 @@ import view.simple_panes.SampleClass;
 import java.util.*;
 
 public class Group extends StoreClass {
-
    private static int sampleId=1;
-
    private String groupName;
    private String color;
    private int bankAccountId;

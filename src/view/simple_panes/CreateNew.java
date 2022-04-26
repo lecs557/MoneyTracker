@@ -1,9 +1,7 @@
 package view.simple_panes;
 
 import controller.DatabaseController;
-import controller.ProfileAccountManager;
 import controller.ViewController;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,18 +9,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import model.AppStart;
 import model.storeclasses.*;
-import view.panes.EntryPane;
+import view.panes.entry_panes.EntryPane;
 import view.panes.entry_panes.ChoiceBoxEntry;
-import view.panes.entry_panes.MultipleChoiceBoxEntry;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 public class CreateNew<T extends StoreClass> extends VBox {
 
